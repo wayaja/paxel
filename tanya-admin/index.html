@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Paxel — Tanya Admin</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --bg:#f8f6ff;
+      --card:#ffffff;
+      --text:#211b3f;
+      --muted:#746d8a;
+      --soft:#f3f0ff;
+      --border:#e7e1f6;
+      --purple:#5f51a1;
+      --green:#25d366;
+      --green-soft:#ecfff3;
+      --green-border:#c8efd6;
+      --green-text:#1c8a4c;
+      --orange-soft:#fff7ed;
+      --orange-border:#fed7aa;
+      --orange-text:#b95f12;
+      --danger:#e85c5c;
+    }
+
+    * {
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    html, body {
+      min-height:100%;
+      font-family:'Plus Jakarta Sans', system-ui, sans-serif;
+      background:
+        radial-gradient(circle at 100% -10%, rgba(95,81,161,.14), transparent 30%),
+        radial-gradient(circle at 0% 100%, rgba(37,211,102,.09), transparent 28%),
+        linear-gradient(180deg,#fff 0%,var(--bg) 100%);
+      color:var(--text);
+    }
+
+    .page {
+      min-height:100dvh;
+      display:flex;
+      justify-content:center;
+      padding:18px 16px 28px;
+    }
+
+    .wrap {
+      width:100%;
+      max-width:430px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .header {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-height:32px;
+    }
+
+    .logo-img {
+      height:28px;
+      width:auto;
+      display:block;
+      flex-shrink:0;
+    }
+
+    .tagline {
+      font-size:11.5px;
+      font-weight:700;
+      color:var(--muted);
+      padding-left:10px;
+      border-left:1px solid var(--border);
+      white-space:nowrap;
+    }
+
+    .hero {
+      margin-top:8px;
+    }
+
+    .headline {
+      font-size:25px;
+      line-height:1.14;
+      letter-spacing:-.04em;
+      font-weight:800;
+    }
+
+    .headline em {
+      font-style:normal;
+      color:var(--purple);
+    }
+
+    .subline {
+      margin-top:9px;
+      color:var(--muted);
+      font-size:12.8px;
+      line-height:1.5;
+    }
+
+    .subline strong {
+      color:var(--text);
+      font-weight:800;
+    }
+
+    .form-card {
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:22px;
+      padding:16px 15px;
+      box-shadow:0 14px 34px rgba(95,81,161,.10);
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .field {
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      position:relative;
+    }
+
+    .field-label {
+      display:flex;
+      align-items:center;
+      gap:6px;
+      font-size:10.5px;
+      line-height:1;
+      font-weight:800;
+      color:#625a78;
+      letter-spacing:.075em;
+      text-transform:uppercase;
+    }
+
+    .field-label span {
+      font-size:13px;
+      letter-spacing:0;
+    }
+
+    input {
+      width:100%;
+      border:1px solid var(--border);
+      background:#fbfaff;
+      border-radius:14px;
+      padding:12px 13px;
+      min-height:43px;
+      outline:none;
+      font-family:inherit;
+      font-size:14px;
+      color:var(--text);
+      transition:.18s ease;
+      -webkit-appearance:none;
+    }
+
+    input::placeholder {
+      color:#aaa4bd;
+    }
+
+    input:focus {
+      background:#fff;
+      border-color:rgba(95,81,161,.55);
+      box-shadow:0 0 0 3px rgba(95,81,161,.12);
+    }
+
+    .hint {
+      font-size:10.5px;
+      color:#8a849e;
+      line-height:1.35;
+      opacity:.82;
+      margin-top:1px;
+    }
+
+    .err-msg {
+      display:none;
+      font-size:10.5px;
+      color:var(--danger);
+      line-height:1.35;
+    }
+
+    .err-msg.show {
+      display:block;
+    }
+
+    .suggestions {
+      display:none;
+      position:absolute;
+      z-index:50;
+      left:0;
+      right:0;
+      top:100%;
+      margin-top:4px;
+      background:#ffffff !important;
+      border:1px solid var(--border) !important;
+      border-radius:14px !important;
+      overflow:hidden;
+      box-shadow:0 14px 32px rgba(33,27,63,.13) !important;
+      max-height:210px;
+      overflow-y:auto;
+    }
+
+    .suggestions.show {
+      display:block;
+    }
+
+    .suggestion-item {
+      width:100%;
+      display:block;
+      border:0;
+      background:#ffffff !important;
+      color:var(--text) !important;
+      text-align:left;
+      padding:11px 13px;
+      font-family:inherit;
+      font-size:13px;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .suggestion-item:hover,
+    .suggestion-item:focus {
+      background:var(--soft) !important;
+      color:var(--text) !important;
+    }
+
+    .suggestion-empty {
+      background:#ffffff !important;
+      color:var(--muted) !important;
+      padding:11px 13px;
+      font-size:12px;
+    }
+
+    .coverage-status {
+      display:block;
+      border-radius:14px;
+      padding:10px 12px;
+      font-size:12px;
+      line-height:1.45;
+      font-weight:600;
+    }
+
+    .coverage-status strong {
+      display:block;
+      font-size:12.5px;
+      margin-bottom:2px;
+      font-weight:800;
+    }
+
+    .coverage-status.wait {
+      background:#fff8e6;
+      border:1px solid #ffe2a3;
+      color:#966400;
+    }
+
+    .coverage-status.ok {
+      background:#eafff1;
+      border:1px solid #b9efca;
+      color:#168348;
+    }
+
+    .coverage-status.no {
+      background:#fff1f1;
+      border:1px solid #ffd0d0;
+      color:#c0392b;
+    }
+
+    .btn-wa {
+      width:100%;
+      border:0;
+      border-radius:16px;
+      padding:15px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      background:var(--green);
+      color:#fff;
+      font-family:inherit;
+      font-size:15.5px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:0 10px 28px rgba(37,211,102,.28);
+      transition:.16s ease;
+    }
+
+    .btn-wa:active {
+      transform:scale(.98);
+    }
+
+    .footer-note {
+      text-align:center;
+      color:#8a849e;
+      font-size:10.5px;
+      line-height:1.45;
+    }
+
+    .success-overlay {
+      position:fixed;
+      inset:0;
+      z-index:999;
+      background:#fff;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      gap:12px;
+      opacity:0;
+      pointer-events:none;
+      transition:.2s ease;
+    }
+
+    .success-overlay.show {
+      opacity:1;
+      pointer-events:all;
+    }
+
+    .success-icon {
+      width:62px;
+      height:62px;
+      border-radius:50%;
+      background:var(--green-soft);
+      color:var(--green-text);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:28px;
+      font-weight:800;
+    }
+
+    .success-msg {
+      font-size:16px;
+      font-weight:800;
+    }
+
+    .success-sub {
+      font-size:12.5px;
+      color:var(--muted);
+    }
+
+    @keyframes shake {
+      0%,100% { transform:translateX(0); }
+      20% { transform:translateX(-6px); }
+      40% { transform:translateX(6px); }
+      60% { transform:translateX(-4px); }
+      80% { transform:translateX(4px); }
+    }
+
+    .shake {
+      animation:shake .35s ease both;
+    }
+
+    @media (max-width:360px) {
+      .headline { font-size:23px; }
+      .form-card { padding:15px 13px; }
+      input { font-size:13.5px; }
+      .tagline { font-size:10.5px; }
+    }
+  </style>
+  <!-- Meta Pixel Placeholder -->
+  <script>
+    const META_PIXEL_ID = ""; // Isi dengan Meta Pixel ID kamu, contoh: "123456789012345"
+
+    if (META_PIXEL_ID) {
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+
+      fbq('init', META_PIXEL_ID);
+      fbq('track', 'PageView');
+    }
+
+    function trackMetaLead() {
+      if (typeof fbq === "function" && META_PIXEL_ID) {
+        fbq('track', 'Lead');
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <iframe name="googleFormTarget" style="display:none;"></iframe>
+
+  <div class="success-overlay" id="successOverlay">
+    <div class="success-icon">✓</div>
+    <div class="success-msg">Membuka WhatsApp…</div>
+    <div class="success-sub">Admin siap bantu jawab pertanyaan kamu</div>
+  </div>
+
+  <main class="page">
+    <section class="wrap">
+      <header class="header">
+        <img class="logo-img" src="https://i.ibb.co.com/vvg82ZRj/logo-paxel.webp" alt="Paxel">
+        <div class="tagline">Tanya admin Paxel</div>
+      </header>
+
+      <section class="hero">
+        <h1 class="headline">Mau tanya dulu soal <em>pickup Paxel?</em></h1>
+        <p class="subline">
+          Isi nama dan lokasi pickup. Sistem akan bantu cek coverage awal, lalu kamu bisa langsung tanya admin via WhatsApp.
+        </p>
+      </section>
+
+      <section class="form-card">
+        <div class="field">
+          <label class="field-label" for="nama"><span>👤</span> Nama kamu</label>
+          <input type="text" id="nama" placeholder="Misal: Budi" autocomplete="given-name">
+          <div class="err-msg" id="err-nama">Nama perlu diisi ya</div>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="lokasiPickup"><span>📍</span> Lokasi pickup</label>
+          <input type="text" id="lokasiPickup" placeholder="Contoh: Kuningan, Jawa Barat, Cigugur, Kec. Cigugur" autocomplete="off">
+          <div class="suggestions" id="suggest-lokasiPickup"></div>
+          <div class="hint">Lokasi untuk melihat coverage Paxel. Format: Kota/Kab, Provinsi, Desa/Kelurahan, Kec. Kecamatan, Kec. Kecamatan.</div>
+          <div class="err-msg" id="err-lokasiPickup">Lokasi pickup perlu diisi ya</div>
+        </div>
+
+        <div id="coverageStatus" class="coverage-status wait">
+          <strong>Cek coverage otomatis</strong>
+          Isi lokasi pickup untuk melihat status coverage Paxel.
+        </div>
+      </section>
+
+      <button type="button" class="btn-wa" id="btnWa" onclick="submitForm()">
+        Tanya Admin via WhatsApp
+      </button>
+
+      <p class="footer-note">
+        Data hanya digunakan untuk membantu admin memahami lokasi pickup kamu.
+      </p>
+    </section>
+  </main>
+
+  <script src="../assets/paxel-locations.js"></script>
+
+<script>
+    // ============================================================
+    // KONFIGURASI
+    // ============================================================
+    const WA_NUMBER = "6281234567890"; // Ganti dengan nomor WA admin, contoh: 62812xxxxxxxx
+
+    // ============================================================
+    // GOOGLE FORM BARU - TANYA ADMIN
+    // ============================================================
+    const GOOGLE_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSeo5qD0zs6KbXJmy6yWJpWGgs7I5WiCrosdv3Q-I1nijXdbUg/formResponse";
+    const GOOGLE_FORM_FIELDS = {
+      nama: "entry.1504118713",
+      lokasiPickup: "entry.233196206",
+      statusCoverage: "entry.1908001349",
+      pesanWhatsapp: "entry.995128602"
+    };
+
+    // ============================================================
+    // DATABASE LOKASI + COVERAGE
+    // ============================================================
+    // ALL_LOCATIONS dimuat dari ../assets/paxel-locations.js
+    // COVERED_AREAS dimuat dari ../assets/paxel-locations.js
+    //
+    // Lokasi ada di ALL_LOCATIONS tapi tidak ada di COVERED_AREAS = Tidak tercover.
+    // Lokasi tidak ada di ALL_LOCATIONS = Perlu dicek admin.
+    // ============================================================
+    const ALL_LOCATIONS = window.PAXEL_ALL_LOCATIONS || [];
+const COVERED_AREAS = window.PAXEL_COVERED_AREAS || [];
+
+    function val(id) {
+      const el = document.getElementById(id);
+      return el ? el.value.trim() : "";
+    }
+
+    function showErr(id, show) {
+      const err = document.getElementById("err-" + id);
+      const input = document.getElementById(id);
+      if (err) err.classList.toggle("show", !!show);
+      if (input) input.style.borderColor = show ? "#e85c5c" : "";
+    }
+
+    function normalizeText(str) {
+      return (str || "")
+        .toString()
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/kelurahan/g, "")
+        .replace(/desa/g, "")
+        .replace(/kecamatan/g, "")
+        .replace(/kabupaten/g, "kab")
+        .replace(/[^a-z0-9\s]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function getLocationList() {
+      return [...new Set(ALL_LOCATIONS.filter(Boolean))];
+    }
+
+    function locationExistsInList(list, lokasiText) {
+      return list.some(item => normalizeText(item) === normalizeText(lokasiText));
+    }
+
+    function findCoverage(lokasiText) {
+      if (!lokasiText) {
+        return {
+          status: "incomplete",
+          covered: false,
+          label: "Belum lengkap"
+        };
+      }
+
+      const existsInAllLocations = locationExistsInList(ALL_LOCATIONS, lokasiText);
+
+      if (!existsInAllLocations) {
+        return {
+          status: "unknown",
+          covered: false,
+          label: "Perlu dicek admin"
+        };
+      }
+
+      const isCovered = locationExistsInList(COVERED_AREAS, lokasiText);
+
+      if (isCovered) {
+        return {
+          status: "covered",
+          covered: true,
+          label: "Tercover"
+        };
+      }
+
+      return {
+        status: "not_covered",
+        covered: false,
+        label: "Tidak tercover"
+      };
+    }
+
+    function renderLocationSuggestions(inputId, boxId) {
+      const input = document.getElementById(inputId);
+      const box = document.getElementById(boxId);
+      if (!input || !box) return;
+
+      const keyword = normalizeText(input.value);
+      box.innerHTML = "";
+
+      if (!keyword) {
+        box.classList.remove("show");
+        return;
+      }
+
+      const matches = getLocationList()
+        .filter(lokasi => normalizeText(lokasi).includes(keyword))
+        .slice(0, 8);
+
+      if (!matches.length) {
+        box.innerHTML = '<div class="suggestion-empty">Lokasi tidak ditemukan di daftar wilayah</div>';
+        box.classList.add("show");
+        return;
+      }
+
+      matches.forEach(lokasi => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "suggestion-item";
+        btn.textContent = lokasi;
+        btn.addEventListener("click", () => {
+          input.value = lokasi;
+          box.classList.remove("show");
+          box.innerHTML = "";
+          showErr(inputId, false);
+          updateCoverageStatus();
+        });
+        box.appendChild(btn);
+      });
+
+      box.classList.add("show");
+    }
+
+    function setupLocationAutocomplete(inputId, boxId) {
+      const input = document.getElementById(inputId);
+      const box = document.getElementById(boxId);
+      if (!input || !box) return;
+
+      input.addEventListener("input", () => {
+        showErr(inputId, false);
+        renderLocationSuggestions(inputId, boxId);
+        updateCoverageStatus();
+      });
+
+      input.addEventListener("focus", () => {
+        renderLocationSuggestions(inputId, boxId);
+      });
+
+      input.addEventListener("blur", () => {
+        setTimeout(() => {
+          box.classList.remove("show");
+        }, 180);
+      });
+    }
+
+    function updateCoverageStatus() {
+      const box = document.getElementById("coverageStatus");
+      if (!box) return;
+
+      const lokasi = val("lokasiPickup");
+      const coverage = findCoverage(lokasi);
+
+      if (coverage.status === "incomplete") {
+        box.className = "coverage-status wait";
+        box.innerHTML = "<strong>Cek coverage otomatis</strong>Isi lokasi pickup untuk melihat status coverage Paxel.";
+        return;
+      }
+
+      if (coverage.status === "covered") {
+        box.className = "coverage-status ok";
+        box.innerHTML = `<strong>Area tercover Paxel.</strong>Lokasi pickup ada di database coverage.<br><br><b>Lokasi:</b> ${lokasi}`;
+        return;
+      }
+
+      if (coverage.status === "not_covered") {
+        box.className = "coverage-status no";
+        box.innerHTML = `<strong>Area belum tercover Paxel.</strong>Lokasi pickup ada di daftar wilayah, tapi belum masuk coverage Paxel.<br><br><b>Lokasi:</b> ${lokasi}`;
+        return;
+      }
+
+      box.className = "coverage-status wait";
+      box.innerHTML = `<strong>Area perlu dicek admin.</strong>Lokasi belum ada di daftar wilayah.<br><br><b>Lokasi:</b> ${lokasi}`;
+    }
+
+    function getCoverageText(lokasi) {
+      const coverage = findCoverage(lokasi);
+
+      if (coverage.status === "covered") {
+        return "Area tercover Paxel.";
+      }
+
+      if (coverage.status === "not_covered") {
+        return "Area belum tercover Paxel.";
+      }
+
+      return "Area perlu dicek admin.";
+    }
+
+    function sendToGoogleForm(data) {
+      const form = document.createElement("form");
+      form.method = "POST";
+      form.action = GOOGLE_FORM_ACTION;
+      form.target = "googleFormTarget";
+      form.style.display = "none";
+
+      const appendInput = (name, value) => {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = name;
+        input.value = value || "";
+        form.appendChild(input);
+      };
+
+      appendInput(GOOGLE_FORM_FIELDS.nama, data.nama);
+      appendInput(GOOGLE_FORM_FIELDS.lokasiPickup, data.lokasiPickup);
+      appendInput(GOOGLE_FORM_FIELDS.statusCoverage, data.statusCoverage);
+      appendInput(GOOGLE_FORM_FIELDS.pesanWhatsapp, data.pesanWhatsapp);
+
+      document.body.appendChild(form);
+      form.submit();
+
+      setTimeout(() => {
+        form.remove();
+      }, 2000);
+    }
+
+    function buildWhatsappMessage(data) {
+      return `Halo Paxel 👋
+
+Saya mau tanya-tanya dulu soal pickup Paxel.
+
+• *Nama*           : ${data.nama}
+• *Lokasi pickup*  : ${data.lokasiPickup}
+• *Status coverage*: ${data.statusCoverage}
+
+Mohon bantu info jadwal pickup, estimasi ongkir, dan ketentuannya ya. Terima kasih 🙏`;
+    }
+
+    function submitForm() {
+      const nama = val("nama");
+      const lokasiPickup = val("lokasiPickup");
+
+      let valid = true;
+
+      if (!nama) {
+        showErr("nama", true);
+        valid = false;
+      }
+
+      if (!lokasiPickup) {
+        showErr("lokasiPickup", true);
+        valid = false;
+      }
+
+      updateCoverageStatus();
+
+      if (!valid) {
+        const btn = document.getElementById("btnWa");
+        if (btn) {
+          btn.classList.add("shake");
+          setTimeout(() => btn.classList.remove("shake"), 400);
+        }
+        return;
+      }
+
+      const statusCoverage = getCoverageText(lokasiPickup);
+
+      const msg = buildWhatsappMessage({
+        nama,
+        lokasiPickup,
+        statusCoverage
+      });
+
+      const cleanNumber = String(WA_NUMBER || "").replace(/\D/g, "");
+
+      if (!cleanNumber) {
+        alert("Nomor WhatsApp admin belum diisi.");
+        return;
+      }
+
+      sendToGoogleForm({
+        nama,
+        lokasiPickup,
+        statusCoverage,
+        pesanWhatsapp: msg
+      });
+
+      trackMetaLead();
+
+      const overlay = document.getElementById("successOverlay");
+      if (overlay) overlay.classList.add("show");
+
+      const url = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(msg)}`;
+
+      setTimeout(() => {
+        window.location.href = url;
+      }, 1500);
+    }
+
+    ["nama", "lokasiPickup"].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener("input", () => {
+          showErr(id, false);
+          updateCoverageStatus();
+        });
+        el.addEventListener("change", () => {
+          showErr(id, false);
+          updateCoverageStatus();
+        });
+      }
+    });
+
+    setupLocationAutocomplete("lokasiPickup", "suggest-lokasiPickup");
+  </script>
+</body>
+</html>
