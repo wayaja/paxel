@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Paxel — Kirim Paket Tanpa Urus Sendiri</title>
+<!-- =========================================================
+ META PIXEL PLACEHOLDER
+ Isi ID Pixel Meta di bawah ini. Jika kosong, pixel tidak akan aktif.
+ Contoh: window.META_PIXEL_ID = "123456789012345";
+ Event yang disiapkan:
+ - PageView
+ - ViewContent
+ - Contact saat klik Tanya Admin
+ - ClickCTA untuk tombol Tanya Admin dan Cek Jadwal Pickup
+ - ScrollDepth 25%, 50%, 75%, 90%
+========================================================= -->
+<script>
+window.META_PIXEL_ID = ""; // ISI META PIXEL ID DI SINI
+
+(function initMetaPixel(){
+  var pixelId = (window.META_PIXEL_ID || "").trim();
+  if(!pixelId) return;
+
+  !function(f,b,e,v,n,t,s){
+    if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)
+  }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+  fbq('init', pixelId);
+  fbq('track', 'PageView');
+  fbq('track', 'ViewContent', {
+    content_name: 'Paxel Pickup Landing Page',
+    content_category: 'Landing Page'
+  });
+})();
+
+window.trackMetaStandard = function(eventName, params){
+  if(typeof fbq === 'function' && (window.META_PIXEL_ID || '').trim()){
+    fbq('track', eventName, params || {});
+  }
+};
+
+window.trackMetaCustom = function(eventName, params){
+  if(typeof fbq === 'function' && (window.META_PIXEL_ID || '').trim()){
+    fbq('trackCustom', eventName, params || {});
+  }
+};
+
+(function initScrollDepthTracking(){
+  var marks = [25, 50, 75, 90];
+  var sent = {};
+  function checkScroll(){
+    var doc = document.documentElement;
+    var scrollTop = window.pageYOffset || doc.scrollTop || 0;
+    var scrollHeight = Math.max(doc.scrollHeight, document.body.scrollHeight || 0);
+    var viewport = window.innerHeight || doc.clientHeight || 0;
+    var maxScroll = scrollHeight - viewport;
+    if(maxScroll <= 0) return;
+    var percent = Math.round((scrollTop / maxScroll) * 100);
+    marks.forEach(function(mark){
+      if(percent >= mark && !sent[mark]){
+        sent[mark] = true;
+        window.trackMetaCustom('ScrollDepth', {depth_percent: mark});
+      }
+    });
+  }
+  window.addEventListener('scroll', checkScroll, {passive:true});
+})();
+</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&amp;family=DM+Sans:ital,wght@0,400;0,500;1,400&amp;display=swap" rel="stylesheet"/>
+<script>document.documentElement.classList.add('js');</script><style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --paxel-purple:#5F51A1;
+  --paxel-purple-2:#4D408C;
+  --paxel-purple-dark:#2F265E;
+  --paxel-lilac:#F4F1FB;
+  --paxel-lilac-2:#ECE7F8;
+  --paxel-yellow:#FFCA3A;
+  --ink:#242238;
+  --ink2:#4B4860;
+  --muted:#7C788D;
+  --surface:#F8F7FC;
+  --border:#E2DBF2;
+  --white:#fff;
+  --wa:#5F51A1;
+  --green:#159B57;
+  --green-soft:#ECFDF3;
+  --shadow:0 10px 26px rgba(47,38,94,.08);
+  --shadow-soft:0 6px 18px rgba(47,38,94,.06);
+  --container:480px;
+}
+
+/* MOBILE TYPOGRAPHY STANDARD
+   Standar ini dibuat agar teks tidak terasa padat di layar 360–430px.
+   Jangan atur font-size manual per section kecuali memang perlu override. */
+:root{
+  --fs-micro:11px;        /* label kecil, hint, error */
+  --fs-eyebrow:11.5px;   /* teks kecil di atas header section */
+  --fs-caption:12.5px;   /* catatan, subtitle kecil */
+  --fs-small:13.5px;     /* deskripsi card pendek */
+  --fs-body:15px;        /* body utama mobile */
+  --fs-body-lg:16px;     /* subheadline / kalimat penting */
+  --fs-card-title:16px;
+  --fs-section:23px;     /* judul section mobile */
+  --fs-section-lg:24px;
+  --fs-hero:33px;        /* headline hero mobile */
+  --lh-tight:1.16;
+  --lh-title:1.22;
+  --lh-body:1.62;
+  --lh-compact:1.48;
+  --tracking-title:-.038em;
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  background:#fff;color:var(--ink);font-size:var(--fs-body);line-height:var(--lh-body);overflow-x:hidden;
+}
+button,a,input,select{font:inherit}
+button{border:0;background:none}
+a{text-decoration:none;color:inherit}
+img{display:block;max-width:100%}
+
+/* HEADER */
+.header{
+  position:sticky;top:0;z-index:50;
+  min-height:58px;padding:10px 18px;
+  background:rgba(95,81,161,.97);backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,.14);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.logo{display:flex;align-items:center;gap:10px;min-width:0}
+.logo-box{
+  width:36px;height:36px;border-radius:12px;flex:0 0 auto;
+  background:#fff url('https://paxel.co/images/icon/logo-purple.svg') center/27px auto no-repeat;
+  color:transparent;font-size:0;box-shadow:0 6px 16px rgba(0,0,0,.12);
+}
+.logo-name{font-family:'Sora','DM Sans',sans-serif;color:#fff;font-size:17px;font-weight:800;letter-spacing:-.04em;line-height:1}
+.header-trust{display:flex;align-items:center;gap:5px;color:rgba(255,255,255,.78);font-size:11px;white-space:nowrap}
+.hstars{color:var(--paxel-yellow);font-size:10px;letter-spacing:.5px}
+.header-trust strong{color:#fff;font-weight:800}
+
+/* STICKY CTA */
+.sticky-bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:40;
+  background:rgba(255,255,255,.96);border-top:1px solid var(--border);
+  padding:10px 16px max(12px,env(safe-area-inset-bottom));
+  box-shadow:0 -8px 24px rgba(47,38,94,.12);
+  transform:translateY(105%);transition:transform .28s cubic-bezier(.16,1,.3,1);
+}
+.sticky-bar.visible{transform:translateY(0)}
+.sticky-bar-inner{max-width:var(--container);margin:0 auto;display:flex;gap:8px}
+.sb-btn-primary,.sb-btn-secondary{min-height:46px;border-radius:14px;cursor:pointer;font-weight:800;transition:transform .15s}
+.sb-btn-primary{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--paxel-purple);color:#fff;font-size:14px;padding:12px 14px;box-shadow:0 8px 18px rgba(95,81,161,.22)}
+.sb-btn-secondary{display:flex;align-items:center;justify-content:center;background:#fff;color:var(--paxel-purple);border:1px solid var(--border);font-size:13px;padding:12px 14px;white-space:nowrap}
+.sb-btn-primary:active,.sb-btn-secondary:active{transform:scale(.98)}
+
+/* HERO */
+.hero{
+  position:relative;overflow:hidden;color:#fff;
+  min-height:510px;padding:24px 18px 30px;
+  display:flex;align-items:flex-end;
+  background:var(--paxel-purple-dark);
+}
+.hero::before{
+  content:'';position:absolute;inset:0;z-index:0;
+  background:url('https://i.ibb.co.com/Z6G1By42/cover-hero-lp-paxel.webp') center center/cover no-repeat;
+  opacity:.62;
+}
+.hero::after{
+  content:'';position:absolute;inset:0;z-index:0;
+  background:linear-gradient(180deg,rgba(47,38,94,.12) 0%,rgba(47,38,94,.38) 40%,rgba(47,38,94,.96) 82%);
+}
+.hero-orb{display:none}
+.hero-inner{position:relative;z-index:1;width:100%;max-width:var(--container);margin:0 auto;padding-top:120px}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;margin-bottom:12px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.26);color:#fff;font-size:var(--fs-eyebrow);line-height:1.15;font-weight:800;box-shadow:0 8px 24px rgba(0,0,0,.12);animation:fadeUp .45s ease both}
+.hero-h1{font-family:'Sora','DM Sans',sans-serif;font-size:clamp(var(--fs-hero),8vw,38px);font-weight:800;line-height:1.08;letter-spacing:-.052em;color:#fff;margin-bottom:12px;text-shadow:0 4px 18px rgba(0,0,0,.22);animation:fadeUp .45s .06s ease both}
+.hero-h1 em{font-style:normal;color:var(--paxel-yellow);background:none;-webkit-text-fill-color:currentColor}
+.hero-context{font-size:var(--fs-small);line-height:var(--lh-compact);color:rgba(255,255,255,.83);font-style:normal;margin-bottom:10px;max-width:34ch;animation:fadeUp .45s .1s ease both}
+.hero-sub{font-size:var(--fs-body-lg);line-height:1.5;color:rgba(255,255,255,.92);margin-bottom:14px;max-width:34ch;animation:fadeUp .45s .12s ease both}
+.hero-bullets{display:flex;flex-direction:column;gap:7px;margin-bottom:18px;animation:fadeUp .45s .16s ease both}
+.hb-item{display:flex;align-items:flex-start;gap:9px;color:rgba(255,255,255,.9);font-size:var(--fs-small);line-height:var(--lh-compact);max-width:34ch}
+.hb-dot{width:7px;height:7px;border-radius:50%;background:var(--paxel-yellow);box-shadow:0 0 0 4px rgba(255,202,58,.16);flex:0 0 auto;margin-top:6px}
+.hero-cta-group{display:flex;flex-direction:column;gap:10px;animation:fadeUp .45s .2s ease both}
+.btn-wa-hero,.btn-outline-hero,.btn-primary,.btn-secondary,.btn-mid,.btn-submit{min-height:50px;border-radius:16px;cursor:pointer;font-weight:800;transition:transform .15s,box-shadow .15s,background .15s}
+.btn-wa-hero{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:15px 18px;background:#fff;color:var(--paxel-purple);box-shadow:0 12px 32px rgba(0,0,0,.18)}
+.btn-wa-hero svg path{fill:var(--paxel-purple)}
+.btn-outline-hero{display:flex;align-items:center;justify-content:center;width:100%;padding:13px 18px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.26);color:#fff;font-size:14px}
+.btn-wa-hero:active,.btn-outline-hero:active,.btn-primary:active,.btn-secondary:active,.btn-mid:active,.btn-submit:active{transform:scale(.98)}
+.btn-lbl{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:2px}
+.btn-lbl-title{font-size:15px;line-height:1;font-weight:800}
+.btn-lbl-cap{font-size:11px;line-height:1.1;font-weight:500;opacity:.78}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* BASE LAYOUT */
+.main{max-width:var(--container);margin:0 auto;padding:0 18px;background:#fff}
+.sec-title{font-family:'Sora','DM Sans',sans-serif;font-size:var(--fs-section);font-weight:800;letter-spacing:var(--tracking-title);line-height:var(--lh-title);color:var(--ink);margin:0 0 10px;max-width:22ch}
+.sec-sub{font-size:var(--fs-body);line-height:1.58;color:var(--muted);margin-bottom:18px;max-width:32ch}
+.section-eyebrow{font-size:var(--fs-eyebrow);line-height:1.2;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--paxel-purple);margin-bottom:12px;display:flex;align-items:center;gap:7px}
+.section-eyebrow::before{content:'';width:22px;height:3px;background:var(--paxel-purple);border-radius:999px}
+
+/* AUTHENTIC PAXEL STATS */
+.trust-strip{
+  display:grid;grid-template-columns:1fr;
+  gap:10px;padding:30px 0 24px;border-bottom:1px solid var(--border);
+}
+.ts-item{
+  display:grid;grid-template-columns:42px 1fr;align-items:center;column-gap:12px;
+  min-height:72px;padding:13px 14px;background:#fff;border:1px solid var(--border);
+  border-radius:18px;box-shadow:0 6px 18px rgba(47,38,94,.055);text-align:left;
+}
+.ts-icon{
+  width:42px;height:42px;border-radius:14px;background:var(--paxel-lilac);
+  display:flex;align-items:center;justify-content:center;flex:0 0 auto;margin-bottom:0;
+}
+.ts-icon img{width:24px;height:24px;object-fit:contain}
+.ts-copy{min-width:0;width:100%}
+.ts-val{
+  font-family:'Sora','DM Sans',sans-serif;font-size:22px;font-weight:800;
+  letter-spacing:-.045em;line-height:1;color:var(--paxel-purple);white-space:nowrap;margin-bottom:4px;
+}
+.ts-lbl{
+  font-size:var(--fs-caption);line-height:1.25;color:var(--muted);font-weight:700;
+  display:block;white-space:normal;
+}
+.ts-note{display:none}
+
+/* PAIN */
+.pain-block{padding:42px 0 8px}
+.pain-items{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.pain-item{display:flex;align-items:flex-start;gap:11px;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:15px;box-shadow:0 6px 18px rgba(47,38,94,.05)}
+.pain-bullet{width:28px;height:28px;border-radius:50%;background:#fff;border:2px solid var(--paxel-purple);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--paxel-purple);flex:0 0 auto;margin-top:1px}
+.pain-text{font-size:var(--fs-body);line-height:var(--lh-body);color:var(--ink2);max-width:38ch}
+.pain-text strong{color:var(--ink);font-weight:800}
+.pain-closing{font-size:var(--fs-body);line-height:var(--lh-body);color:var(--ink2);padding:15px 16px;background:#fff;border:1px solid var(--border);border-left:5px solid var(--paxel-purple);border-radius:18px;box-shadow:var(--shadow-soft);max-width:42ch}
+.pain-closing em{font-style:normal;color:var(--ink);font-weight:800}
+.solution-bridge{padding:28px 0 8px}
+.solution-card{background:var(--paxel-lilac);border:1px solid var(--border);border-radius:20px;padding:18px;box-shadow:var(--shadow-soft)}
+.solution-title{font-family:'Sora','DM Sans',sans-serif;font-size:var(--fs-section);font-weight:800;letter-spacing:var(--tracking-title);line-height:var(--lh-title);color:var(--ink);margin-bottom:9px;max-width:24ch}
+.solution-text{font-size:var(--fs-body);line-height:var(--lh-body);color:var(--ink2);max-width:40ch}
+
+/* SELF-SELECTION: no heavy cards on mobile */
+.self-select{padding:42px 0 8px}
+.ss-grid{display:flex;flex-direction:column;gap:0;margin-top:8px;border-top:1px solid var(--border)}
+.ss-item{display:flex;align-items:flex-start;gap:12px;background:transparent;border:0;border-bottom:1px solid var(--border);border-radius:0;padding:14px 0;box-shadow:none;min-height:auto}
+.ss-icon{width:34px;height:34px;border-radius:12px;background:var(--paxel-lilac);display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1;flex:0 0 auto;margin-top:0}
+.ss-text{font-size:var(--fs-body);line-height:var(--lh-compact);font-weight:700;color:var(--ink2);padding-top:5px;max-width:34ch}
+
+/* MECHANISM */
+.mechanism{padding:42px 0 8px}
+.mech-card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:15px;box-shadow:var(--shadow-soft)}
+.mech-title{font-family:'Sora','DM Sans',sans-serif;font-size:var(--fs-card-title);line-height:var(--lh-title);font-weight:800;color:var(--ink);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.mech-title-icon{width:34px;height:34px;border-radius:12px;background:var(--paxel-lilac);display:flex;align-items:center;justify-content:center;font-size:16px;flex:0 0 auto}
+.mech-compare{display:flex;flex-direction:column;gap:10px}
+.mc-col{border-radius:16px;padding:14px}
+.mc-old{background:#FFF7F7;border:1px solid #F5D0D0}
+.mc-new{background:#F3FDF6;border:1px solid #BFEACF}
+.mc-label{font-size:var(--fs-eyebrow);line-height:1.2;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.mc-old .mc-label{color:#C83D3D}.mc-new .mc-label{color:var(--green)}
+.mc-list{display:flex;flex-direction:column;gap:7px}
+.mc-item{font-size:var(--fs-small);line-height:1.44;color:var(--ink2)}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:0;background:#fff;border:1px solid var(--border);border-radius:20px;padding:8px 16px;box-shadow:var(--shadow-soft);margin-top:12px}
+.step{display:flex;gap:14px;align-items:flex-start;padding:14px 0;position:relative}
+.step:not(:last-child){border-bottom:1px solid var(--border)}
+.step:not(:last-child)::after{display:none}
+.step-num{width:34px;height:34px;border-radius:50%;background:var(--paxel-lilac);border:2px solid var(--paxel-purple);display:flex;align-items:center;justify-content:center;font-family:'Sora','DM Sans',sans-serif;font-size:13px;font-weight:800;color:var(--paxel-purple);flex:0 0 auto;margin-top:1px}
+.step-name{font-size:var(--fs-card-title);font-weight:800;color:var(--ink);line-height:var(--lh-title);margin-bottom:5px}
+.step-desc{font-size:var(--fs-small);line-height:1.52;color:var(--muted);max-width:38ch}
+
+/* MID CTA */
+.mid-cta{background:var(--paxel-lilac);border:1px solid var(--border);border-radius:20px;padding:18px;margin:26px 0;text-align:left;box-shadow:var(--shadow-soft)}
+.mid-cta p{font-size:13px;line-height:1.5;color:var(--ink2);margin-bottom:14px}.mid-cta p strong{color:var(--ink);font-weight:800}
+.btn-mid{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--paxel-purple);color:#fff;padding:14px 18px;font-size:14px;box-shadow:0 8px 20px rgba(95,81,161,.22)}
+
+/* USP: compact mobile rows */
+.usp-grid{display:flex;flex-direction:column;gap:12px;margin:14px 0 8px}
+.usp-card{display:grid;grid-template-columns:42px 1fr;column-gap:12px;align-items:start;background:#fff;border:1px solid var(--border);border-radius:20px;padding:15px;box-shadow:var(--shadow-soft);min-height:auto}
+.usp-icon{grid-row:1 / span 3;width:42px;height:42px;border-radius:14px;background:var(--paxel-lilac);display:flex;align-items:center;justify-content:center;font-size:22px;line-height:1;margin:0}
+.usp-title{font-family:'Sora','DM Sans',sans-serif;font-size:var(--fs-card-title);line-height:var(--lh-title);font-weight:800;color:var(--ink);margin:0 0 5px}
+.usp-desc{font-size:var(--fs-small);line-height:1.5;color:var(--muted);margin:0;max-width:34ch}
+.usp-note{font-size:var(--fs-caption);line-height:1.38;color:var(--paxel-purple);font-weight:800;margin-top:7px;font-style:normal}
+
+/* TESTIMONIAL */
+.testi{background:#fff;border:1px solid var(--border);border-radius:20px;padding:17px;box-shadow:var(--shadow-soft);margin-bottom:12px}
+.testi-arc{font-size:var(--fs-micro);line-height:1.2;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--paxel-purple);margin-bottom:8px}
+.testi-text{font-size:var(--fs-body);line-height:var(--lh-body);color:var(--ink2);font-style:italic;margin-bottom:12px;max-width:42ch}.testi-text::before{content:'"';font-size:22px;color:var(--paxel-purple);line-height:0;vertical-align:-.3em;margin-right:3px}
+.testi-footer{display:flex;align-items:center;gap:9px}.testi-avatar{width:32px;height:32px;border-radius:50%;background:var(--paxel-purple);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:800;flex:0 0 auto}.testi-name{font-size:12px;font-weight:800;color:var(--ink)}.testi-role{font-size:11px;color:var(--muted);line-height:1.3}.testi-stars{color:var(--paxel-yellow);font-size:11px;margin-left:auto}
+
+/* DECISION SAFETY */
+.decision-safety{background:#F3FDF6;border:1px solid #BFEACF;border-radius:20px;padding:18px;margin:28px 0;box-shadow:var(--shadow-soft)}
+.ds-title{font-family:'Sora','DM Sans',sans-serif;font-size:18px;line-height:1.25;font-weight:800;color:#126C3A;margin-bottom:8px;display:flex;align-items:center;gap:8px}.ds-sub{font-size:13px;line-height:1.5;color:#23754A;margin-bottom:14px}.ds-list{display:flex;flex-direction:column;gap:9px}.ds-item{display:flex;align-items:flex-start;gap:8px;font-size:13px;line-height:1.42;color:#166534}.ds-check{color:var(--green);font-weight:800;flex:0 0 auto}
+
+/* FAQ */
+.faq{padding:44px 0 8px}.faq-list{display:flex;flex-direction:column;gap:8px}.faq-item{border:1px solid var(--border);border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 4px 14px rgba(47,38,94,.04)}.faq-q{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 15px;font-size:var(--fs-body);font-weight:800;line-height:1.42;color:var(--ink);cursor:pointer}.faq-chev{font-style:normal;color:var(--paxel-purple);transition:transform .2s}.faq-item.open .faq-chev{transform:rotate(180deg)}.faq-a{display:none;border-top:1px solid var(--border);padding:14px 15px 16px;background:var(--surface);font-size:var(--fs-small);line-height:1.62;color:var(--muted)}.faq-a.open{display:block}
+
+/* FINAL CTA */
+.final-cta{position:relative;overflow:hidden;background:linear-gradient(160deg,var(--paxel-purple),var(--paxel-purple-dark));border-radius:24px;padding:28px 20px;margin:30px 0;text-align:center;color:#fff;box-shadow:0 16px 38px rgba(47,38,94,.18)}.fc-o1,.fc-o2{position:absolute;border-radius:50%;filter:blur(50px);pointer-events:none}.fc-o1{width:180px;height:180px;background:rgba(255,202,58,.28);top:-50px;right:-35px}.fc-o2{width:150px;height:150px;background:rgba(255,255,255,.18);bottom:-60px;left:-35px}.fc-inner{position:relative;z-index:1}.fc-title{font-family:'Sora','DM Sans',sans-serif;font-size:var(--fs-section-lg);line-height:var(--lh-title);font-weight:800;letter-spacing:var(--tracking-title);margin-bottom:7px}.fc-sub{font-size:var(--fs-small);line-height:1.52;color:rgba(255,255,255,.78);margin:0 auto 20px;max-width:36ch}.btn-group{display:flex;flex-direction:column;gap:10px}.btn-primary{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;background:#fff;color:var(--paxel-purple);padding:15px 18px;box-shadow:0 10px 26px rgba(0,0,0,.14)}.btn-primary svg path{fill:var(--paxel-purple)}.or-div{display:flex;align-items:center;gap:10px;font-size:11px;color:rgba(255,255,255,.45)}.or-line{flex:1;height:1px;background:rgba(255,255,255,.18)}.btn-secondary{display:flex;align-items:center;justify-content:center;width:100%;padding:13px 18px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.24);color:#fff;font-size:14px}
+
+/* FOOTER */
+.footer{padding:24px 20px;text-align:center;border-top:1px solid var(--border);font-size:12px;color:var(--muted);line-height:1.6;background:#fff}.footer-brand{font-family:'Sora','DM Sans',sans-serif;font-size:17px;font-weight:800;letter-spacing:-.04em;color:var(--paxel-purple);margin-bottom:4px}.footer-text{font-size:12.5px;font-weight:700;color:var(--ink2);margin-bottom:3px}.footer-note{font-size:11.5px;color:var(--muted)}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;z-index:100;background:rgba(47,38,94,.80);backdrop-filter:blur(8px);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}.modal-overlay.show{opacity:1;pointer-events:all}.modal-sheet{width:100%;max-width:480px;background:#fff;border-radius:26px 26px 0 0;padding:22px 18px 36px;transform:translateY(105%);transition:transform .35s cubic-bezier(.16,1,.3,1);max-height:92dvh;overflow-y:auto;box-shadow:0 -10px 34px rgba(0,0,0,.18)}.modal-overlay.show .modal-sheet{transform:translateY(0)}.modal-handle{width:42px;height:5px;background:#D8D0EE;border-radius:999px;margin:0 auto 18px}.modal-tabs{display:flex;gap:6px;margin-bottom:18px;background:var(--paxel-lilac);border-radius:14px;padding:5px}.modal-tab{flex:1;padding:10px 8px;border-radius:11px;font-size:12px;font-weight:800;color:var(--muted);cursor:pointer;line-height:1.25}.modal-tab.active{background:#fff;color:var(--paxel-purple);box-shadow:0 3px 12px rgba(47,38,94,.10)}.modal-pane{display:none}.modal-pane.active{display:block}.modal-title{font-family:'Sora','DM Sans',sans-serif;font-size:19px;line-height:var(--lh-title);font-weight:800;letter-spacing:-.035em;margin-bottom:6px;color:var(--ink)}.modal-sub{font-size:var(--fs-small);color:var(--muted);margin-bottom:16px;line-height:1.52;max-width:38ch}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}.field-label{font-size:var(--fs-micro);line-height:1.2;font-weight:800;text-transform:uppercase;letter-spacing:.055em;color:var(--paxel-purple);display:flex;align-items:center;gap:5px}.field input,.field select{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:13px 14px;font-size:16px;color:var(--ink);outline:none;width:100%;-webkit-appearance:none;transition:border-color .2s,box-shadow .2s,background .2s;min-height:48px}.field input::placeholder{color:#AAA5BA;font-size:13px}.field input:focus,.field select:focus{border-color:var(--paxel-purple);box-shadow:0 0 0 4px rgba(95,81,161,.12);background:#fff}.field input.error,.field select.error{border-color:#dc2626;box-shadow:0 0 0 3px rgba(220,38,38,.08)}.hint{font-size:10px;color:var(--muted);margin-top:2px}.err-msg{font-size:10px;color:#dc2626;margin-top:2px;display:none}.err-msg.show{display:block}.autocomplete-wrap{position:relative}.suggestions{position:absolute;top:100%;left:0;right:0;z-index:200;background:#fff;border:1.5px solid var(--border);border-radius:14px;margin-top:4px;box-shadow:0 12px 28px rgba(47,38,94,.16);max-height:172px;overflow-y:auto;display:none}.suggestions.show{display:block}.suggestion-item{padding:10px 14px;font-size:13px;color:var(--ink);cursor:pointer;border-bottom:1px solid var(--border)}.suggestion-item:last-child{border-bottom:0}.suggestion-item:hover{background:var(--paxel-lilac);color:var(--paxel-purple)}.btn-submit{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--paxel-purple);color:#fff;padding:14px 18px;font-size:14px;width:100%;margin-top:6px;box-shadow:0 8px 20px rgba(95,81,161,.22)}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}.shake{animation:shake .35s ease both}.success-overlay{position:fixed;inset:0;z-index:200;background:var(--paxel-purple-dark);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;opacity:0;pointer-events:none;transition:opacity .3s}.success-overlay.show{opacity:1;pointer-events:all}.success-icon{width:58px;height:58px;background:rgba(255,255,255,.13);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;animation:popIn .4s cubic-bezier(.175,.885,.32,1.275) both}@keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}.success-msg{font-size:15px;font-weight:800;color:#fff}.success-sub{font-size:13px;color:rgba(255,255,255,.62)}.sticky-spacer{height:70px}
+
+
+/* Reading density control */
+.main > div{scroll-margin-top:72px}
+.pain-items,.usp-grid,.faq-list,.steps,.ss-grid{max-width:100%}
+.pain-item,.usp-card,.testi,.faq-item,.mech-card,.steps{word-break:normal;overflow-wrap:break-word}
+@media(max-width:390px){
+  :root{--fs-hero:30px;--fs-section:20px;--fs-body:14px;--fs-body-lg:15px}
+  .header{padding-left:14px;padding-right:14px}
+  .hero{padding-left:16px;padding-right:16px}
+  .main{padding-left:16px;padding-right:16px}
+  .sticky-bar{padding-left:12px;padding-right:12px}
+  .sb-btn-secondary{font-size:12px;padding-left:11px;padding-right:11px}
+}
+
+
+/* MOBILE READABILITY POLISH: target 9/10 */
+.main > .pain-block,
+.main > .self-select,
+.main > .solution-bridge,
+.main > .mechanism,
+.main > .faq{scroll-margin-top:72px}
+.solution-bridge{padding:42px 0 8px}
+.solution-title{font-family:'Sora','DM Sans',sans-serif;font-size:var(--fs-section);line-height:var(--lh-title);letter-spacing:var(--tracking-title);font-weight:800;color:var(--ink);margin-bottom:10px;max-width:22ch}
+.solution-text{font-size:var(--fs-body);line-height:var(--lh-body);color:var(--ink2);max-width:34ch}
+.section-gap{margin-top:38px}
+.readability-note{font-size:var(--fs-caption);line-height:1.5;color:var(--muted);max-width:36ch}
+@media(max-width:380px){
+  :root{--fs-hero:31px;--fs-section:22px;--fs-body:14.5px;--fs-body-lg:15.5px}
+  .header-trust{font-size:10px}.logo-name{font-size:16px}
+  .sb-btn-secondary{font-size:12px;padding-left:10px;padding-right:10px}
+}
+
+@media(min-width:640px){
+  :root{--container:560px}
+  .hero{min-height:620px}.hero-inner{padding-top:220px}
+  .trust-strip{grid-template-columns:repeat(3,1fr);gap:10px}.ts-item{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:112px;padding:14px 10px}.ts-icon{width:42px;height:42px;margin-bottom:9px}.ts-icon img{width:26px;height:26px}.ts-val{font-size:23px}.ts-lbl{font-size:11px}
+  .ss-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;border:0}.ss-item{border:1px solid var(--border);border-radius:18px;padding:14px;background:#fff;box-shadow:var(--shadow-soft)}
+  .mech-compare{display:grid;grid-template-columns:1fr 1fr}
+  .usp-grid{display:grid;grid-template-columns:1fr 1fr}
+}
+@media(min-width:900px){
+  :root{--container:1120px}
+  :root{--fs-body:16px;--fs-body-lg:17px;--fs-section:30px;--fs-section-lg:32px;--fs-hero:48px}
+  body{font-size:var(--fs-body)}
+  .header{padding:14px 40px}
+  .hero{min-height:620px;padding:80px 40px;align-items:center;background:var(--paxel-purple)}
+  .hero::before{background-image:url('https://i.ibb.co.com/Z6G1By42/cover-hero-lp-paxel.webp');background-size:cover;background-position:center center;opacity:.78}
+  .hero::after{background:linear-gradient(90deg,rgba(95,81,161,.96) 0%,rgba(95,81,161,.86) 38%,rgba(47,38,94,.22) 70%,rgba(47,38,94,.08) 100%)}
+  .hero-inner{padding-top:0}.hero-inner>*{max-width:520px}.hero-cta-group{max-width:430px}.hero-h1{font-size:48px}.hero-sub{font-size:17px}
+  .main{padding:0 40px}
+  .trust-strip{gap:18px;padding:34px 0 42px}.ts-item{min-height:150px;padding:22px}.ts-icon{width:58px;height:58px}.ts-icon img{width:36px;height:36px}.ts-val{font-size:34px}.ts-lbl{font-size:14px}
+  .pain-block,.self-select,.mechanism,.faq{padding-top:56px}.solution-bridge{padding-top:36px}.solution-title{font-size:24px}.solution-text{font-size:15px}.pain-items{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.pain-item{min-height:166px}.pain-closing{font-size:15px;padding:18px 20px}
+  .sec-title{font-size:30px}.sec-sub{font-size:15px}.ss-grid{grid-template-columns:repeat(3,1fr);gap:16px}.ss-item{min-height:112px;padding:18px}.ss-text{font-size:15px}
+  .mech-card{padding:24px}.mech-title{font-size:18px}.mc-col{padding:18px}.mc-item{font-size:14px}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;padding:22px}.step{display:block;padding:0 14px;border:0}.step-num{margin-bottom:14px}.step-name{font-size:15px}.step-desc{font-size:13px}
+  .mid-cta{display:flex;align-items:center;justify-content:space-between;text-align:left;gap:24px;padding:22px 24px}.mid-cta p{margin-bottom:0;font-size:15px}.btn-mid{max-width:260px}
+  .usp-grid{grid-template-columns:repeat(4,1fr);gap:16px}.usp-card{display:block;padding:20px}.usp-icon{margin-bottom:14px}.usp-title{font-size:15px}.usp-desc{font-size:13px}
+  .testi{padding:20px}.testi-text{font-size:14px}.decision-safety{padding:24px}.ds-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 18px}.ds-title{font-size:22px}.ds-sub{font-size:14px}
+  .faq-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.faq-item{align-self:start}.faq-q{font-size:14px}
+  .final-cta{padding:42px 32px}.fc-title{font-size:32px}.fc-sub{font-size:15px}.btn-group{max-width:420px;margin:0 auto}
+  .modal-overlay{align-items:center}.modal-sheet{border-radius:26px;max-height:88vh}.footer{padding:28px 20px}
+}
+
+
+/* =========================================================
+   MOBILE-FIRST UI/UX + TYPOGRAPHY EXECUTION PATCH
+   Basis: preview-5.html
+   Tujuan: mempertahankan readability 9/10 di layar 360–430px.
+   ========================================================= */
+@media(max-width:639px){
+  body{font-size:var(--fs-body);line-height:var(--lh-body)}
+  .header{min-height:58px}
+
+  /* Hero: CTA tetap terlihat lebih cepat, tanpa mengorbankan visual */
+  .hero{min-height:500px;padding:22px 18px 28px}
+  .hero-inner{padding-top:104px}
+  .hero-badge{font-size:12px;margin-bottom:12px}
+  .hero-h1{font-size:clamp(32px,8.4vw,36px);line-height:1.08;letter-spacing:-.052em;margin-bottom:12px;max-width:11ch}
+  .hero-sub{font-size:16px;line-height:1.52;max-width:32ch;margin-bottom:13px;color:rgba(255,255,255,.93)}
+  .hero-bullets{gap:8px;margin-bottom:18px}
+  .hb-item{font-size:14px;line-height:1.45;max-width:33ch}
+  .btn-wa-hero,.btn-primary{min-height:52px}
+  .btn-outline-hero,.btn-secondary{min-height:50px}
+
+  /* Global section rhythm */
+  .main{padding-left:18px;padding-right:18px}
+  .pain-block,.self-select,.mechanism,.faq{padding:48px 0 8px}
+  .solution-bridge{padding:36px 0 8px}
+  .section-gap{margin-top:42px}
+  .sec-title{font-size:24px;line-height:1.2;letter-spacing:-.04em;max-width:22ch;margin-bottom:11px}
+  .sec-sub{font-size:15px;line-height:1.58;max-width:34ch;margin-bottom:18px}
+  .section-eyebrow{font-size:12px;margin-bottom:12px}
+
+  /* Trust proof: jangan dipaksa 3 kolom di mobile */
+  .trust-strip{grid-template-columns:1fr;gap:10px;padding:30px 0 26px}
+  .ts-item{grid-template-columns:42px 1fr;min-height:72px;padding:13px 14px;text-align:left;align-items:center}
+  .ts-val{font-size:22px}.ts-lbl{font-size:13px}
+
+  /* Pain cards: baca satu napas, tidak terlalu rapat */
+  .pain-items{gap:11px;margin-bottom:15px}
+  .pain-item{padding:15px;border-radius:18px}
+  .pain-text{font-size:15px;line-height:1.62}
+  .pain-closing{font-size:15px;line-height:1.62;padding:15px 16px}
+
+  /* Self selection: list row lebih aman daripada grid kecil */
+  .ss-grid{display:flex;flex-direction:column;gap:0;margin-top:8px;border-top:1px solid var(--border)}
+  .ss-item{display:flex;align-items:flex-start;gap:12px;background:transparent;border:0;border-bottom:1px solid var(--border);border-radius:0;padding:14px 0;box-shadow:none;min-height:auto}
+  .ss-icon{width:34px;height:34px;border-radius:12px;background:var(--paxel-lilac);display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1;flex:0 0 auto;margin-top:0}
+  .ss-text{font-size:15px;line-height:1.48;font-weight:700;color:var(--ink2);padding-top:5px;max-width:34ch}
+
+  /* Mechanism: comparison harus stack di mobile */
+  .mech-card{padding:15px;border-radius:20px}
+  .mech-title{font-size:16px;line-height:1.24;margin-bottom:14px}
+  .mech-compare{display:flex;flex-direction:column;gap:10px}
+  .mc-col{padding:14px;border-radius:16px}
+  .mc-item{font-size:13.5px;line-height:1.48}
+
+  /* Steps: cukup besar untuk dipindai saat scroll */
+  .steps{padding:8px 16px;border-radius:20px;margin-top:12px}
+  .step{padding:15px 0;gap:14px}
+  .step-name{font-size:16px;line-height:1.24;margin-bottom:5px}
+  .step-desc{font-size:14px;line-height:1.56;max-width:36ch}
+
+  /* Mid CTA */
+  .mid-cta{padding:18px;margin:28px 0 0;border-radius:20px;text-align:left}
+  .mid-cta p{font-size:14.5px;line-height:1.55;margin-bottom:14px}
+  .btn-mid{min-height:50px;font-size:14.5px;border-radius:16px}
+
+  /* USP: 1 kolom agar selling point tidak padat */
+  .usp-grid{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+  .usp-card{display:grid;grid-template-columns:42px 1fr;column-gap:12px;align-items:start;padding:15px;border-radius:20px}
+  .usp-icon{grid-row:1 / span 3;width:42px;height:42px;border-radius:14px;background:var(--paxel-lilac);display:flex;align-items:center;justify-content:center;font-size:22px;line-height:1;margin:0}
+  .usp-title{font-size:16px;line-height:1.24;margin-bottom:5px}
+  .usp-desc{font-size:14px;line-height:1.52;max-width:34ch}
+  .usp-note{font-size:12.5px;line-height:1.42;margin-top:8px}
+
+  /* Testimonial + decision safety */
+  .testi{padding:17px;border-radius:20px}
+  .testi-text{font-size:15px;line-height:1.62}
+  .decision-safety{padding:18px;border-radius:20px;margin:28px 0}
+  .ds-title{font-size:18px;line-height:1.25}
+  .ds-sub,.ds-item{font-size:14px;line-height:1.5}
+
+  /* FAQ */
+  .faq-q{font-size:15px;line-height:1.45;padding:16px 15px}
+  .faq-a{font-size:14px;line-height:1.62}
+
+  /* Footer logo from the cleaner version */
+}
+
+@media(max-width:390px){
+  :root{--fs-hero:31px;--fs-section:22px;--fs-body:14.8px;--fs-body-lg:15.8px}
+  .hero{min-height:492px;padding-left:16px;padding-right:16px}
+  .main{padding-left:16px;padding-right:16px}
+  .hero-h1{font-size:31px}
+  .sec-title{font-size:22px}
+  .sb-btn-primary{font-size:13.5px}
+  .sb-btn-secondary{font-size:12.5px;padding-left:10px;padding-right:10px}
+}
+
+
+
+/* CLICK FEEDBACK + PROGRESSIVE REVEAL */
+button{
+  touch-action:manipulation;
+  user-select:none;
+  -webkit-user-select:none;
+}
+.sb-btn-primary,.sb-btn-secondary,
+.btn-wa-hero,.btn-outline-hero,.btn-primary,.btn-secondary,.btn-mid,.btn-submit{
+  position:relative;
+  overflow:hidden;
+  will-change:transform,box-shadow,filter;
+}
+button.is-pressing{
+  transform:translateY(1px) scale(.985)!important;
+  filter:saturate(1.05);
+}
+button.is-loading{
+  pointer-events:none;
+  opacity:.92;
+}
+.btn-ripple{
+  position:absolute;
+  width:18px;
+  height:18px;
+  border-radius:999px;
+  background:rgba(255,255,255,.45);
+  transform:translate(-50%,-50%) scale(0);
+  animation:btnRipple .55s ease-out forwards;
+  pointer-events:none;
+}
+.btn-wa-hero .btn-ripple,
+.btn-primary .btn-ripple,
+.sb-btn-secondary .btn-ripple{
+  background:rgba(95,81,161,.18);
+}
+@keyframes btnRipple{
+  to{transform:translate(-50%,-50%) scale(16);opacity:0}
+}
+.action-toast{
+  position:fixed;
+  left:50%;
+  bottom:92px;
+  z-index:90;
+  max-width:calc(100% - 32px);
+  padding:10px 14px;
+  border-radius:999px;
+  background:rgba(47,38,94,.94);
+  color:#fff;
+  font-size:12.5px;
+  font-weight:800;
+  line-height:1.2;
+  box-shadow:0 12px 28px rgba(47,38,94,.22);
+  transform:translateX(-50%) translateY(10px);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s ease,transform .2s ease;
+}
+.action-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.js .reveal{
+  opacity:0;
+  transform:translateY(16px);
+  transition:opacity .55s ease,transform .55s cubic-bezier(.16,1,.3,1);
+}
+.js .reveal.is-visible{opacity:1;transform:translateY(0)}
+.reveal-block{
+  content-visibility:auto;
+  contain-intrinsic-size:1px 340px;
+}
+.faq-list.loading-faq::before{
+  content:'Menyiapkan pertanyaan umum...';
+  display:block;
+  padding:14px 15px;
+  border:1px solid var(--border);
+  border-radius:16px;
+  background:var(--surface);
+  color:var(--muted);
+  font-size:var(--fs-small);
+  line-height:1.5;
+}
+@media(prefers-reduced-motion:reduce){
+  .js .reveal{opacity:1;transform:none;transition:none}
+  .btn-ripple{display:none}
+  button.is-pressing{transform:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- Modal with 2 panes -->
+
+<!-- HEADER -->
+<header class="header">
+<div class="logo">
+<div class="logo-box">📦</div>
+<div class="logo-name">Paxel</div>
+</div>
+<div class="header-trust">
+<span class="hstars">★★★★★</span>
+<span><strong>99,5%</strong> Tepat waktu</span>
+</div>
+</header>
+<!-- STICKY BAR -->
+<div class="sticky-bar" id="stickyBar">
+<div class="sticky-bar-inner">
+<button class="sb-btn-primary" onclick="tanyaAdmin()">
+<svg fill="white" height="16" viewbox="0 0 24 24" width="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>
+      Tanya Admin Dulu
+    </button>
+<button class="sb-btn-secondary" onclick="openModal()">📅 Cek Pickup</button>
+</div>
+</div><div aria-live="polite" class="action-toast" id="actionToast" role="status">Membuka halaman...</div>
+<!-- HERO -->
+<section class="hero" id="heroSection">
+<div class="h-o1 hero-orb"></div>
+<div class="h-o2 hero-orb"></div>
+<div class="h-o3 hero-orb"></div>
+<div class="hero-inner">
+<div class="hero-badge">📦 Layanan Pickup Paket</div>
+<h1 class="hero-h1">Kirim paket<br/>tanpa <em>urus sendiri.</em></h1>
+<p class="hero-sub">Paket dijemput dari rumah, kantor, atau toko kamu. Tidak perlu ke konter. Tidak perlu antre.</p>
+<div class="hero-bullets">
+<div class="hb-item"><div class="hb-dot"></div>Pickup mulai dari 1 paket</div>
+<div class="hb-item"><div class="hb-dot"></div>Admin bantu cek ongkir dan area pickup</div>
+</div>
+<div class="hero-cta-group">
+<button class="btn-wa-hero" onclick="tanyaAdmin()">
+<svg fill="white" height="20" viewbox="0 0 24 24" width="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>
+<div class="btn-lbl">
+<span class="btn-lbl-title">Tanya Admin Dulu</span>
+<span class="btn-lbl-cap">Belum yakin? Tanya dulu, gratis</span>
+</div>
+</button>
+<button class="btn-outline-hero" onclick="openModal()">📅  Cek Jadwal Pickup</button>
+</div>
+</div>
+</section>
+<!-- MAIN -->
+<div class="main">
+<!-- Pain block -->
+<div class="pain-block reveal reveal-block">
+<div class="section-eyebrow">Situasi yang sering terjadi</div>
+<div class="pain-items">
+<div class="pain-item">
+<div class="pain-bullet">1</div>
+<div class="pain-text">Mau kirim paket hari ini — tapi <strong>tidak sempat ke konter.</strong> Akhirnya paket tertunda sampai besok.</div>
+</div>
+<div class="pain-item">
+<div class="pain-bullet">2</div>
+<div class="pain-text">Sudah sampai konter, <strong>antre panjang,</strong> buang satu jam. Padahal masih banyak urusan lain yang menunggu.</div>
+</div>
+<div class="pain-item">
+<div class="pain-bullet">3</div>
+<div class="pain-text">Paket harus dikirim hari ini, tapi baru sempat keluar sore. <strong>Akhirnya pengiriman mundur satu hari.</strong></div>
+</div>
+</div>
+<div class="pain-closing">
+      Masalahnya bukan kamu tidak sempat kirim. <em>Proses kirim manual memang sering makan waktu saat kamu sedang sibuk.</em>
+</div>
+</div>
+<!-- Solution bridge -->
+<div class="solution-bridge reveal reveal-block">
+<div class="solution-card">
+<div class="solution-title">Kirim paket seharusnya tidak mengganggu jadwal kamu.</div>
+<div class="solution-text">Dengan pickup, kamu cukup siapkan paket. Admin bantu cek ongkir, kurir datang ke lokasi, lalu tracking aktif setelah paket diproses.</div>
+</div>
+</div>
+<!-- Self-selection -->
+<div class="self-select reveal reveal-block">
+<div class="sec-title">Cocok untuk kamu yang…</div>
+<div class="ss-grid">
+<div class="ss-item"><div class="ss-icon">🛍️</div><div class="ss-text">Punya toko online dan sering kirim paket kecil</div></div>
+<div class="ss-item"><div class="ss-icon">📄</div><div class="ss-text">Perlu kirim dokumen tapi tidak sempat keluar</div></div>
+<div class="ss-item"><div class="ss-icon">⏰</div><div class="ss-text">Sering menunda kiriman karena antre konter</div></div>
+<div class="ss-item"><div class="ss-icon">🎁</div><div class="ss-text">Mau kirim kado atau hampers tepat waktu</div></div>
+<div class="ss-item"><div class="ss-icon">💬</div><div class="ss-text">Ingin cek ongkir dulu sebelum memutuskan kirim</div></div>
+<div class="ss-item"><div class="ss-icon">📍</div><div class="ss-text">Butuh konfirmasi area pickup sebelum order</div></div>
+</div>
+</div>
+<!-- Mechanism -->
+<div class="mechanism reveal reveal-block">
+<div class="sec-title" style="margin-bottom:12px">Kenapa pickup lebih efisien?</div>
+<div class="mech-card">
+<div class="mech-title"><div class="mech-title-icon">🔄</div>Cara lama vs cara sekarang</div>
+<div class="mech-compare">
+<div class="mc-col mc-old">
+<div class="mc-label">❌ Cara Lama</div>
+<div class="mc-list">
+<div class="mc-item">✕ Keluar rumah/kantor</div>
+<div class="mc-item">✕ Cari parkir &amp; antre</div>
+<div class="mc-item">✕ Input data manual</div>
+<div class="mc-item">✕ Tidak ada yang bisa dihubungi</div>
+</div>
+</div>
+<div class="mc-col mc-new">
+<div class="mc-label">✓ Dengan Paxel</div>
+<div class="mc-list">
+<div class="mc-item">✓ Chat admin dari mana saja</div>
+<div class="mc-item">✓ Kurir datang ke lokasi</div>
+<div class="mc-item">✓ Admin bantu proses</div>
+<div class="mc-item">✓ Tracking aktif real-time</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- How it works -->
+<div class="sec-title section-gap reveal">Caranya mudah</div>
+<div class="sec-sub reveal" style="margin-bottom:14px">Empat langkah, paket sudah di tangan penerima.</div>
+<div class="steps reveal reveal-block">
+<div class="step">
+<div class="step-num">1</div>
+<div>
+<div class="step-name">Chat admin via WhatsApp</div>
+<div class="step-desc">Kirim info asal, tujuan, dan jenis paket. Admin bantu cek ongkir dan area pickup.</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">2</div>
+<div>
+<div class="step-name">Konfirmasi jadwal pickup</div>
+<div class="step-desc">Pilih slot yang tersedia. Pagi 08.00–10.00 atau malam 20.00–22.00.</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">3</div>
+<div>
+<div class="step-name">Kurir datang ke lokasimu</div>
+<div class="step-desc">Kurir jemput paket sesuai jadwal. Kamu tidak perlu keluar rumah atau kantor.</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">4</div>
+<div>
+<div class="step-name">Paket dikirim, tracking aktif</div>
+<div class="step-desc">Tracking aktif setelah paket diproses. Kamu dan penerima bisa cek posisi paket.</div>
+</div>
+</div>
+</div>
+<!-- Mid CTA -->
+<div class="mid-cta reveal reveal-block">
+<p>Sudah paham prosesnya? <strong>Tanya admin dulu untuk cek area pickup, ongkir, dan slot yang tersedia.</strong></p>
+<button class="btn-mid" onclick="tanyaAdmin()">
+<svg fill="white" height="16" viewbox="0 0 24 24" width="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>
+      Tanya Admin Sekarang
+    </button>
+</div>
+<!-- USP -->
+<div class="sec-title section-gap reveal">Kenapa Paxel?</div>
+<div class="usp-grid reveal reveal-block" style="margin-top:12px">
+<div class="usp-card">
+<div class="usp-icon">🚚</div>
+<div class="usp-title">Pickup Gratis</div>
+<div class="usp-desc">1 paket pun dijemput langsung ke lokasi kamu.</div>
+</div>
+<div class="usp-card">
+<div class="usp-icon">⚡</div>
+<div class="usp-title">Layanan Cepat</div>
+<div class="usp-desc">Tersedia layanan same-day untuk rute tertentu.</div>
+</div>
+<div class="usp-card">
+<div class="usp-icon">💰</div>
+<div class="usp-title">Mulai Rp10rb</div>
+<div class="usp-desc">PaxelAmplop flat Rp10.000 untuk dokumen &amp; surat.</div>
+</div>
+<div class="usp-card">
+<div class="usp-icon">🔒</div>
+<div class="usp-title">Ada Jaminan</div>
+<div class="usp-desc">Refund tersedia jika ada keterlambatan sesuai ketentuan.</div>
+</div>
+</div>
+<div class="usp-note reveal" style="margin:10px 0 0">Detail layanan tergantung rute, area, dan ketersediaan jadwal. Admin akan bantu cek sebelum kamu order.</div>
+<!-- Trust strip -->
+<div class="trust-strip reveal reveal-block">
+<div class="ts-item">
+<div class="ts-icon"><img alt="Users Paxel" loading="lazy" src="https://paxel.co/images/content/ic-users.svg"/></div>
+<div class="ts-copy">
+<div class="ts-val">2.9jt++</div>
+<div class="ts-lbl">Pengguna</div>
+</div>
+</div>
+<div class="ts-item">
+<div class="ts-icon"><img alt="Pengiriman Paxel" loading="lazy" src="https://paxel.co/images/content/ic-shipments.svg"/></div>
+<div class="ts-copy">
+<div class="ts-val">32jt++</div>
+<div class="ts-lbl">Pengiriman</div>
+</div>
+</div>
+<div class="ts-item">
+<div class="ts-icon"><img alt="Pengiriman tepat waktu Paxel" loading="lazy" src="https://paxel.co/images/content/ic-ontimedelivery.svg"/></div>
+<div class="ts-copy">
+<div class="ts-val">99,5%</div>
+<div class="ts-lbl">Tepat Waktu</div>
+</div>
+</div>
+</div>
+<!-- Testimonial progressive -->
+<div class="sec-title section-gap reveal">Yang sudah pakai</div>
+<div class="reveal" style="margin-top:12px">
+<div class="testi">
+<div class="testi-arc">Pengalaman pengguna</div>
+<div class="testi-text">Awalnya saya pikir tetap harus datang ke konter. Ternyata cukup chat admin, kasih alamat, lalu kurir datang. Sekarang kiriman toko jadi lebih praktis.</div>
+<div class="testi-footer">
+<div class="testi-avatar">R</div>
+<div><div class="testi-name">Rina, Jakarta</div><div class="testi-role">Seller online fashion</div></div>
+<div class="testi-stars">★★★★★</div>
+</div>
+</div>
+</div>
+<!-- Decision safety -->
+<div class="decision-safety reveal reveal-block">
+<div class="ds-title">✋ Masih mau cek dulu? Bisa.</div>
+<div class="ds-sub">Tidak harus langsung jadwalkan pickup. Admin bisa bantu cek dulu sebelum kamu order.</div>
+<div class="ds-list">
+<div class="ds-item"><span class="ds-check">✓</span>Area pickup dari lokasi kamu</div>
+<div class="ds-item"><span class="ds-check">✓</span>Estimasi ongkir sesuai rute</div>
+<div class="ds-item"><span class="ds-check">✓</span>Slot pickup yang tersedia</div>
+<div class="ds-item"><span class="ds-check">✓</span>Jenis paket yang bisa dikirim</div>
+</div>
+</div>
+<!-- FAQ -->
+<div class="faq reveal reveal-block">
+<div class="sec-title" style="margin-bottom:14px">Pertanyaan yang sering muncul</div><div class="sec-sub">Jawaban singkat sebelum kamu chat admin.</div>
+<div class="faq-list" id="faqList"></div>
+</div>
+<!-- Final CTA -->
+<div class="final-cta reveal reveal-block">
+<div class="fc-o1"></div><div class="fc-o2"></div>
+<div class="fc-inner">
+<div class="fc-title">Mau kirim paket?</div>
+<div class="fc-sub">Belum harus order sekarang. Kamu bisa tanya admin dulu untuk cek ongkir, area pickup, dan slot yang tersedia.</div>
+<div class="btn-group">
+<button class="btn-primary" onclick="tanyaAdmin()">
+<svg fill="white" height="20" viewbox="0 0 24 24" width="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>
+<div class="btn-lbl">
+<span class="btn-lbl-title">Tanya Admin Dulu</span>
+<span class="btn-lbl-cap">Belum yakin? Tanya dulu, gratis</span>
+</div>
+</button>
+<div class="or-div"><div class="or-line"></div><span>atau</span><div class="or-line"></div></div>
+<button class="btn-secondary" onclick="openModal()">📅  Langsung Jadwalkan Pickup</button>
+</div>
+</div>
+</div>
+<div class="sticky-spacer"></div>
+</div>
+<footer class="footer">
+<div class="footer-brand">Paxel</div>
+<div class="footer-text">Layanan pickup &amp; pengiriman paket.</div>
+<div class="footer-note">Cek jadwal pickup atau tanya admin sebelum order.</div>
+</footer>
+<script>
+const TANYA_ADMIN_URL = "https://ekspedisiterbaik.netlify.app/tanya-admin";
+const CEK_JADWAL_PICKUP_URL = "https://ekspedisiterbaik.netlify.app/cek-jadwal-pickup.html";
+
+const FAQS = [
+  {q:"Bisa pickup 1 paket saja?", a:"Bisa. Tidak ada minimum order. Admin akan bantu cek jadwal dan area pickup sesuai lokasi kamu."},
+  {q:"Bisa cek ongkir dulu sebelum pickup?", a:"Bisa. Kirim kota asal, kota tujuan, dan jenis paket ke admin. Estimasi ongkir dicek dulu sebelum kamu memutuskan."},
+  {q:"Area saya tercover atau tidak?", a:"Admin akan cek berdasarkan kota dan alamat pickup. Kalau belum tercover, admin akan info alternatif yang tersedia."},
+  {q:"Bisa kirim hari yang sama?", a:"Bisa untuk rute tertentu. Ketersediaannya tergantung kota asal, kota tujuan, dan slot pickup."},
+  {q:"Barang apa saja yang bisa dikirim?", a:"Dokumen, fashion, hampers, kado, paket personal, dan barang lain sesuai ketentuan layanan. Untuk barang spesifik, admin bisa bantu cek dulu."}
+];
+
+let isRedirecting = false;
+
+function showActionToast(text){
+  const toast = document.getElementById('actionToast');
+  if(!toast) return;
+  toast.textContent = text || 'Membuka halaman...';
+  toast.classList.add('show');
+}
+
+function redirectWithTracking(url, customEventName, params, standardEventName){
+  if(isRedirecting) return;
+  isRedirecting = true;
+
+  if(window.trackMetaCustom && customEventName){
+    window.trackMetaCustom(customEventName, params || {});
+  }
+  if(window.trackMetaStandard && standardEventName){
+    window.trackMetaStandard(standardEventName, params || {});
+  }
+
+  const ctaName = params && params.cta_name ? params.cta_name : 'halaman';
+  showActionToast(ctaName === 'Tanya Admin' ? 'Membuka halaman tanya admin...' : 'Membuka halaman cek jadwal pickup...');
+
+  setTimeout(function(){ window.location.href = url; }, 520);
+}
+
+function tanyaAdmin(){
+  redirectWithTracking(
+    TANYA_ADMIN_URL,
+    'ClickCTA',
+    {cta_name:'Tanya Admin', destination_url: TANYA_ADMIN_URL},
+    'Contact'
+  );
+}
+
+function openModal(){
+  redirectWithTracking(
+    CEK_JADWAL_PICKUP_URL,
+    'ClickCTA',
+    {cta_name:'Cek Jadwal Pickup', destination_url: CEK_JADWAL_PICKUP_URL},
+    null
+  );
+}
+
+function initButtonUX(){
+  document.querySelectorAll('button').forEach(function(btn){
+    btn.addEventListener('pointerdown', function(e){
+      btn.classList.add('is-pressing');
+      createRipple(btn, e);
+    });
+    ['pointerup','pointercancel','pointerleave','blur'].forEach(function(evt){
+      btn.addEventListener(evt, function(){ btn.classList.remove('is-pressing'); });
+    });
+    btn.addEventListener('click', function(){
+      if(btn.matches('.btn-wa-hero,.btn-outline-hero,.btn-primary,.btn-secondary,.btn-mid,.sb-btn-primary,.sb-btn-secondary')){
+        btn.classList.add('is-loading');
+        setTimeout(function(){ btn.classList.remove('is-loading'); }, 1400);
+      }
+    });
+  });
+}
+
+function createRipple(btn, event){
+  const rect = btn.getBoundingClientRect();
+  const ripple = document.createElement('span');
+  ripple.className = 'btn-ripple';
+  ripple.style.left = (event.clientX - rect.left) + 'px';
+  ripple.style.top = (event.clientY - rect.top) + 'px';
+  btn.appendChild(ripple);
+  setTimeout(function(){ ripple.remove(); }, 650);
+}
+
+function initSticky(){
+  const hero = document.getElementById('heroSection');
+  const bar = document.getElementById('stickyBar');
+  if(!hero || !bar || !('IntersectionObserver' in window)) return;
+  const obs = new IntersectionObserver(function(entries){
+    const e = entries[0];
+    bar.classList.toggle('visible', !e.isIntersecting);
+  }, {threshold:0});
+  obs.observe(hero);
+}
+
+function initReveals(){
+  const items = Array.from(document.querySelectorAll('.reveal'));
+  if(!items.length) return;
+  if(!('IntersectionObserver' in window)){
+    items.forEach(function(el){ el.classList.add('is-visible'); });
+    return;
+  }
+
+  const obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+
+  items.forEach(function(el, index){
+    el.style.transitionDelay = Math.min((index % 3) * 60, 120) + 'ms';
+    obs.observe(el);
+  });
+}
+
+function buildFAQ(){
+  const list = document.getElementById('faqList');
+  if(!list || list.dataset.built === 'true') return;
+  list.dataset.built = 'true';
+  list.classList.remove('loading-faq');
+
+  FAQS.forEach(function(f, i){
+    const item = document.createElement('div');
+    item.className = 'faq-item';
+    item.innerHTML = '<div class="faq-q" onclick="toggleFAQ('+i+')"><span>'+f.q+'</span><span class="faq-chev">▾</span></div><div class="faq-a" id="fa-'+i+'">'+f.a+'</div>';
+    list.appendChild(item);
+  });
+}
+
+function initLazyFAQ(){
+  const list = document.getElementById('faqList');
+  const faqSection = document.querySelector('.faq');
+  if(!list || !faqSection) return;
+  list.classList.add('loading-faq');
+
+  if(!('IntersectionObserver' in window)){
+    buildFAQ();
+    return;
+  }
+
+  const obs = new IntersectionObserver(function(entries){
+    if(entries[0].isIntersecting){
+      buildFAQ();
+      obs.disconnect();
+    }
+  }, {rootMargin:'360px 0px'});
+  obs.observe(faqSection);
+}
+
+function toggleFAQ(i){
+  const item = document.querySelectorAll('.faq-item')[i];
+  const ans = document.getElementById('fa-'+i);
+  if(!item || !ans) return;
+  const isOpen = ans.classList.contains('open');
+  document.querySelectorAll('.faq-a.open').forEach(function(a){ a.classList.remove('open'); });
+  document.querySelectorAll('.faq-item.open').forEach(function(a){ a.classList.remove('open'); });
+  if(!isOpen){ ans.classList.add('open'); item.classList.add('open'); }
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  initButtonUX();
+  initSticky();
+  initReveals();
+  initLazyFAQ();
+});
+</script>
+</body>
+</html>
