@@ -1,985 +1,147 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<meta name="robots" content="noindex">
-<title>Paxel — Cek Jadwal Pickup</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Halaman Gabut</title>
+  <style>
+    :root {
+      --bg: #fff7ed;
+      --card: #ffffff;
+      --text: #2b2118;
+      --muted: #7a6b5d;
+      --border: #f1d8be;
+      --accent: #f97316;
+      --soft: #ffedd5;
+    }
 
-:root {
-  --bg:#f8f6ff;
-  --card:#ffffff;
-  --text:#211b3f;
-  --muted:#746d8a;
-  --soft:#f3f0ff;
-  --border:#e7e1f6;
-  --purple:#5f51a1;
-  --purple-dark:#473b86;
-  --green:#25d366;
-  --green-soft:#ecfff3;
-  --green-border:#c8efd6;
-  --green-text:#1c8a4c;
-  --orange-soft:#fff7ed;
-  --orange-border:#fed7aa;
-  --orange-text:#b95f12;
-  --danger:#e85c5c;
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-* {
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  -webkit-tap-highlight-color:transparent;
-}
+    html, body {
+      min-height: 100%;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(249, 115, 22, 0.14), transparent 28%),
+        radial-gradient(circle at 90% 90%, rgba(249, 115, 22, 0.12), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+      color: var(--text);
+    }
 
-html,body {
-  min-height:100%;
-  font-family:'Plus Jakarta Sans',system-ui,sans-serif;
-  background:
-    radial-gradient(circle at 100% -10%, rgba(95,81,161,.14), transparent 30%),
-    radial-gradient(circle at 0% 100%, rgba(37,211,102,.09), transparent 28%),
-    linear-gradient(180deg,#fff 0%,var(--bg) 100%);
-  color:var(--text);
-}
+    main {
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+    }
 
-.page {
-  min-height:100dvh;
-  display:flex;
-  justify-content:center;
-  padding:18px 16px 28px;
-}
+    .card {
+      width: 100%;
+      max-width: 560px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      padding: 28px 22px;
+      text-align: center;
+      box-shadow: 0 18px 44px rgba(120, 72, 30, 0.12);
+    }
 
-.wrap {
-  width:100%;
-  max-width:430px;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 13px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
 
-.header {
-  display:flex;
-  align-items:center;
-  gap:10px;
-  min-height:32px;
-}
+    h1 {
+      font-size: 27px;
+      line-height: 1.2;
+      letter-spacing: -0.04em;
+      margin-bottom: 10px;
+      font-weight: 850;
+    }
 
-.logo-img {
-  height:28px;
-  width:auto;
-  display:block;
-  flex-shrink:0;
-}
+    .sub {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
 
-.tagline {
-  font-size:11.5px;
-  font-weight:700;
-  color:var(--muted);
-  padding-left:10px;
-  border-left:1px solid var(--border);
-  white-space:nowrap;
-}
+    .jokes {
+      display: grid;
+      gap: 10px;
+      text-align: left;
+      margin-top: 18px;
+    }
 
-.trust-bar {
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  width:max-content;
-  max-width:100%;
-  background:#fff;
-  border:1px solid #eee9fb;
-  border-radius:999px;
-  padding:7px 11px;
-  box-shadow:0 8px 20px rgba(95,81,161,.06);
-}
+    .joke {
+      background: #fffaf5;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 14px;
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text);
+      font-weight: 650;
+    }
 
-.stars {
-  color:#f5b301;
-  font-size:12px;
-  letter-spacing:.5px;
-  line-height:1;
-}
+    .footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
 
-.trust-text {
-  font-size:11.5px;
-  color:var(--muted);
-  line-height:1;
-}
+    @media (max-width: 380px) {
+      h1 {
+        font-size: 24px;
+      }
 
-.trust-text strong {
-  color:var(--text);
-  font-weight:800;
-}
+      .card {
+        padding: 24px 18px;
+      }
 
-.hero {
-  margin-top:2px;
-}
-
-.headline {
-  font-size:24px;
-  line-height:1.14;
-  letter-spacing:-.04em;
-  font-weight:800;
-}
-
-.headline em {
-  font-style:normal;
-  color:var(--purple);
-}
-
-.badge-free {
-  display:inline-flex;
-  align-items:center;
-  width:max-content;
-  margin-top:8px;
-  padding:6px 11px;
-  border-radius:999px;
-  background:var(--green-soft);
-  border:1px solid var(--green-border);
-  color:var(--green-text);
-  font-size:11px;
-  font-weight:800;
-}
-
-.subline {
-  margin-top:9px;
-  color:var(--muted);
-  font-size:12.5px;
-  line-height:1.45;
-}
-
-.subline strong {
-  color:var(--text);
-  font-weight:800;
-}
-
-.form-card {
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:22px;
-  padding:16px 15px;
-  box-shadow:0 14px 34px rgba(95,81,161,.10);
-  display:flex;
-  flex-direction:column;
-  gap:11px;
-}
-
-.field {
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-  position:relative;
-}
-
-.field-label {
-  display:flex;
-  align-items:center;
-  gap:6px;
-  font-size:10.5px;
-  line-height:1;
-  font-weight:800;
-  color:#625a78;
-  letter-spacing:.075em;
-  text-transform:uppercase;
-}
-
-.field-label span {
-  font-size:13px;
-  letter-spacing:0;
-}
-
-input,select {
-  width:100%;
-  border:1px solid var(--border);
-  background:#fbfaff;
-  border-radius:14px;
-  padding:12px 13px;
-  min-height:43px;
-  outline:none;
-  font-family:inherit;
-  font-size:14px;
-  color:var(--text);
-  transition:.18s ease;
-  -webkit-appearance:none;
-}
-
-input::placeholder {
-  color:#aaa4bd;
-}
-
-input:focus,select:focus {
-  background:#fff;
-  border-color:rgba(95,81,161,.55);
-  box-shadow:0 0 0 3px rgba(95,81,161,.12);
-}
-
-select {
-  cursor:pointer;
-}
-
-.hint {
-  font-size:10px;
-  color:#8a849e;
-  line-height:1.35;
-  opacity:.78;
-  margin-top:1px;
-}
-
-.err-msg {
-  display:none;
-  font-size:10.5px;
-  color:var(--danger);
-  line-height:1.35;
-}
-
-.err-msg.show {
-  display:block;
-}
-
-.suggestions {
-  display:none;
-  position:absolute;
-  z-index:30;
-  left:0;
-  right:0;
-  top:100%;
-  margin-top:4px;
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:14px;
-  overflow:hidden;
-  box-shadow:0 14px 32px rgba(33,27,63,.13);
-  max-height:188px;
-  overflow-y:auto;
-}
-
-.suggestions.show {
-  display:block;
-}
-
-.suggestion-item {
-  width:100%;
-  border:0;
-  background:#fff;
-  text-align:left;
-  padding:11px 13px;
-  font-family:inherit;
-  font-size:13px;
-  color:var(--text);
-  cursor:pointer;
-}
-
-.suggestion-item:hover {
-  background:var(--soft);
-}
-
-.suggestion-empty {
-  padding:11px 13px;
-  font-size:12px;
-  color:var(--muted);
-}
-
-.coverage-status {
-  display:none;
-  padding:10px 12px;
-  border-radius:13px;
-  font-size:11.5px;
-  font-weight:700;
-  line-height:1.45;
-}
-
-.coverage-status.show {
-  display:block;
-}
-
-.coverage-status.ok {
-  background:var(--green-soft);
-  border:1px solid var(--green-border);
-  color:var(--green-text);
-}
-
-.coverage-status.no {
-  background:var(--orange-soft);
-  border:1px solid var(--orange-border);
-  color:var(--orange-text);
-}
-
-.divider {
-  height:1px;
-  background:var(--border);
-  margin:1px 0;
-}
-
-.micro-proof {
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-
-.mp-item {
-  display:flex;
-  align-items:flex-start;
-  gap:9px;
-  font-size:11.5px;
-  color:#5f5874;
-  line-height:1.42;
-}
-
-.mp-icon {
-  width:23px;
-  height:23px;
-  border-radius:7px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-shrink:0;
-  font-size:11px;
-  font-weight:800;
-}
-
-.mpg {
-  background:#e9fff1;
-  color:#168348;
-}
-
-.mpp {
-  background:#efeafd;
-  color:var(--purple);
-}
-
-.btn-wa {
-  width:100%;
-  border:0;
-  border-radius:16px;
-  padding:15px 18px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  background:var(--green);
-  color:#fff;
-  font-family:inherit;
-  font-size:15.5px;
-  font-weight:800;
-  cursor:pointer;
-  box-shadow:0 10px 28px rgba(37,211,102,.28);
-  transition:.16s ease;
-}
-
-.btn-wa:active {
-  transform:scale(.98);
-}
-
-.wa-svg {
-  width:21px;
-  height:21px;
-  flex-shrink:0;
-}
-
-.footer-note {
-  text-align:center;
-  color:#8a849e;
-  font-size:10.5px;
-  line-height:1.45;
-}
-
-.success-overlay {
-  position:fixed;
-  inset:0;
-  z-index:999;
-  background:#fff;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  gap:12px;
-  opacity:0;
-  pointer-events:none;
-  transition:.2s ease;
-}
-
-.success-overlay.show {
-  opacity:1;
-  pointer-events:all;
-}
-
-.success-icon {
-  width:62px;
-  height:62px;
-  border-radius:50%;
-  background:var(--green-soft);
-  color:var(--green-text);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:28px;
-  font-weight:800;
-}
-
-.success-msg {
-  font-size:16px;
-  font-weight:800;
-}
-
-.success-sub {
-  font-size:12.5px;
-  color:var(--muted);
-}
-
-@keyframes shake {
-  0%,100% { transform:translateX(0); }
-  20% { transform:translateX(-6px); }
-  40% { transform:translateX(6px); }
-  60% { transform:translateX(-4px); }
-  80% { transform:translateX(4px); }
-}
-
-.shake {
-  animation:shake .35s ease both;
-}
-
-@media (max-width:360px) {
-  .headline { font-size:22px; }
-  .form-card { padding:15px 13px; }
-  input,select { font-size:13.5px; }
-  .tagline { font-size:10.5px; }
-}
-
-/* Preview-style coverage notification */
-.coverage-status{
-  display:block!important;
-  border-radius:14px;
-  padding:10px 12px;
-  font-size:12px;
-  line-height:1.45;
-  font-weight:600;
-}
-.coverage-status strong{
-  display:block;
-  font-size:12.5px;
-  margin-bottom:2px;
-  font-weight:800;
-}
-.coverage-status.wait{
-  background:#fff8e6;
-  border:1px solid #ffe2a3;
-  color:#966400;
-}
-.coverage-status.ok{
-  background:#eafff1;
-  border:1px solid #b9efca;
-  color:#168348;
-}
-.coverage-status.no{
-  background:#fff1f1;
-  border:1px solid #ffd0d0;
-  color:#c0392b;
-}
-
-</style>
+      .joke {
+        font-size: 13.5px;
+      }
+    }
+  </style>
 </head>
 <body>
-<iframe name="googleFormTarget" style="display:none;width:0;height:0;border:0;"></iframe>
+  <main>
+    <section class="card">
+      <div class="badge">Halaman Gabut Resmi</div>
+      <h1>Kamu nyasar, tapi gapapa.</h1>
+      <p class="sub">
+        Tidak ada apa-apa di sini. Tapi karena sudah telanjur buka, silakan baca yang random dulu.
+      </p>
 
-<div class="success-overlay" id="successOverlay">
-  <div class="success-icon">✓</div>
-  <div class="success-msg">Membuka WhatsApp…</div>
-  <div class="success-sub">Admin siap membantu kamu sekarang</div>
-</div>
+      <div class="jokes">
+        <div class="joke">• WiFi rumah paling jujur. Kalau lagi butuh cepat, dia langsung lambat.</div>
+        <div class="joke">• Alarm itu bukan membangunkan. Dia cuma mengingatkan bahwa hidup belum selesai.</div>
+        <div class="joke">• Niat hemat dimulai dari rumah. Berakhir di kasir minimarket.</div>
+        <div class="joke">• Orang bilang tidur cukup itu penting. Masalahnya, scroll juga merasa penting.</div>
+        <div class="joke">• Isi kulkas : air dingin, saos, dan harapan palsu.</div>
+        <div class="joke">• Kalau hidup terasa berat, coba cek tas. Mungkin isinya charger, botol minum, dan beban pikiran.</div>
+        <div class="joke">• Update aplikasi selalu bilang “bug fixed”. Tapi bug hidup saya belum ada patch-nya.</div>
+      </div>
 
-<main class="page">
-  <section class="wrap">
-
-    <header class="header">
-      <img class="logo-img" src="https://i.ibb.co.com/vvg82ZRj/logo-paxel.webp" alt="Paxel">
-      <div class="tagline">Kirim paket cepat aman</div>
-    </header>
-
-    <div class="trust-bar">
-      <div class="stars">★★★★★</div>
-      <div class="trust-text"><strong>4.8</strong> · 500rb+ pengirim</div>
-    </div>
-
-    <section class="hero">
-      <h1 class="headline">Mau kirim paket?<br><em>Kami yang jemput.</em></h1>
-      <div class="badge-free">✓ Gratis tanpa biaya tambahan</div>
-      <p class="subline">
-        <strong>Stop kirim paket cara lama.</strong><br>
-        Sekarang cukup WhatsApp, paket bisa dijemput langsung ke lokasimu.<br>
-        Isi form singkat di bawah — admin langsung bantu cek jadwal pickup dari lokasimu.
+      <p class="footer">
+        Selesai. Silakan lanjutkan aktivitas. Jangan lupa minum.
       </p>
     </section>
-
-    <section class="form-card">
-
-      <div class="field">
-        <label class="field-label" for="nama"><span>👤</span> Nama kamu</label>
-        <input type="text" id="nama" placeholder="Misal: Budi" autocomplete="given-name">
-        <div class="err-msg" id="err-nama">Nama perlu diisi ya</div>
-      </div>
-
-      <div class="field">
-        <label class="field-label" for="jenis"><span>📦</span> Jenis kiriman</label>
-        <select id="jenis">
-          <option value="" disabled selected>Pilih jenis kiriman</option>
-          <option value="Dokumen / surat">Dokumen / Surat</option>
-          <option value="Kado / hampers">Kado / Hampers</option>
-          <option value="Pakaian / fashion">Pakaian / Fashion</option>
-          <option value="Elektronik / gadget">Elektronik / Gadget</option>
-          <option value="Paket lainnya">Paket lainnya</option>
-        </select>
-        <div class="err-msg" id="err-jenis">Pilih jenis kiriman dulu ya</div>
-      </div>
-
-      <div class="field">
-        <label class="field-label" for="ukuran"><span>📏</span> Perkiraan ukuran paket</label>
-        <select id="ukuran">
-          <option value="" disabled selected>Pilih ukuran paket</option>
-          <option value="Kecil - dokumen, kosmetik, aksesoris">Kecil — dokumen, kosmetik, aksesoris</option>
-          <option value="Sedang - pakaian, sepatu, hampers kecil">Sedang — pakaian, sepatu, hampers kecil</option>
-          <option value="Besar - box besar, banyak item, paket volume besar">Besar — box besar / banyak item</option>
-          <option value="Belum tahu">Belum tahu</option>
-        </select>
-        <div class="hint">Perkiraan ukuran paket digunakan untuk bantu admin cek estimasi ongkir sebelum pickup.</div>
-        <div class="err-msg" id="err-ukuran">Pilih perkiraan ukuran paket dulu ya</div>
-      </div>
-
-      <div class="field">
-        <label class="field-label" for="tgl"><span>📅</span> Tanggal pickup</label>
-        <input type="date" id="tgl" autocomplete="off">
-        <div class="err-msg" id="err-tgl">Pilih tanggal pickup ya</div>
-      </div>
-
-      <div class="field">
-        <label class="field-label" for="slot"><span>🕐</span> Slot waktu pickup</label>
-        <select id="slot">
-          <option value="" disabled selected>Pilih slot waktu</option>
-          <option value="Pagi — 08.00 s/d 10.00">🌅 Pagi — 08.00 s/d 10.00</option>
-          <option value="Malam — 20.00 s/d 22.00">🌙 Malam — 20.00 s/d 22.00</option>
-        </select>
-        <div class="hint">Kurir akan datang sesuai slot yang dipilih</div>
-        <div class="err-msg" id="err-slot">Pilih slot waktu pickup ya</div>
-      </div>
-
-      <div class="field">
-        <label class="field-label" for="asal"><span>📍</span> Kota asal pickup</label>
-        <input type="text" id="asal" placeholder="Ketik kota asal pickup" autocomplete="off">
-        <div class="suggestions" id="suggest-asal"></div>
-        <div class="err-msg" id="err-asal">Kota asal pickup perlu dipilih</div>
-      </div>
-
-      <div class="field">
-        <label class="field-label" for="tujuan"><span>🏁</span> Kota tujuan</label>
-        <input type="text" id="tujuan" placeholder="Ketik kota tujuan" autocomplete="off">
-        <div class="suggestions" id="suggest-tujuan"></div>
-        <div class="err-msg" id="err-tujuan">Kota tujuan perlu dipilih</div>
-      </div>
-
-      <div id="coverageStatus" class="coverage-status wait"><strong>Cek coverage otomatis</strong>Pilih kota asal dan kota tujuan untuk melihat status area Paxel.</div>
-
-      <div class="divider"></div>
-
-      <div class="micro-proof">
-        <div class="mp-item">
-          <div class="mp-icon mpg">✓</div>
-          Pickup langsung ke lokasi — tanpa perlu antre counter
-        </div>
-        <div class="mp-item">
-          <div class="mp-icon mpp">⚡</div>
-          Admin bantu cek jadwal pickup dan ongkir via WhatsApp
-        </div>
-        <div class="mp-item">
-          <div class="mp-icon mpp">🔒</div>
-          Status coverage dicek otomatis sebelum lanjut ke admin
-        </div>
-      </div>
-
-    </section>
-
-    <button type="button" class="btn-wa" id="btnWa" onclick="submitForm()">
-      <svg class="wa-svg" viewBox="0 0 24 24" fill="white">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-      </svg>
-      Cek Jadwal Pickup via WhatsApp
-    </button>
-
-    <p class="footer-note">
-      Dengan melanjutkan, kamu akan dihubungkan ke admin Paxel via WhatsApp.<br>
-      Data form hanya digunakan untuk memudahkan proses cek pickup.
-    </p>
-
-  </section>
-</main>
-
-<script>
-// ============================================================
-// KONFIGURASI
-// ============================================================
-const WA_NUMBER = "62811411805"; // Ganti dengan nomor WA admin, contoh: 62812xxxxxxxx
-
-// ============================================================
-// GOOGLE FORM BACKEND - DATA MASUK KE SPREADSHEET
-// ============================================================
-const GOOGLE_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSd3t38LKKhztHDZtZ7pST6HJNSnsXR4eiICBbdywv2B4GycMg/formResponse";
-const GOOGLE_FORM_FIELDS = {
-  nama: "entry.1709834578",
-  jenis: "entry.832812738",
-  ukuran: "entry.525353575",
-  tanggalPickup: "entry.535021562",
-  slot: "entry.672542134",
-  asal: "entry.911966518",
-  tujuan: "entry.193346608",
-  statusCoverage: "entry.291026120",
-  pesanWhatsapp: "entry.2128533278"
-};
-
-function sendToGoogleForm(data) {
-  const form = document.createElement("form");
-  form.method = "POST";
-  form.action = GOOGLE_FORM_ACTION;
-  form.target = "googleFormTarget";
-  form.style.display = "none";
-
-  const appendInput = (name, value) => {
-    const input = document.createElement("input");
-    input.type = "hidden";
-    input.name = name;
-    input.value = value || "";
-    form.appendChild(input);
-  };
-
-  appendInput(GOOGLE_FORM_FIELDS.nama, data.nama);
-  appendInput(GOOGLE_FORM_FIELDS.jenis, data.jenis);
-  appendInput(GOOGLE_FORM_FIELDS.ukuran, data.ukuran);
-  appendInput(GOOGLE_FORM_FIELDS.tanggalPickup, data.tanggalPickup);
-  appendInput(GOOGLE_FORM_FIELDS.slot, data.slot);
-  appendInput(GOOGLE_FORM_FIELDS.asal, data.asal);
-  appendInput(GOOGLE_FORM_FIELDS.tujuan, data.tujuan);
-  appendInput(GOOGLE_FORM_FIELDS.statusCoverage, data.statusCoverage);
-  appendInput(GOOGLE_FORM_FIELDS.pesanWhatsapp, data.pesanWhatsapp);
-
-  document.body.appendChild(form);
-  form.submit();
-
-  setTimeout(() => {
-    form.remove();
-  }, 2000);
-}
-
-const ALL_CITIES = [{"city": "Aceh Barat Daya", "province": "Aceh", "label": "Aceh Barat Daya — Aceh"}, {"city": "Aceh Barat", "province": "Aceh", "label": "Aceh Barat — Aceh"}, {"city": "Aceh Besar", "province": "Aceh", "label": "Aceh Besar — Aceh"}, {"city": "Aceh Jaya", "province": "Aceh", "label": "Aceh Jaya — Aceh"}, {"city": "Aceh Selatan", "province": "Aceh", "label": "Aceh Selatan — Aceh"}, {"city": "Aceh Singkil", "province": "Aceh", "label": "Aceh Singkil — Aceh"}, {"city": "Aceh Tamiang", "province": "Aceh", "label": "Aceh Tamiang — Aceh"}, {"city": "Aceh Tengah", "province": "Aceh", "label": "Aceh Tengah — Aceh"}, {"city": "Aceh Tenggara", "province": "Aceh", "label": "Aceh Tenggara — Aceh"}, {"city": "Aceh Timur", "province": "Aceh", "label": "Aceh Timur — Aceh"}, {"city": "Aceh Utara", "province": "Aceh", "label": "Aceh Utara — Aceh"}, {"city": "Agam", "province": "Sumatera Barat", "label": "Agam — Sumatera Barat"}, {"city": "Alor", "province": "Nusa Tenggara Timur", "label": "Alor — Nusa Tenggara Timur"}, {"city": "Asahan", "province": "Sumatera Utara", "label": "Asahan — Sumatera Utara"}, {"city": "Asmat", "province": "Papua Selatan", "label": "Asmat — Papua Selatan"}, {"city": "Badung", "province": "Bali", "label": "Badung — Bali"}, {"city": "Balangan", "province": "Kalimantan Selatan", "label": "Balangan — Kalimantan Selatan"}, {"city": "Bandung Barat", "province": "Jawa Barat", "label": "Bandung Barat — Jawa Barat"}, {"city": "Bandung", "province": "Jawa Barat", "label": "Bandung — Jawa Barat"}, {"city": "Banggai Kepulauan", "province": "Sulawesi Tengah", "label": "Banggai Kepulauan — Sulawesi Tengah"}, {"city": "Banggai Laut", "province": "Sulawesi Tengah", "label": "Banggai Laut — Sulawesi Tengah"}, {"city": "Banggai", "province": "Sulawesi Tengah", "label": "Banggai — Sulawesi Tengah"}, {"city": "Bangka Barat", "province": "Kepulauan Bangka Belitung", "label": "Bangka Barat — Kepulauan Bangka Belitung"}, {"city": "Bangka Selatan", "province": "Kepulauan Bangka Belitung", "label": "Bangka Selatan — Kepulauan Bangka Belitung"}, {"city": "Bangka Tengah", "province": "Kepulauan Bangka Belitung", "label": "Bangka Tengah — Kepulauan Bangka Belitung"}, {"city": "Bangka", "province": "Kepulauan Bangka Belitung", "label": "Bangka — Kepulauan Bangka Belitung"}, {"city": "Bangkalan", "province": "Jawa Timur", "label": "Bangkalan — Jawa Timur"}, {"city": "Bangli", "province": "Bali", "label": "Bangli — Bali"}, {"city": "Banjar", "province": "Kalimantan Selatan", "label": "Banjar — Kalimantan Selatan"}, {"city": "Banjarnegara", "province": "Jawa Tengah", "label": "Banjarnegara — Jawa Tengah"}, {"city": "Bantaeng", "province": "Sulawesi Selatan", "label": "Bantaeng — Sulawesi Selatan"}, {"city": "Bantul", "province": "Daerah Istimewa Yogyakarta", "label": "Bantul — Daerah Istimewa Yogyakarta"}, {"city": "Banyuasin", "province": "Sumatera Selatan", "label": "Banyuasin — Sumatera Selatan"}, {"city": "Banyumas", "province": "Jawa Tengah", "label": "Banyumas — Jawa Tengah"}, {"city": "Banyuwangi", "province": "Jawa Timur", "label": "Banyuwangi — Jawa Timur"}, {"city": "Barito Kuala", "province": "Kalimantan Selatan", "label": "Barito Kuala — Kalimantan Selatan"}, {"city": "Barito Selatan", "province": "Kalimantan Tengah", "label": "Barito Selatan — Kalimantan Tengah"}, {"city": "Barito Timur", "province": "Kalimantan Tengah", "label": "Barito Timur — Kalimantan Tengah"}, {"city": "Barito Utara", "province": "Kalimantan Tengah", "label": "Barito Utara — Kalimantan Tengah"}, {"city": "Barru", "province": "Sulawesi Selatan", "label": "Barru — Sulawesi Selatan"}, {"city": "Batang", "province": "Jawa Tengah", "label": "Batang — Jawa Tengah"}, {"city": "Batanghari", "province": "Jambi", "label": "Batanghari — Jambi"}, {"city": "Batu Bara", "province": "Sumatera Utara", "label": "Batu Bara — Sumatera Utara"}, {"city": "Batu", "province": "Jawa Timur", "label": "Batu — Jawa Timur"}, {"city": "Bekasi", "province": "Jawa Barat", "label": "Bekasi — Jawa Barat"}, {"city": "Belitung Timur", "province": "Kepulauan Bangka Belitung", "label": "Belitung Timur — Kepulauan Bangka Belitung"}, {"city": "Belitung", "province": "Kepulauan Bangka Belitung", "label": "Belitung — Kepulauan Bangka Belitung"}, {"city": "Belu", "province": "Nusa Tenggara Timur", "label": "Belu — Nusa Tenggara Timur"}, {"city": "Bener Meriah", "province": "Aceh", "label": "Bener Meriah — Aceh"}, {"city": "Bengkalis", "province": "Riau", "label": "Bengkalis — Riau"}, {"city": "Bengkayang", "province": "Kalimantan Barat", "label": "Bengkayang — Kalimantan Barat"}, {"city": "Bengkulu Selatan", "province": "Bengkulu", "label": "Bengkulu Selatan — Bengkulu"}, {"city": "Bengkulu Tengah", "province": "Bengkulu", "label": "Bengkulu Tengah — Bengkulu"}, {"city": "Bengkulu Utara", "province": "Bengkulu", "label": "Bengkulu Utara — Bengkulu"}, {"city": "Berau", "province": "Kalimantan Timur", "label": "Berau — Kalimantan Timur"}, {"city": "Biak Numfor", "province": "Papua", "label": "Biak Numfor — Papua"}, {"city": "Bima", "province": "Nusa Tenggara Barat", "label": "Bima — Nusa Tenggara Barat"}, {"city": "Bintan", "province": "Kepulauan Riau", "label": "Bintan — Kepulauan Riau"}, {"city": "Bireuen", "province": "Aceh", "label": "Bireuen — Aceh"}, {"city": "Blitar", "province": "Jawa Timur", "label": "Blitar — Jawa Timur"}, {"city": "Blora", "province": "Jawa Tengah", "label": "Blora — Jawa Tengah"}, {"city": "Boalemo", "province": "Gorontalo", "label": "Boalemo — Gorontalo"}, {"city": "Bogor", "province": "Jawa Barat", "label": "Bogor — Jawa Barat"}, {"city": "Bojonegoro", "province": "Jawa Timur", "label": "Bojonegoro — Jawa Timur"}, {"city": "Bolaang Mongondow Selatan", "province": "Sulawesi Utara", "label": "Bolaang Mongondow Selatan — Sulawesi Utara"}, {"city": "Bolaang Mongondow Timur", "province": "Sulawesi Utara", "label": "Bolaang Mongondow Timur — Sulawesi Utara"}, {"city": "Bolaang Mongondow Utara", "province": "Sulawesi Utara", "label": "Bolaang Mongondow Utara — Sulawesi Utara"}, {"city": "Bolaang Mongondow", "province": "Sulawesi Utara", "label": "Bolaang Mongondow — Sulawesi Utara"}, {"city": "Bombana", "province": "Sulawesi Tenggara", "label": "Bombana — Sulawesi Tenggara"}, {"city": "Bondowoso", "province": "Jawa Timur", "label": "Bondowoso — Jawa Timur"}, {"city": "Bone Bolango", "province": "Gorontalo", "label": "Bone Bolango — Gorontalo"}, {"city": "Bone", "province": "Sulawesi Selatan", "label": "Bone — Sulawesi Selatan"}, {"city": "Boven Digoel", "province": "Papua Selatan", "label": "Boven Digoel — Papua Selatan"}, {"city": "Boyolali", "province": "Jawa Tengah", "label": "Boyolali — Jawa Tengah"}, {"city": "Brebes", "province": "Jawa Tengah", "label": "Brebes — Jawa Tengah"}, {"city": "Buleleng", "province": "Bali", "label": "Buleleng — Bali"}, {"city": "Bulukumba", "province": "Sulawesi Selatan", "label": "Bulukumba — Sulawesi Selatan"}, {"city": "Bulungan", "province": "Kalimantan Utara", "label": "Bulungan — Kalimantan Utara"}, {"city": "Bungo", "province": "Jambi", "label": "Bungo — Jambi"}, {"city": "Buol", "province": "Sulawesi Tengah", "label": "Buol — Sulawesi Tengah"}, {"city": "Buru Selatan", "province": "Maluku", "label": "Buru Selatan — Maluku"}, {"city": "Buru", "province": "Maluku", "label": "Buru — Maluku"}, {"city": "Buton Selatan", "province": "Sulawesi Tenggara", "label": "Buton Selatan — Sulawesi Tenggara"}, {"city": "Buton Tengah", "province": "Sulawesi Tenggara", "label": "Buton Tengah — Sulawesi Tenggara"}, {"city": "Buton Utara", "province": "Sulawesi Tenggara", "label": "Buton Utara — Sulawesi Tenggara"}, {"city": "Buton", "province": "Sulawesi Tenggara", "label": "Buton — Sulawesi Tenggara"}, {"city": "Ciamis", "province": "Jawa Barat", "label": "Ciamis — Jawa Barat"}, {"city": "Cianjur", "province": "Jawa Barat", "label": "Cianjur — Jawa Barat"}, {"city": "Cilacap", "province": "Jawa Tengah", "label": "Cilacap — Jawa Tengah"}, {"city": "Cirebon", "province": "Jawa Barat", "label": "Cirebon — Jawa Barat"}, {"city": "Dairi", "province": "Sumatera Utara", "label": "Dairi — Sumatera Utara"}, {"city": "Danau Toba", "province": "Sumatera Utara", "label": "Danau Toba — Sumatera Utara"}, {"city": "Danau", "province": "Lampung", "label": "Danau — Lampung"}, {"city": "Danau", "province": "Sulawesi Utara", "label": "Danau — Sulawesi Utara"}, {"city": "Danau", "province": "Sumatera Barat", "label": "Danau — Sumatera Barat"}, {"city": "Deiyai", "province": "Papua Tengah", "label": "Deiyai — Papua Tengah"}, {"city": "Deli Serdang", "province": "Sumatera Utara", "label": "Deli Serdang — Sumatera Utara"}, {"city": "Demak", "province": "Jawa Tengah", "label": "Demak — Jawa Tengah"}, {"city": "Dharmasraya", "province": "Sumatera Barat", "label": "Dharmasraya — Sumatera Barat"}, {"city": "Dogiyai", "province": "Papua Tengah", "label": "Dogiyai — Papua Tengah"}, {"city": "Dompu", "province": "Nusa Tenggara Barat", "label": "Dompu — Nusa Tenggara Barat"}, {"city": "Donggala", "province": "Sulawesi Tengah", "label": "Donggala — Sulawesi Tengah"}, {"city": "Empat Lawang", "province": "Sumatera Selatan", "label": "Empat Lawang — Sumatera Selatan"}, {"city": "Ende", "province": "Nusa Tenggara Timur", "label": "Ende — Nusa Tenggara Timur"}, {"city": "Enrekang", "province": "Sulawesi Selatan", "label": "Enrekang — Sulawesi Selatan"}, {"city": "Fak Fak", "province": "Papua Barat", "label": "Fak Fak — Papua Barat"}, {"city": "Flores Timur", "province": "Nusa Tenggara Timur", "label": "Flores Timur — Nusa Tenggara Timur"}, {"city": "Garut", "province": "Jawa Barat", "label": "Garut — Jawa Barat"}, {"city": "Gayo Lues", "province": "Aceh", "label": "Gayo Lues — Aceh"}, {"city": "Gianyar", "province": "Bali", "label": "Gianyar — Bali"}, {"city": "Gorontalo Utara", "province": "Gorontalo", "label": "Gorontalo Utara — Gorontalo"}, {"city": "Gorontalo", "province": "Gorontalo", "label": "Gorontalo — Gorontalo"}, {"city": "Gowa", "province": "Sulawesi Selatan", "label": "Gowa — Sulawesi Selatan"}, {"city": "Gresik", "province": "Jawa Timur", "label": "Gresik — Jawa Timur"}, {"city": "Grobogan", "province": "Jawa Tengah", "label": "Grobogan — Jawa Tengah"}, {"city": "Gunung Mas", "province": "Kalimantan Tengah", "label": "Gunung Mas — Kalimantan Tengah"}, {"city": "Gunungkidul", "province": "Daerah Istimewa Yogyakarta", "label": "Gunungkidul — Daerah Istimewa Yogyakarta"}, {"city": "Halmahera Barat", "province": "Maluku Utara", "label": "Halmahera Barat — Maluku Utara"}, {"city": "Halmahera Selatan", "province": "Maluku Utara", "label": "Halmahera Selatan — Maluku Utara"}, {"city": "Halmahera Tengah", "province": "Maluku Utara", "label": "Halmahera Tengah — Maluku Utara"}, {"city": "Halmahera Timur", "province": "Maluku Utara", "label": "Halmahera Timur — Maluku Utara"}, {"city": "Halmahera Utara", "province": "Maluku Utara", "label": "Halmahera Utara — Maluku Utara"}, {"city": "Hulu Sungai Selatan", "province": "Kalimantan Selatan", "label": "Hulu Sungai Selatan — Kalimantan Selatan"}, {"city": "Hulu Sungai Tengah", "province": "Kalimantan Selatan", "label": "Hulu Sungai Tengah — Kalimantan Selatan"}, {"city": "Hulu Sungai Utara", "province": "Kalimantan Selatan", "label": "Hulu Sungai Utara — Kalimantan Selatan"}, {"city": "Humbang Hasundutan", "province": "Sumatera Utara", "label": "Humbang Hasundutan — Sumatera Utara"}, {"city": "Hutan", "province": "Aceh", "label": "Hutan — Aceh"}, {"city": "Hutan", "province": "Jawa Tengah", "label": "Hutan — Jawa Tengah"}, {"city": "Indragiri Hilir", "province": "Riau", "label": "Indragiri Hilir — Riau"}, {"city": "Indragiri Hulu", "province": "Riau", "label": "Indragiri Hulu — Riau"}, {"city": "Indramayu", "province": "Jawa Barat", "label": "Indramayu — Jawa Barat"}, {"city": "Intan Jaya", "province": "Papua Tengah", "label": "Intan Jaya — Papua Tengah"}, {"city": "Jayapura", "province": "Papua", "label": "Jayapura — Papua"}, {"city": "Jayawijaya", "province": "Papua Pegunungan", "label": "Jayawijaya — Papua Pegunungan"}, {"city": "Jember", "province": "Jawa Timur", "label": "Jember — Jawa Timur"}, {"city": "Jembrana", "province": "Bali", "label": "Jembrana — Bali"}, {"city": "Jeneponto", "province": "Sulawesi Selatan", "label": "Jeneponto — Sulawesi Selatan"}, {"city": "Jepara", "province": "Jawa Tengah", "label": "Jepara — Jawa Tengah"}, {"city": "Jombang", "province": "Jawa Timur", "label": "Jombang — Jawa Timur"}, {"city": "Kaimana", "province": "Papua Barat", "label": "Kaimana — Papua Barat"}, {"city": "Kampar", "province": "Riau", "label": "Kampar — Riau"}, {"city": "Kapuas Hulu", "province": "Kalimantan Barat", "label": "Kapuas Hulu — Kalimantan Barat"}, {"city": "Kapuas", "province": "Kalimantan Tengah", "label": "Kapuas — Kalimantan Tengah"}, {"city": "Karanganyar", "province": "Jawa Tengah", "label": "Karanganyar — Jawa Tengah"}, {"city": "Karangasem", "province": "Bali", "label": "Karangasem — Bali"}, {"city": "Karawang", "province": "Jawa Barat", "label": "Karawang — Jawa Barat"}, {"city": "Karimun", "province": "Kepulauan Riau", "label": "Karimun — Kepulauan Riau"}, {"city": "Karo", "province": "Sumatera Utara", "label": "Karo — Sumatera Utara"}, {"city": "Katingan", "province": "Kalimantan Tengah", "label": "Katingan — Kalimantan Tengah"}, {"city": "Kaur", "province": "Bengkulu", "label": "Kaur — Bengkulu"}, {"city": "Kayong Utara", "province": "Kalimantan Barat", "label": "Kayong Utara — Kalimantan Barat"}, {"city": "Kebumen", "province": "Jawa Tengah", "label": "Kebumen — Jawa Tengah"}, {"city": "Kediri", "province": "Jawa Timur", "label": "Kediri — Jawa Timur"}, {"city": "Keerom", "province": "Papua", "label": "Keerom — Papua"}, {"city": "Kendal", "province": "Jawa Tengah", "label": "Kendal — Jawa Tengah"}, {"city": "Kep. Siau Tagulandang Biaro", "province": "Sulawesi Utara", "label": "Kep. Siau Tagulandang Biaro — Sulawesi Utara"}, {"city": "Kepahiang", "province": "Bengkulu", "label": "Kepahiang — Bengkulu"}, {"city": "Kepulauan Anambas", "province": "Kepulauan Riau", "label": "Kepulauan Anambas — Kepulauan Riau"}, {"city": "Kepulauan Aru", "province": "Maluku", "label": "Kepulauan Aru — Maluku"}, {"city": "Kepulauan Mentawai", "province": "Sumatera Barat", "label": "Kepulauan Mentawai — Sumatera Barat"}, {"city": "Kepulauan Meranti", "province": "Riau", "label": "Kepulauan Meranti — Riau"}, {"city": "Kepulauan Sangihe", "province": "Sulawesi Utara", "label": "Kepulauan Sangihe — Sulawesi Utara"}, {"city": "Kepulauan Selayar", "province": "Sulawesi Selatan", "label": "Kepulauan Selayar — Sulawesi Selatan"}, {"city": "Kepulauan Seribu", "province": "Dki Jakarta", "label": "Kepulauan Seribu — Dki Jakarta"}, {"city": "Kepulauan Sula", "province": "Maluku Utara", "label": "Kepulauan Sula — Maluku Utara"}, {"city": "Kepulauan Talaud", "province": "Sulawesi Utara", "label": "Kepulauan Talaud — Sulawesi Utara"}, {"city": "Kepulauan Tanimbar", "province": "Maluku", "label": "Kepulauan Tanimbar — Maluku"}, {"city": "Kepulauan Yapen", "province": "Papua", "label": "Kepulauan Yapen — Papua"}, {"city": "Kerinci", "province": "Jambi", "label": "Kerinci — Jambi"}, {"city": "Ketapang", "province": "Kalimantan Barat", "label": "Ketapang — Kalimantan Barat"}, {"city": "Klaten", "province": "Jawa Tengah", "label": "Klaten — Jawa Tengah"}, {"city": "Klungkung", "province": "Bali", "label": "Klungkung — Bali"}, {"city": "Kolaka Timur", "province": "Sulawesi Tenggara", "label": "Kolaka Timur — Sulawesi Tenggara"}, {"city": "Kolaka Utara", "province": "Sulawesi Tenggara", "label": "Kolaka Utara — Sulawesi Tenggara"}, {"city": "Kolaka", "province": "Sulawesi Tenggara", "label": "Kolaka — Sulawesi Tenggara"}, {"city": "Konawe Kepulauan", "province": "Sulawesi Tenggara", "label": "Konawe Kepulauan — Sulawesi Tenggara"}, {"city": "Konawe Selatan", "province": "Sulawesi Tenggara", "label": "Konawe Selatan — Sulawesi Tenggara"}, {"city": "Konawe Utara", "province": "Sulawesi Tenggara", "label": "Konawe Utara — Sulawesi Tenggara"}, {"city": "Konawe", "province": "Sulawesi Tenggara", "label": "Konawe — Sulawesi Tenggara"}, {"city": "Kota Ambon", "province": "Maluku", "label": "Kota Ambon — Maluku"}, {"city": "Kota Balikpapan", "province": "Kalimantan Timur", "label": "Kota Balikpapan — Kalimantan Timur"}, {"city": "Kota Banda Aceh", "province": "Aceh", "label": "Kota Banda Aceh — Aceh"}, {"city": "Kota Bandar Lampung", "province": "Lampung", "label": "Kota Bandar Lampung — Lampung"}, {"city": "Kota Bandung", "province": "Jawa Barat", "label": "Kota Bandung — Jawa Barat"}, {"city": "Kota Banjar", "province": "Jawa Barat", "label": "Kota Banjar — Jawa Barat"}, {"city": "Kota Banjarbaru", "province": "Kalimantan Selatan", "label": "Kota Banjarbaru — Kalimantan Selatan"}, {"city": "Kota Banjarmasin", "province": "Kalimantan Selatan", "label": "Kota Banjarmasin — Kalimantan Selatan"}, {"city": "Kota Batam", "province": "Kepulauan Riau", "label": "Kota Batam — Kepulauan Riau"}, {"city": "Kota Batu", "province": "Jawa Timur", "label": "Kota Batu — Jawa Timur"}, {"city": "Kota Bau Bau", "province": "Sulawesi Tenggara", "label": "Kota Bau Bau — Sulawesi Tenggara"}, {"city": "Kota Bekasi", "province": "Jawa Barat", "label": "Kota Bekasi — Jawa Barat"}, {"city": "Kota Bengkulu", "province": "Bengkulu", "label": "Kota Bengkulu — Bengkulu"}, {"city": "Kota Bima", "province": "Nusa Tenggara Barat", "label": "Kota Bima — Nusa Tenggara Barat"}, {"city": "Kota Binjai", "province": "Sumatera Utara", "label": "Kota Binjai — Sumatera Utara"}, {"city": "Kota Bitung", "province": "Sulawesi Utara", "label": "Kota Bitung — Sulawesi Utara"}, {"city": "Kota Blitar", "province": "Jawa Timur", "label": "Kota Blitar — Jawa Timur"}, {"city": "Kota Bogor", "province": "Jawa Barat", "label": "Kota Bogor — Jawa Barat"}, {"city": "Kota Bontang", "province": "Kalimantan Timur", "label": "Kota Bontang — Kalimantan Timur"}, {"city": "Kota Bukittinggi", "province": "Sumatera Barat", "label": "Kota Bukittinggi — Sumatera Barat"}, {"city": "Kota Cilegon", "province": "Banten", "label": "Kota Cilegon — Banten"}, {"city": "Kota Cimahi", "province": "Jawa Barat", "label": "Kota Cimahi — Jawa Barat"}, {"city": "Kota Cirebon", "province": "Jawa Barat", "label": "Kota Cirebon — Jawa Barat"}, {"city": "Kota Denpasar", "province": "Bali", "label": "Kota Denpasar — Bali"}, {"city": "Kota Depok", "province": "Jawa Barat", "label": "Kota Depok — Jawa Barat"}, {"city": "Kota Dumai", "province": "Riau", "label": "Kota Dumai — Riau"}, {"city": "Kota Gorontalo", "province": "Gorontalo", "label": "Kota Gorontalo — Gorontalo"}, {"city": "Kota Gunungsitoli", "province": "Sumatera Utara", "label": "Kota Gunungsitoli — Sumatera Utara"}, {"city": "Kota Jakarta Barat", "province": "Dki Jakarta", "label": "Kota Jakarta Barat — Dki Jakarta"}, {"city": "Kota Jakarta Pusat", "province": "Dki Jakarta", "label": "Kota Jakarta Pusat — Dki Jakarta"}, {"city": "Kota Jakarta Selatan", "province": "Dki Jakarta", "label": "Kota Jakarta Selatan — Dki Jakarta"}, {"city": "Kota Jakarta Timur", "province": "Dki Jakarta", "label": "Kota Jakarta Timur — Dki Jakarta"}, {"city": "Kota Jakarta Utara", "province": "Dki Jakarta", "label": "Kota Jakarta Utara — Dki Jakarta"}, {"city": "Kota Jambi", "province": "Jambi", "label": "Kota Jambi — Jambi"}, {"city": "Kota Jayapura", "province": "Papua", "label": "Kota Jayapura — Papua"}, {"city": "Kota Kediri", "province": "Jawa Timur", "label": "Kota Kediri — Jawa Timur"}, {"city": "Kota Kendari", "province": "Sulawesi Tenggara", "label": "Kota Kendari — Sulawesi Tenggara"}, {"city": "Kota Kotamobagu", "province": "Sulawesi Utara", "label": "Kota Kotamobagu — Sulawesi Utara"}, {"city": "Kota Kupang", "province": "Nusa Tenggara Timur", "label": "Kota Kupang — Nusa Tenggara Timur"}, {"city": "Kota Langsa", "province": "Aceh", "label": "Kota Langsa — Aceh"}, {"city": "Kota Lhokseumawe", "province": "Aceh", "label": "Kota Lhokseumawe — Aceh"}, {"city": "Kota Lubuklinggau", "province": "Sumatera Selatan", "label": "Kota Lubuklinggau — Sumatera Selatan"}, {"city": "Kota Madiun", "province": "Jawa Timur", "label": "Kota Madiun — Jawa Timur"}, {"city": "Kota Magelang", "province": "Jawa Tengah", "label": "Kota Magelang — Jawa Tengah"}, {"city": "Kota Makassar", "province": "Sulawesi Selatan", "label": "Kota Makassar — Sulawesi Selatan"}, {"city": "Kota Malang", "province": "Jawa Timur", "label": "Kota Malang — Jawa Timur"}, {"city": "Kota Manado", "province": "Sulawesi Utara", "label": "Kota Manado — Sulawesi Utara"}, {"city": "Kota Mataram", "province": "Nusa Tenggara Barat", "label": "Kota Mataram — Nusa Tenggara Barat"}, {"city": "Kota Medan", "province": "Sumatera Utara", "label": "Kota Medan — Sumatera Utara"}, {"city": "Kota Metro", "province": "Lampung", "label": "Kota Metro — Lampung"}, {"city": "Kota Mojokerto", "province": "Jawa Timur", "label": "Kota Mojokerto — Jawa Timur"}, {"city": "Kota Padang Panjang", "province": "Sumatera Barat", "label": "Kota Padang Panjang — Sumatera Barat"}, {"city": "Kota Padang Sidimpuan", "province": "Sumatera Utara", "label": "Kota Padang Sidimpuan — Sumatera Utara"}, {"city": "Kota Padang", "province": "Sumatera Barat", "label": "Kota Padang — Sumatera Barat"}, {"city": "Kota Pagar Alam", "province": "Sumatera Selatan", "label": "Kota Pagar Alam — Sumatera Selatan"}, {"city": "Kota Palangkaraya", "province": "Kalimantan Tengah", "label": "Kota Palangkaraya — Kalimantan Tengah"}, {"city": "Kota Palembang", "province": "Sumatera Selatan", "label": "Kota Palembang — Sumatera Selatan"}, {"city": "Kota Palopo", "province": "Sulawesi Selatan", "label": "Kota Palopo — Sulawesi Selatan"}, {"city": "Kota Palu", "province": "Sulawesi Tengah", "label": "Kota Palu — Sulawesi Tengah"}, {"city": "Kota Pangkalpinang", "province": "Kepulauan Bangka Belitung", "label": "Kota Pangkalpinang — Kepulauan Bangka Belitung"}, {"city": "Kota Pare Pare", "province": "Sulawesi Selatan", "label": "Kota Pare Pare — Sulawesi Selatan"}, {"city": "Kota Pariaman", "province": "Sumatera Barat", "label": "Kota Pariaman — Sumatera Barat"}, {"city": "Kota Pasuruan", "province": "Jawa Timur", "label": "Kota Pasuruan — Jawa Timur"}, {"city": "Kota Payakumbuh", "province": "Sumatera Barat", "label": "Kota Payakumbuh — Sumatera Barat"}, {"city": "Kota Pekalongan", "province": "Jawa Tengah", "label": "Kota Pekalongan — Jawa Tengah"}, {"city": "Kota Pekanbaru", "province": "Riau", "label": "Kota Pekanbaru — Riau"}, {"city": "Kota Pematangsiantar", "province": "Sumatera Utara", "label": "Kota Pematangsiantar — Sumatera Utara"}, {"city": "Kota Pontianak", "province": "Kalimantan Barat", "label": "Kota Pontianak — Kalimantan Barat"}, {"city": "Kota Prabumulih", "province": "Sumatera Selatan", "label": "Kota Prabumulih — Sumatera Selatan"}, {"city": "Kota Probolinggo", "province": "Jawa Timur", "label": "Kota Probolinggo — Jawa Timur"}, {"city": "Kota Sabang", "province": "Aceh", "label": "Kota Sabang — Aceh"}, {"city": "Kota Salatiga", "province": "Jawa Tengah", "label": "Kota Salatiga — Jawa Tengah"}, {"city": "Kota Samarinda", "province": "Kalimantan Timur", "label": "Kota Samarinda — Kalimantan Timur"}, {"city": "Kota Sawahlunto", "province": "Sumatera Barat", "label": "Kota Sawahlunto — Sumatera Barat"}, {"city": "Kota Semarang", "province": "Jawa Tengah", "label": "Kota Semarang — Jawa Tengah"}, {"city": "Kota Serang", "province": "Banten", "label": "Kota Serang — Banten"}, {"city": "Kota Sibolga", "province": "Sumatera Utara", "label": "Kota Sibolga — Sumatera Utara"}, {"city": "Kota Singkawang", "province": "Kalimantan Barat", "label": "Kota Singkawang — Kalimantan Barat"}, {"city": "Kota Solok", "province": "Sumatera Barat", "label": "Kota Solok — Sumatera Barat"}, {"city": "Kota Sorong", "province": "Papua Barat Daya", "label": "Kota Sorong — Papua Barat Daya"}, {"city": "Kota Subulussalam", "province": "Aceh", "label": "Kota Subulussalam — Aceh"}, {"city": "Kota Sukabumi", "province": "Jawa Barat", "label": "Kota Sukabumi — Jawa Barat"}, {"city": "Kota Sungai Penuh", "province": "Jambi", "label": "Kota Sungai Penuh — Jambi"}, {"city": "Kota Surabaya", "province": "Jawa Timur", "label": "Kota Surabaya — Jawa Timur"}, {"city": "Kota Surakarta", "province": "Jawa Tengah", "label": "Kota Surakarta — Jawa Tengah"}, {"city": "Kota Tangerang Selatan", "province": "Banten", "label": "Kota Tangerang Selatan — Banten"}, {"city": "Kota Tangerang", "province": "Banten", "label": "Kota Tangerang — Banten"}, {"city": "Kota Tanjung Balai", "province": "Sumatera Utara", "label": "Kota Tanjung Balai — Sumatera Utara"}, {"city": "Kota Tanjungpinang", "province": "Kepulauan Riau", "label": "Kota Tanjungpinang — Kepulauan Riau"}, {"city": "Kota Tarakan", "province": "Kalimantan Utara", "label": "Kota Tarakan — Kalimantan Utara"}, {"city": "Kota Tasikmalaya", "province": "Jawa Barat", "label": "Kota Tasikmalaya — Jawa Barat"}, {"city": "Kota Tebing Tinggi", "province": "Sumatera Utara", "label": "Kota Tebing Tinggi — Sumatera Utara"}, {"city": "Kota Tegal", "province": "Jawa Tengah", "label": "Kota Tegal — Jawa Tengah"}, {"city": "Kota Ternate", "province": "Maluku Utara", "label": "Kota Ternate — Maluku Utara"}, {"city": "Kota Tidore Kepulauan", "province": "Maluku Utara", "label": "Kota Tidore Kepulauan — Maluku Utara"}, {"city": "Kota Tomohon", "province": "Sulawesi Utara", "label": "Kota Tomohon — Sulawesi Utara"}, {"city": "Kota Tual", "province": "Maluku", "label": "Kota Tual — Maluku"}, {"city": "Kota Yogyakarta", "province": "Daerah Istimewa Yogyakarta", "label": "Kota Yogyakarta — Daerah Istimewa Yogyakarta"}, {"city": "Kotabaru", "province": "Kalimantan Selatan", "label": "Kotabaru — Kalimantan Selatan"}, {"city": "Kotawaringin Barat", "province": "Kalimantan Tengah", "label": "Kotawaringin Barat — Kalimantan Tengah"}, {"city": "Kotawaringin Timur", "province": "Kalimantan Tengah", "label": "Kotawaringin Timur — Kalimantan Tengah"}, {"city": "Kuantan Singingi", "province": "Riau", "label": "Kuantan Singingi — Riau"}, {"city": "Kubu Raya", "province": "Kalimantan Barat", "label": "Kubu Raya — Kalimantan Barat"}, {"city": "Kudus", "province": "Jawa Tengah", "label": "Kudus — Jawa Tengah"}, {"city": "Kulon Progo", "province": "Daerah Istimewa Yogyakarta", "label": "Kulon Progo — Daerah Istimewa Yogyakarta"}, {"city": "Kuningan", "province": "Jawa Barat", "label": "Kuningan — Jawa Barat"}, {"city": "Kupang", "province": "Nusa Tenggara Timur", "label": "Kupang — Nusa Tenggara Timur"}, {"city": "Kutai Barat", "province": "Kalimantan Timur", "label": "Kutai Barat — Kalimantan Timur"}, {"city": "Kutai Kartanegara", "province": "Kalimantan Timur", "label": "Kutai Kartanegara — Kalimantan Timur"}, {"city": "Kutai Timur", "province": "Kalimantan Timur", "label": "Kutai Timur — Kalimantan Timur"}, {"city": "Labuhanbatu Selatan", "province": "Sumatera Utara", "label": "Labuhanbatu Selatan — Sumatera Utara"}, {"city": "Labuhanbatu Utara", "province": "Sumatera Utara", "label": "Labuhanbatu Utara — Sumatera Utara"}, {"city": "Labuhanbatu", "province": "Sumatera Utara", "label": "Labuhanbatu — Sumatera Utara"}, {"city": "Lahat", "province": "Sumatera Selatan", "label": "Lahat — Sumatera Selatan"}, {"city": "Lamandau", "province": "Kalimantan Tengah", "label": "Lamandau — Kalimantan Tengah"}, {"city": "Lamongan", "province": "Jawa Timur", "label": "Lamongan — Jawa Timur"}, {"city": "Lampung Barat", "province": "Lampung", "label": "Lampung Barat — Lampung"}, {"city": "Lampung Selatan", "province": "Lampung", "label": "Lampung Selatan — Lampung"}, {"city": "Lampung Tengah", "province": "Lampung", "label": "Lampung Tengah — Lampung"}, {"city": "Lampung Timur", "province": "Lampung", "label": "Lampung Timur — Lampung"}, {"city": "Lampung Utara", "province": "Lampung", "label": "Lampung Utara — Lampung"}, {"city": "Landak", "province": "Kalimantan Barat", "label": "Landak — Kalimantan Barat"}, {"city": "Langkat", "province": "Sumatera Utara", "label": "Langkat — Sumatera Utara"}, {"city": "Lanny Jaya", "province": "Papua Pegunungan", "label": "Lanny Jaya — Papua Pegunungan"}, {"city": "Lebak", "province": "Banten", "label": "Lebak — Banten"}, {"city": "Lebong", "province": "Bengkulu", "label": "Lebong — Bengkulu"}, {"city": "Lembata", "province": "Nusa Tenggara Timur", "label": "Lembata — Nusa Tenggara Timur"}, {"city": "Lhokseumawe", "province": "Aceh", "label": "Lhokseumawe — Aceh"}, {"city": "Lima Puluh Kota", "province": "Sumatera Barat", "label": "Lima Puluh Kota — Sumatera Barat"}, {"city": "Lingga", "province": "Kepulauan Riau", "label": "Lingga — Kepulauan Riau"}, {"city": "Lombok Barat", "province": "Nusa Tenggara Barat", "label": "Lombok Barat — Nusa Tenggara Barat"}, {"city": "Lombok Tengah", "province": "Nusa Tenggara Barat", "label": "Lombok Tengah — Nusa Tenggara Barat"}, {"city": "Lombok Timur", "province": "Nusa Tenggara Barat", "label": "Lombok Timur — Nusa Tenggara Barat"}, {"city": "Lombok Utara", "province": "Nusa Tenggara Barat", "label": "Lombok Utara — Nusa Tenggara Barat"}, {"city": "Lumajang", "province": "Jawa Timur", "label": "Lumajang — Jawa Timur"}, {"city": "Luwu Timur", "province": "Sulawesi Selatan", "label": "Luwu Timur — Sulawesi Selatan"}, {"city": "Luwu Utara", "province": "Sulawesi Selatan", "label": "Luwu Utara — Sulawesi Selatan"}, {"city": "Luwu", "province": "Sulawesi Selatan", "label": "Luwu — Sulawesi Selatan"}, {"city": "Madiun", "province": "Jawa Timur", "label": "Madiun — Jawa Timur"}, {"city": "Magelang", "province": "Jawa Tengah", "label": "Magelang — Jawa Tengah"}, {"city": "Magetan", "province": "Jawa Timur", "label": "Magetan — Jawa Timur"}, {"city": "Mahakam Ulu", "province": "Kalimantan Timur", "label": "Mahakam Ulu — Kalimantan Timur"}, {"city": "Majalengka", "province": "Jawa Barat", "label": "Majalengka — Jawa Barat"}, {"city": "Majene", "province": "Sulawesi Barat", "label": "Majene — Sulawesi Barat"}, {"city": "Malaka", "province": "Nusa Tenggara Timur", "label": "Malaka — Nusa Tenggara Timur"}, {"city": "Malang", "province": "Jawa Timur", "label": "Malang — Jawa Timur"}, {"city": "Malinau", "province": "Kalimantan Utara", "label": "Malinau — Kalimantan Utara"}, {"city": "Maluku Barat Daya", "province": "Maluku", "label": "Maluku Barat Daya — Maluku"}, {"city": "Maluku Tengah", "province": "Maluku", "label": "Maluku Tengah — Maluku"}, {"city": "Maluku Tenggara", "province": "Maluku", "label": "Maluku Tenggara — Maluku"}, {"city": "Mamasa", "province": "Sulawesi Barat", "label": "Mamasa — Sulawesi Barat"}, {"city": "Mamberamo Raya", "province": "Papua", "label": "Mamberamo Raya — Papua"}, {"city": "Mamberamo Tengah", "province": "Papua Pegunungan", "label": "Mamberamo Tengah — Papua Pegunungan"}, {"city": "Mamuju Tengah", "province": "Sulawesi Barat", "label": "Mamuju Tengah — Sulawesi Barat"}, {"city": "Mamuju Utara", "province": "Sulawesi Barat", "label": "Mamuju Utara — Sulawesi Barat"}, {"city": "Mamuju", "province": "Sulawesi Barat", "label": "Mamuju — Sulawesi Barat"}, {"city": "Mandailing Natal", "province": "Sumatera Utara", "label": "Mandailing Natal — Sumatera Utara"}, {"city": "Manggarai Barat", "province": "Nusa Tenggara Timur", "label": "Manggarai Barat — Nusa Tenggara Timur"}, {"city": "Manggarai Timur", "province": "Nusa Tenggara Timur", "label": "Manggarai Timur — Nusa Tenggara Timur"}, {"city": "Manggarai", "province": "Nusa Tenggara Timur", "label": "Manggarai — Nusa Tenggara Timur"}, {"city": "Manokwari Selatan", "province": "Papua Barat", "label": "Manokwari Selatan — Papua Barat"}, {"city": "Manokwari", "province": "Papua Barat", "label": "Manokwari — Papua Barat"}, {"city": "Mappi", "province": "Papua Selatan", "label": "Mappi — Papua Selatan"}, {"city": "Maros", "province": "Sulawesi Selatan", "label": "Maros — Sulawesi Selatan"}, {"city": "Maybrat", "province": "Papua Barat Daya", "label": "Maybrat — Papua Barat Daya"}, {"city": "Melawi", "province": "Kalimantan Barat", "label": "Melawi — Kalimantan Barat"}, {"city": "Mempawah", "province": "Kalimantan Barat", "label": "Mempawah — Kalimantan Barat"}, {"city": "Merangin", "province": "Jambi", "label": "Merangin — Jambi"}, {"city": "Merauke", "province": "Papua Selatan", "label": "Merauke — Papua Selatan"}, {"city": "Mesuji", "province": "Lampung", "label": "Mesuji — Lampung"}, {"city": "Mimika", "province": "Papua Tengah", "label": "Mimika — Papua Tengah"}, {"city": "Minahasa Selatan", "province": "Sulawesi Utara", "label": "Minahasa Selatan — Sulawesi Utara"}, {"city": "Minahasa Tenggara", "province": "Sulawesi Utara", "label": "Minahasa Tenggara — Sulawesi Utara"}, {"city": "Minahasa Utara", "province": "Sulawesi Utara", "label": "Minahasa Utara — Sulawesi Utara"}, {"city": "Minahasa", "province": "Sulawesi Utara", "label": "Minahasa — Sulawesi Utara"}, {"city": "Mojokerto", "province": "Jawa Timur", "label": "Mojokerto — Jawa Timur"}, {"city": "Morowali Utara", "province": "Sulawesi Tengah", "label": "Morowali Utara — Sulawesi Tengah"}, {"city": "Morowali", "province": "Sulawesi Tengah", "label": "Morowali — Sulawesi Tengah"}, {"city": "Muara Enim", "province": "Sumatera Selatan", "label": "Muara Enim — Sumatera Selatan"}, {"city": "Muaro Jambi", "province": "Jambi", "label": "Muaro Jambi — Jambi"}, {"city": "Mukomuko", "province": "Bengkulu", "label": "Mukomuko — Bengkulu"}, {"city": "Muna Barat", "province": "Sulawesi Tenggara", "label": "Muna Barat — Sulawesi Tenggara"}, {"city": "Muna", "province": "Sulawesi Tenggara", "label": "Muna — Sulawesi Tenggara"}, {"city": "Murung Raya", "province": "Kalimantan Tengah", "label": "Murung Raya — Kalimantan Tengah"}, {"city": "Musi Banyuasin", "province": "Sumatera Selatan", "label": "Musi Banyuasin — Sumatera Selatan"}, {"city": "Musi Rawas Utara", "province": "Sumatera Selatan", "label": "Musi Rawas Utara — Sumatera Selatan"}, {"city": "Musi Rawas", "province": "Sumatera Selatan", "label": "Musi Rawas — Sumatera Selatan"}, {"city": "Nabire", "province": "Papua Tengah", "label": "Nabire — Papua Tengah"}, {"city": "Nagan Raya", "province": "Aceh", "label": "Nagan Raya — Aceh"}, {"city": "Nagekeo", "province": "Nusa Tenggara Timur", "label": "Nagekeo — Nusa Tenggara Timur"}, {"city": "Natuna", "province": "Kepulauan Riau", "label": "Natuna — Kepulauan Riau"}, {"city": "Nduga", "province": "Papua Pegunungan", "label": "Nduga — Papua Pegunungan"}, {"city": "Ngada", "province": "Nusa Tenggara Timur", "label": "Ngada — Nusa Tenggara Timur"}, {"city": "Nganjuk", "province": "Jawa Timur", "label": "Nganjuk — Jawa Timur"}, {"city": "Ngawi", "province": "Jawa Timur", "label": "Ngawi — Jawa Timur"}, {"city": "Nias Barat", "province": "Sumatera Utara", "label": "Nias Barat — Sumatera Utara"}, {"city": "Nias Selatan", "province": "Sumatera Utara", "label": "Nias Selatan — Sumatera Utara"}, {"city": "Nias Utara", "province": "Sumatera Utara", "label": "Nias Utara — Sumatera Utara"}, {"city": "Nias", "province": "Sumatera Utara", "label": "Nias — Sumatera Utara"}, {"city": "Nunukan", "province": "Kalimantan Utara", "label": "Nunukan — Kalimantan Utara"}, {"city": "Ogan Ilir", "province": "Sumatera Selatan", "label": "Ogan Ilir — Sumatera Selatan"}, {"city": "Ogan Komering Ilir", "province": "Sumatera Selatan", "label": "Ogan Komering Ilir — Sumatera Selatan"}, {"city": "Ogan Komering Ulu Selatan", "province": "Sumatera Selatan", "label": "Ogan Komering Ulu Selatan — Sumatera Selatan"}, {"city": "Ogan Komering Ulu Timur", "province": "Sumatera Selatan", "label": "Ogan Komering Ulu Timur — Sumatera Selatan"}, {"city": "Ogan Komering Ulu", "province": "Sumatera Selatan", "label": "Ogan Komering Ulu — Sumatera Selatan"}, {"city": "Pacitan", "province": "Jawa Timur", "label": "Pacitan — Jawa Timur"}, {"city": "Padang Lawas Utara", "province": "Sumatera Utara", "label": "Padang Lawas Utara — Sumatera Utara"}, {"city": "Padang Lawas", "province": "Sumatera Utara", "label": "Padang Lawas — Sumatera Utara"}, {"city": "Padang Pariaman", "province": "Sumatera Barat", "label": "Padang Pariaman — Sumatera Barat"}, {"city": "Pahuwato", "province": "Gorontalo", "label": "Pahuwato — Gorontalo"}, {"city": "Pakpak Bharat", "province": "Sumatera Utara", "label": "Pakpak Bharat — Sumatera Utara"}, {"city": "Pamekasan", "province": "Jawa Timur", "label": "Pamekasan — Jawa Timur"}, {"city": "Pandeglang", "province": "Banten", "label": "Pandeglang — Banten"}, {"city": "Pangandaran", "province": "Jawa Barat", "label": "Pangandaran — Jawa Barat"}, {"city": "Pangkajene Dan Kepulauan", "province": "Sulawesi Selatan", "label": "Pangkajene Dan Kepulauan — Sulawesi Selatan"}, {"city": "Paniai", "province": "Papua Tengah", "label": "Paniai — Papua Tengah"}, {"city": "Pariaman", "province": "Sumatera Barat", "label": "Pariaman — Sumatera Barat"}, {"city": "Parigi Moutong", "province": "Sulawesi Tengah", "label": "Parigi Moutong — Sulawesi Tengah"}, {"city": "Pasaman Barat", "province": "Sumatera Barat", "label": "Pasaman Barat — Sumatera Barat"}, {"city": "Pasaman", "province": "Sumatera Barat", "label": "Pasaman — Sumatera Barat"}, {"city": "Paser", "province": "Kalimantan Timur", "label": "Paser — Kalimantan Timur"}, {"city": "Pasuruan", "province": "Jawa Timur", "label": "Pasuruan — Jawa Timur"}, {"city": "Pati", "province": "Jawa Tengah", "label": "Pati — Jawa Tengah"}, {"city": "Pegunungan Arfak", "province": "Papua Barat", "label": "Pegunungan Arfak — Papua Barat"}, {"city": "Pegunungan Bintang", "province": "Papua Pegunungan", "label": "Pegunungan Bintang — Papua Pegunungan"}, {"city": "Pekalongan", "province": "Jawa Tengah", "label": "Pekalongan — Jawa Tengah"}, {"city": "Pelalawan", "province": "Riau", "label": "Pelalawan — Riau"}, {"city": "Pemalang", "province": "Jawa Tengah", "label": "Pemalang — Jawa Tengah"}, {"city": "Penajam Paser Utara", "province": "Kalimantan Timur", "label": "Penajam Paser Utara — Kalimantan Timur"}, {"city": "Penukal Abab Lematang Ilir", "province": "Sumatera Selatan", "label": "Penukal Abab Lematang Ilir — Sumatera Selatan"}, {"city": "Pesawaran", "province": "Lampung", "label": "Pesawaran — Lampung"}, {"city": "Pesisir Barat", "province": "Lampung", "label": "Pesisir Barat — Lampung"}, {"city": "Pesisir Selatan", "province": "Sumatera Barat", "label": "Pesisir Selatan — Sumatera Barat"}, {"city": "Pidie Jaya", "province": "Aceh", "label": "Pidie Jaya — Aceh"}, {"city": "Pidie", "province": "Aceh", "label": "Pidie — Aceh"}, {"city": "Pinrang", "province": "Sulawesi Selatan", "label": "Pinrang — Sulawesi Selatan"}, {"city": "Polewali Mandar", "province": "Sulawesi Barat", "label": "Polewali Mandar — Sulawesi Barat"}, {"city": "Ponorogo", "province": "Jawa Timur", "label": "Ponorogo — Jawa Timur"}, {"city": "Poso", "province": "Sulawesi Tengah", "label": "Poso — Sulawesi Tengah"}, {"city": "Pringsewu", "province": "Lampung", "label": "Pringsewu — Lampung"}, {"city": "Probolinggo", "province": "Jawa Timur", "label": "Probolinggo — Jawa Timur"}, {"city": "Pulang Pisau", "province": "Kalimantan Tengah", "label": "Pulang Pisau — Kalimantan Tengah"}, {"city": "Pulau Morotai", "province": "Maluku Utara", "label": "Pulau Morotai — Maluku Utara"}, {"city": "Pulau Taliabu", "province": "Maluku Utara", "label": "Pulau Taliabu — Maluku Utara"}, {"city": "Puncak Jaya", "province": "Papua Tengah", "label": "Puncak Jaya — Papua Tengah"}, {"city": "Puncak", "province": "Papua Tengah", "label": "Puncak — Papua Tengah"}, {"city": "Purbalingga", "province": "Jawa Tengah", "label": "Purbalingga — Jawa Tengah"}, {"city": "Purwakarta", "province": "Jawa Barat", "label": "Purwakarta — Jawa Barat"}, {"city": "Purworejo", "province": "Jawa Tengah", "label": "Purworejo — Jawa Tengah"}, {"city": "Raja Ampat", "province": "Papua Barat Daya", "label": "Raja Ampat — Papua Barat Daya"}, {"city": "Rejang Lebong", "province": "Bengkulu", "label": "Rejang Lebong — Bengkulu"}, {"city": "Rembang", "province": "Jawa Tengah", "label": "Rembang — Jawa Tengah"}, {"city": "Rokan Hilir", "province": "Riau", "label": "Rokan Hilir — Riau"}, {"city": "Rokan Hulu", "province": "Riau", "label": "Rokan Hulu — Riau"}, {"city": "Rote Ndao", "province": "Nusa Tenggara Timur", "label": "Rote Ndao — Nusa Tenggara Timur"}, {"city": "Sabang", "province": "Aceh", "label": "Sabang — Aceh"}, {"city": "Sabu Raijua", "province": "Nusa Tenggara Timur", "label": "Sabu Raijua — Nusa Tenggara Timur"}, {"city": "Sambas", "province": "Kalimantan Barat", "label": "Sambas — Kalimantan Barat"}, {"city": "Samosir", "province": "Sumatera Utara", "label": "Samosir — Sumatera Utara"}, {"city": "Sampang", "province": "Jawa Timur", "label": "Sampang — Jawa Timur"}, {"city": "Sanggau", "province": "Kalimantan Barat", "label": "Sanggau — Kalimantan Barat"}, {"city": "Sarmi", "province": "Papua", "label": "Sarmi — Papua"}, {"city": "Sarolangun", "province": "Jambi", "label": "Sarolangun — Jambi"}, {"city": "Sekadau", "province": "Kalimantan Barat", "label": "Sekadau — Kalimantan Barat"}, {"city": "Seluma", "province": "Bengkulu", "label": "Seluma — Bengkulu"}, {"city": "Semarang", "province": "Jawa Tengah", "label": "Semarang — Jawa Tengah"}, {"city": "Seram Bagian Barat", "province": "Maluku", "label": "Seram Bagian Barat — Maluku"}, {"city": "Seram Bagian Timur", "province": "Maluku", "label": "Seram Bagian Timur — Maluku"}, {"city": "Serang", "province": "Banten", "label": "Serang — Banten"}, {"city": "Serdang Bedagai", "province": "Sumatera Utara", "label": "Serdang Bedagai — Sumatera Utara"}, {"city": "Seruyan", "province": "Kalimantan Tengah", "label": "Seruyan — Kalimantan Tengah"}, {"city": "Siak", "province": "Riau", "label": "Siak — Riau"}, {"city": "Sidenreng Rappang", "province": "Sulawesi Selatan", "label": "Sidenreng Rappang — Sulawesi Selatan"}, {"city": "Sidoarjo", "province": "Jawa Timur", "label": "Sidoarjo — Jawa Timur"}, {"city": "Sigi", "province": "Sulawesi Tengah", "label": "Sigi — Sulawesi Tengah"}, {"city": "Sijunjung", "province": "Sumatera Barat", "label": "Sijunjung — Sumatera Barat"}, {"city": "Sikka", "province": "Nusa Tenggara Timur", "label": "Sikka — Nusa Tenggara Timur"}, {"city": "Simalungun", "province": "Sumatera Utara", "label": "Simalungun — Sumatera Utara"}, {"city": "Simeulue", "province": "Aceh", "label": "Simeulue — Aceh"}, {"city": "Sinjai", "province": "Sulawesi Selatan", "label": "Sinjai — Sulawesi Selatan"}, {"city": "Sintang", "province": "Kalimantan Barat", "label": "Sintang — Kalimantan Barat"}, {"city": "Situbondo", "province": "Jawa Timur", "label": "Situbondo — Jawa Timur"}, {"city": "Sleman", "province": "Daerah Istimewa Yogyakarta", "label": "Sleman — Daerah Istimewa Yogyakarta"}, {"city": "Solok Selatan", "province": "Sumatera Barat", "label": "Solok Selatan — Sumatera Barat"}, {"city": "Solok", "province": "Sumatera Barat", "label": "Solok — Sumatera Barat"}, {"city": "Soppeng", "province": "Sulawesi Selatan", "label": "Soppeng — Sulawesi Selatan"}, {"city": "Sorong Selatan", "province": "Papua Barat Daya", "label": "Sorong Selatan — Papua Barat Daya"}, {"city": "Sorong", "province": "Papua Barat", "label": "Sorong — Papua Barat"}, {"city": "Sorong", "province": "Papua Barat Daya", "label": "Sorong — Papua Barat Daya"}, {"city": "Sragen", "province": "Jawa Tengah", "label": "Sragen — Jawa Tengah"}, {"city": "Subang", "province": "Jawa Barat", "label": "Subang — Jawa Barat"}, {"city": "Sukabumi", "province": "Jawa Barat", "label": "Sukabumi — Jawa Barat"}, {"city": "Sukamara", "province": "Kalimantan Tengah", "label": "Sukamara — Kalimantan Tengah"}, {"city": "Sukoharjo", "province": "Jawa Tengah", "label": "Sukoharjo — Jawa Tengah"}, {"city": "Sumba Barat Daya", "province": "Nusa Tenggara Timur", "label": "Sumba Barat Daya — Nusa Tenggara Timur"}, {"city": "Sumba Barat", "province": "Nusa Tenggara Timur", "label": "Sumba Barat — Nusa Tenggara Timur"}, {"city": "Sumba Tengah", "province": "Nusa Tenggara Timur", "label": "Sumba Tengah — Nusa Tenggara Timur"}, {"city": "Sumba Timur", "province": "Nusa Tenggara Timur", "label": "Sumba Timur — Nusa Tenggara Timur"}, {"city": "Sumbawa Barat", "province": "Nusa Tenggara Barat", "label": "Sumbawa Barat — Nusa Tenggara Barat"}, {"city": "Sumbawa", "province": "Nusa Tenggara Barat", "label": "Sumbawa — Nusa Tenggara Barat"}, {"city": "Sumedang", "province": "Jawa Barat", "label": "Sumedang — Jawa Barat"}, {"city": "Sumenep", "province": "Jawa Timur", "label": "Sumenep — Jawa Timur"}, {"city": "Supiori", "province": "Papua", "label": "Supiori — Papua"}, {"city": "Tabalong", "province": "Kalimantan Selatan", "label": "Tabalong — Kalimantan Selatan"}, {"city": "Tabanan", "province": "Bali", "label": "Tabanan — Bali"}, {"city": "Takalar", "province": "Sulawesi Selatan", "label": "Takalar — Sulawesi Selatan"}, {"city": "Tambrauw", "province": "Papua Barat Daya", "label": "Tambrauw — Papua Barat Daya"}, {"city": "Tana Tidung", "province": "Kalimantan Utara", "label": "Tana Tidung — Kalimantan Utara"}, {"city": "Tana Toraja", "province": "Sulawesi Selatan", "label": "Tana Toraja — Sulawesi Selatan"}, {"city": "Tanah Bumbu", "province": "Kalimantan Selatan", "label": "Tanah Bumbu — Kalimantan Selatan"}, {"city": "Tanah Datar", "province": "Sumatera Barat", "label": "Tanah Datar — Sumatera Barat"}, {"city": "Tanah Laut", "province": "Kalimantan Selatan", "label": "Tanah Laut — Kalimantan Selatan"}, {"city": "Tangerang", "province": "Banten", "label": "Tangerang — Banten"}, {"city": "Tanggamus", "province": "Lampung", "label": "Tanggamus — Lampung"}, {"city": "Tanjung Jabung Barat", "province": "Jambi", "label": "Tanjung Jabung Barat — Jambi"}, {"city": "Tanjung Jabung Timur", "province": "Jambi", "label": "Tanjung Jabung Timur — Jambi"}, {"city": "Tapanuli Selatan", "province": "Sumatera Utara", "label": "Tapanuli Selatan — Sumatera Utara"}, {"city": "Tapanuli Tengah", "province": "Sumatera Utara", "label": "Tapanuli Tengah — Sumatera Utara"}, {"city": "Tapanuli Utara", "province": "Sumatera Utara", "label": "Tapanuli Utara — Sumatera Utara"}, {"city": "Tapin", "province": "Kalimantan Selatan", "label": "Tapin — Kalimantan Selatan"}, {"city": "Tasikmalaya", "province": "Jawa Barat", "label": "Tasikmalaya — Jawa Barat"}, {"city": "Tebo", "province": "Jambi", "label": "Tebo — Jambi"}, {"city": "Tegal", "province": "Jawa Tengah", "label": "Tegal — Jawa Tengah"}, {"city": "Teluk Bintuni", "province": "Papua Barat", "label": "Teluk Bintuni — Papua Barat"}, {"city": "Teluk Wondama", "province": "Papua Barat", "label": "Teluk Wondama — Papua Barat"}, {"city": "Temanggung", "province": "Jawa Tengah", "label": "Temanggung — Jawa Tengah"}, {"city": "Ternate", "province": "Maluku Utara", "label": "Ternate — Maluku Utara"}, {"city": "Timor Tengah Selatan", "province": "Nusa Tenggara Timur", "label": "Timor Tengah Selatan — Nusa Tenggara Timur"}, {"city": "Timor Tengah Utara", "province": "Nusa Tenggara Timur", "label": "Timor Tengah Utara — Nusa Tenggara Timur"}, {"city": "Toba Samosir", "province": "Sumatera Utara", "label": "Toba Samosir — Sumatera Utara"}, {"city": "Tojo Una-Una", "province": "Sulawesi Tengah", "label": "Tojo Una-Una — Sulawesi Tengah"}, {"city": "Tolikara", "province": "Papua Pegunungan", "label": "Tolikara — Papua Pegunungan"}, {"city": "Tolitoli", "province": "Sulawesi Tengah", "label": "Tolitoli — Sulawesi Tengah"}, {"city": "Toraja Utara", "province": "Sulawesi Selatan", "label": "Toraja Utara — Sulawesi Selatan"}, {"city": "Trenggalek", "province": "Jawa Timur", "label": "Trenggalek — Jawa Timur"}, {"city": "Tuban", "province": "Jawa Timur", "label": "Tuban — Jawa Timur"}, {"city": "Tulang Bawang Barat", "province": "Lampung", "label": "Tulang Bawang Barat — Lampung"}, {"city": "Tulang Bawang", "province": "Lampung", "label": "Tulang Bawang — Lampung"}, {"city": "Tulungagung", "province": "Jawa Timur", "label": "Tulungagung — Jawa Timur"}, {"city": "Waduk Cirata", "province": "Jawa Barat", "label": "Waduk Cirata — Jawa Barat"}, {"city": "Waduk Kedungombo", "province": "Jawa Tengah", "label": "Waduk Kedungombo — Jawa Tengah"}, {"city": "Wajo", "province": "Sulawesi Selatan", "label": "Wajo — Sulawesi Selatan"}, {"city": "Wakatobi", "province": "Sulawesi Tenggara", "label": "Wakatobi — Sulawesi Tenggara"}, {"city": "Waropen", "province": "Papua", "label": "Waropen — Papua"}, {"city": "Way Kanan", "province": "Lampung", "label": "Way Kanan — Lampung"}, {"city": "Wonogiri", "province": "Jawa Tengah", "label": "Wonogiri — Jawa Tengah"}, {"city": "Wonosobo", "province": "Jawa Tengah", "label": "Wonosobo — Jawa Tengah"}, {"city": "Yahukimo", "province": "Papua Pegunungan", "label": "Yahukimo — Papua Pegunungan"}, {"city": "Yalimo", "province": "Papua Pegunungan", "label": "Yalimo — Papua Pegunungan"}];
-const COVERED_CITIES = new Set(["Aceh Besar — Aceh", "Badung — Bali", "Bandung Barat — Jawa Barat", "Bandung — Jawa Barat", "Banjarnegara — Jawa Tengah", "Bantul — Daerah Istimewa Yogyakarta", "Banyuasin — Sumatera Selatan", "Banyumas — Jawa Tengah", "Banyuwangi — Jawa Timur", "Batang — Jawa Tengah", "Batu — Jawa Timur", "Bekasi — Jawa Barat", "Blitar — Jawa Timur", "Blora — Jawa Tengah", "Bogor — Jawa Barat", "Bondowoso — Jawa Timur", "Boyolali — Jawa Tengah", "Brebes — Jawa Tengah", "Ciamis — Jawa Barat", "Cianjur — Jawa Barat", "Cilacap — Jawa Tengah", "Cirebon — Jawa Barat", "Deli Serdang — Sumatera Utara", "Demak — Jawa Tengah", "Garut — Jawa Barat", "Gianyar — Bali", "Gowa — Sulawesi Selatan", "Gresik — Jawa Timur", "Gunungkidul — Daerah Istimewa Yogyakarta", "Indramayu — Jawa Barat", "Jember — Jawa Timur", "Jepara — Jawa Tengah", "Jombang — Jawa Timur", "Karanganyar — Jawa Tengah", "Karawang — Jawa Barat", "Kebumen — Jawa Tengah", "Kediri — Jawa Timur", "Kendal — Jawa Tengah", "Klaten — Jawa Tengah", "Kota Balikpapan — Kalimantan Timur", "Kota Banda Aceh — Aceh", "Kota Bandar Lampung — Lampung", "Kota Bandung — Jawa Barat", "Kota Banjar — Jawa Barat", "Kota Banjarbaru — Kalimantan Selatan", "Kota Banjarmasin — Kalimantan Selatan", "Kota Batam — Kepulauan Riau", "Kota Batu — Jawa Timur", "Kota Bekasi — Jawa Barat", "Kota Bengkulu — Bengkulu", "Kota Blitar — Jawa Timur", "Kota Bogor — Jawa Barat", "Kota Bukittinggi — Sumatera Barat", "Kota Cilegon — Banten", "Kota Cimahi — Jawa Barat", "Kota Cirebon — Jawa Barat", "Kota Denpasar — Bali", "Kota Depok — Jawa Barat", "Kota Gorontalo — Gorontalo", "Kota Jakarta Barat — Dki Jakarta", "Kota Jakarta Pusat — Dki Jakarta", "Kota Jakarta Selatan — Dki Jakarta", "Kota Jakarta Timur — Dki Jakarta", "Kota Jakarta Utara — Dki Jakarta", "Kota Jambi — Jambi", "Kota Kediri — Jawa Timur", "Kota Kendari — Sulawesi Tenggara", "Kota Kupang — Nusa Tenggara Timur", "Kota Madiun — Jawa Timur", "Kota Magelang — Jawa Tengah", "Kota Makassar — Sulawesi Selatan", "Kota Malang — Jawa Timur", "Kota Manado — Sulawesi Utara", "Kota Mataram — Nusa Tenggara Barat", "Kota Medan — Sumatera Utara", "Kota Metro — Lampung", "Kota Mojokerto — Jawa Timur", "Kota Padang — Sumatera Barat", "Kota Palangkaraya — Kalimantan Tengah", "Kota Palembang — Sumatera Selatan", "Kota Palu — Sulawesi Tengah", "Kota Pasuruan — Jawa Timur", "Kota Pekalongan — Jawa Tengah", "Kota Pekanbaru — Riau", "Kota Pontianak — Kalimantan Barat", "Kota Probolinggo — Jawa Timur", "Kota Sabang — Aceh", "Kota Salatiga — Jawa Tengah", "Kota Samarinda — Kalimantan Timur", "Kota Semarang — Jawa Tengah", "Kota Serang — Banten", "Kota Sorong — Papua Barat Daya", "Kota Sukabumi — Jawa Barat", "Kota Surabaya — Jawa Timur", "Kota Surakarta — Jawa Tengah", "Kota Tangerang Selatan — Banten", "Kota Tangerang — Banten", "Kota Tasikmalaya — Jawa Barat", "Kota Tegal — Jawa Tengah", "Kota Ternate — Maluku Utara", "Kota Yogyakarta — Daerah Istimewa Yogyakarta", "Kubu Raya — Kalimantan Barat", "Kudus — Jawa Tengah", "Kuningan — Jawa Barat", "Kupang — Nusa Tenggara Timur", "Lamongan — Jawa Timur", "Lampung Selatan — Lampung", "Lumajang — Jawa Timur", "Madiun — Jawa Timur", "Magelang — Jawa Tengah", "Majalengka — Jawa Barat", "Malang — Jawa Timur", "Mojokerto — Jawa Timur", "Nganjuk — Jawa Timur", "Ngawi — Jawa Timur", "Pasuruan — Jawa Timur", "Pati — Jawa Tengah", "Pemalang — Jawa Tengah", "Ponorogo — Jawa Timur", "Probolinggo — Jawa Timur", "Purbalingga — Jawa Tengah", "Purwakarta — Jawa Barat", "Rembang — Jawa Tengah", "Semarang — Jawa Tengah", "Serang — Banten", "Sidoarjo — Jawa Timur", "Sleman — Daerah Istimewa Yogyakarta", "Sukabumi — Jawa Barat", "Sukoharjo — Jawa Tengah", "Sumedang — Jawa Barat", "Tambrauw — Papua Barat Daya", "Tangerang — Banten", "Tasikmalaya — Jawa Barat", "Tegal — Jawa Tengah", "Temanggung — Jawa Tengah", "Trenggalek — Jawa Timur", "Tulungagung — Jawa Timur", "Wonosobo — Jawa Tengah"]);
-// ============================================================
-
-const selectedCity = {
-  asal: "",
-  tujuan: ""
-};
-
-function val(id) {
-  const el = document.getElementById(id);
-  return el ? el.value.trim() : "";
-}
-
-function showErr(id, show) {
-  const err = document.getElementById("err-" + id);
-  const input = document.getElementById(id);
-  if(err) err.classList.toggle("show", !!show);
-  if(input) input.style.borderColor = show ? "#e85c5c" : "";
-}
-
-function normalizeText(str) {
-  return (str || "")
-    .toString()
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9\s]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function cityMatches(query) {
-  const q = normalizeText(query);
-  if(!q) return [];
-  return ALL_CITIES
-    .filter(item => normalizeText(item.label).includes(q) || normalizeText(item.city).includes(q))
-    .slice(0, 8);
-}
-
-function renderSuggestions(inputId, boxId) {
-  const input = document.getElementById(inputId);
-  const box = document.getElementById(boxId);
-  const results = cityMatches(input.value);
-
-  if(!input.value.trim()) {
-    box.className = "suggestions";
-    box.innerHTML = "";
-    selectedCity[inputId] = "";
-    updateCoverageStatus();
-    return;
-  }
-
-  if(!results.length) {
-    box.className = "suggestions show";
-    box.innerHTML = `<div class="suggestion-empty">Kota tidak ditemukan. Coba ketik nama kota/kabupaten.</div>`;
-    selectedCity[inputId] = "";
-    updateCoverageStatus();
-    return;
-  }
-
-  box.className = "suggestions show";
-  box.innerHTML = results.map(item => `
-    <button type="button" class="suggestion-item" data-label="${item.label}">
-      ${item.label}
-    </button>
-  `).join("");
-
-  box.querySelectorAll(".suggestion-item").forEach(btn => {
-    btn.addEventListener("click", () => {
-      input.value = btn.dataset.label;
-      selectedCity[inputId] = btn.dataset.label;
-      box.className = "suggestions";
-      box.innerHTML = "";
-      showErr(inputId, false);
-      updateCoverageStatus();
-    });
-  });
-}
-
-function bindCityInput(inputId, boxId) {
-  const input = document.getElementById(inputId);
-  const box = document.getElementById(boxId);
-
-  input.addEventListener("input", () => {
-    selectedCity[inputId] = "";
-    renderSuggestions(inputId, boxId);
-  });
-
-  input.addEventListener("focus", () => {
-    if(input.value.trim()) renderSuggestions(inputId, boxId);
-  });
-
-  document.addEventListener("click", (e) => {
-    if(!input.contains(e.target) && !box.contains(e.target)) {
-      box.className = "suggestions";
-    }
-  });
-}
-
-function isSelectedCovered(id) {
-  const selected = selectedCity[id] || val(id);
-  if(COVERED_CITIES.has(selected)) return true;
-  const selectedNorm = normalizeText(selected);
-  for(const city of COVERED_CITIES){
-    if(normalizeText(city) === selectedNorm) return true;
-  }
-  return false;
-}
-
-function updateCoverageStatus() {
-  const asal = val("asal");
-  const tujuan = val("tujuan");
-  const box = document.getElementById("coverageStatus");
-
-  if(!box) return;
-
-  if(!asal && !tujuan) {
-    box.className = "coverage-status wait";
-    box.innerHTML = "<strong>Cek coverage otomatis</strong>Pilih kota asal dan kota tujuan untuk melihat status area Paxel.";
-    return;
-  }
-
-  const asalValid = ALL_CITIES.some(item => item.label === asal);
-  const tujuanValid = ALL_CITIES.some(item => item.label === tujuan);
-
-  if(!asalValid || !tujuanValid){
-    box.className = "coverage-status wait";
-    box.innerHTML = "<strong>Lengkapi lokasi pengiriman</strong>Pilih kota dari rekomendasi agar status coverage bisa dicek otomatis.";
-    return;
-  }
-
-  const asalCovered = isSelectedCovered("asal");
-  const tujuanCovered = isSelectedCovered("tujuan");
-
-  if(asalCovered && tujuanCovered) {
-    box.className = "coverage-status ok";
-    box.innerHTML = "<strong>Area tercover Paxel.</strong>Rute pickup dan tujuan sudah tercover. Lanjut cek jadwal pickup via WhatsApp.";
-  } else if(!tujuanCovered) {
-    box.className = "coverage-status no";
-    box.innerHTML = "<strong>Mohon maaf, kota tujuan belum ada Paxel.</strong>Kamu tetap bisa konsultasi ke admin untuk opsi pengiriman lain.";
-  } else {
-    box.className = "coverage-status no";
-    box.innerHTML = "<strong>Mohon maaf, kota asal pickup belum ada Paxel.</strong>Silakan pilih kota asal lain yang sudah tercover.";
-  }
-}
-
-function validateCity(id) {
-  // Accept any non-empty value — coverage check is advisory, not blocking
-  if(!val(id)) return false;
-  const el = document.getElementById(id);
-  const exact = ALL_CITIES.find(item => normalizeText(item.label) === normalizeText(el.value));
-  if(exact){
-    el.value = exact.label;
-    selectedCity[id] = exact.label;
-  } else {
-    // Try partial match — use closest match if found
-    const partial = ALL_CITIES.find(item =>
-      normalizeText(item.label).includes(normalizeText(el.value)) ||
-      normalizeText(item.city).includes(normalizeText(el.value))
-    );
-    if(partial){
-      el.value = partial.label;
-      selectedCity[id] = partial.label;
-    }
-    // If no match at all, still accept — admin will clarify
-  }
-  return true; // Always pass as long as field is not empty
-}
-
-function submitForm() {
-  const nama = val("nama");
-  const jenis = val("jenis");
-  const ukuran = val("ukuran");
-  const asal = val("asal");
-  const tujuan = val("tujuan");
-
-  let valid = true;
-
-  // Accept exact typed city labels, not only clicked suggestions
-  ["asal","tujuan"].forEach(id => {
-    const el = document.getElementById(id);
-    const exact = ALL_CITIES.find(item => normalizeText(item.label) === normalizeText(el.value));
-    if(exact){
-      el.value = exact.label;
-      selectedCity[id] = exact.label;
-    }
-  });
-
-  const tgl   = val("tgl");
-  const slot  = val("slot");
-
-  if(!nama)   { showErr("nama",  true); valid = false; } else showErr("nama",  false);
-  if(!jenis)  { showErr("jenis", true); valid = false; } else showErr("jenis", false);
-  if(!ukuran) { showErr("ukuran",true); valid = false; } else showErr("ukuran",false);
-  if(!tgl)    { showErr("tgl",   true); valid = false; } else showErr("tgl",   false);
-  if(!slot)   { showErr("slot",  true); valid = false; } else showErr("slot",  false);
-  if(!validateCity("asal")) { showErr("asal", true); valid = false; } else showErr("asal", false);
-  if(!validateCity("tujuan")) { showErr("tujuan", true); valid = false; } else showErr("tujuan", false);
-
-  updateCoverageStatus();
-
-  if(!valid) {
-    const btn = document.getElementById("btnWa");
-    if(btn){
-      btn.classList.add("shake");
-      setTimeout(() => btn.classList.remove("shake"), 400);
-    }
-    return;
-  }
-
-  // Format date to Indonesian
-  const tglObj = new Date(tgl + 'T00:00:00');
-  const hariList = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
-  const bulanList = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
-  const tglFormatted = `${hariList[tglObj.getDay()]}, ${tglObj.getDate()} ${bulanList[tglObj.getMonth()]} ${tglObj.getFullYear()}`;
-
-  const asalCovered = isSelectedCovered("asal");
-  const tujuanCovered = isSelectedCovered("tujuan");
-  const statusCoverage = (asalCovered && tujuanCovered)
-    ? "Area tercover Paxel. Rute pickup dan tujuan sudah tercover."
-    : (!tujuanCovered ? "Mohon maaf, kota tujuan belum ada Paxel." : "Mohon maaf, kota asal pickup belum ada Paxel.");
-
-  const coverageIcon = (asalCovered && tujuanCovered) ? "✅" : "⚠️";
-
-  const msg =
-`Halo Paxel 👋
-
-Saya mau cek jadwal *pickup* dan estimasi ongkir untuk kiriman berikut:
-
-• *Nama*          : ${nama}
-
-• *Jenis kiriman*  : ${jenis}
-
-• *Ukuran paket*  : ${ukuran}
-
-• *Pickup dari*    : ${asal}
-
-• *Tujuan*         : ${tujuan}
-
-• *Tanggal pickup* : ${tglFormatted}
-
-• *Slot waktu*     : ${slot}
-
-${coverageIcon} *Status coverage* : ${statusCoverage}
-
-Mohon bantu cek jadwal pickup & estimasi ongkir ya. Terima kasih! 🙏`;
-
-  const cleanNumber = String(WA_NUMBER || "").replace(/\D/g, "");
-
-  if(!cleanNumber){
-    alert("Nomor WhatsApp admin belum diisi.");
-    return;
-  }
-
-  const url = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(msg)}`;
-
-  const leadData = {
-    nama: nama,
-    jenis: jenis,
-    ukuran: ukuran,
-    tanggalPickup: tglFormatted,
-    slot: slot,
-    asal: val("asal"),
-    tujuan: val("tujuan"),
-    statusCoverage: statusCoverage,
-    pesanWhatsapp: msg
-  };
-
-  sendToGoogleForm(leadData);
-
-  // Tampilkan overlay, beri jeda supaya Google Form sempat menerima data, lalu buka WhatsApp
-  const overlay = document.getElementById('successOverlay');
-  if(overlay) overlay.classList.add('show');
-  setTimeout(() => {
-    window.location.href = url;
-  }, 1500);
-}
-
-["nama","jenis","ukuran","tgl","slot"].forEach(id => {
-  const el = document.getElementById(id);
-  el.addEventListener("input", () => { showErr(id, false); updateCoverageStatus(); });
-  el.addEventListener("change", () => { showErr(id, false); updateCoverageStatus(); });
-});
-
-// Set min date to today
-const tglInput = document.getElementById("tgl");
-if(tglInput){
-  const today = new Date();
-  const yyyy = today.getFullYear();
-  const mm = String(today.getMonth()+1).padStart(2,'0');
-  const dd = String(today.getDate()).padStart(2,'0');
-  tglInput.min = `${yyyy}-${mm}-${dd}`;
-}
-
-bindCityInput("asal", "suggest-asal");
-bindCityInput("tujuan", "suggest-tujuan");
-
-["asal","tujuan"].forEach(id => {
-  const el = document.getElementById(id);
-  if(el){
-    el.addEventListener("blur", () => {
-      const exact = ALL_CITIES.find(item => normalizeText(item.label) === normalizeText(el.value));
-      if(exact){
-        el.value = exact.label;
-        selectedCity[id] = exact.label;
-      }
-      updateCoverageStatus();
-    });
-  }
-});
-
-</script>
+  </main>
 </body>
 </html>
