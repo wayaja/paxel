@@ -460,10 +460,8 @@
 <!-- ROUTING GITHUB PAGES -->
 <script>
   const LOCATION_URL = 'https://share.google/QdEfj2MuMFK3P9Gt4';
-  const incomingParams = new URLSearchParams(window.location.search);
-  const PAGE_SOURCE = incomingParams.get('source') || incomingParams.get('utm_source') || 'awareness';
-  const ADMIN_PAGE_URL = `./tanya-admin/?source=${encodeURIComponent(PAGE_SOURCE)}`;
-  const PICKUP_PAGE_URL = `./cek-jadwal-pickup/?source=${encodeURIComponent(PAGE_SOURCE)}`;
+  const ADMIN_PAGE_URL = './tanya-admin/?source=lp1_awareness';
+  const PICKUP_PAGE_URL = './cek-jadwal-pickup/?source=lp1_awareness';
 </script>
 <header class="topbar">
 <div class="container nav">
@@ -474,7 +472,7 @@
 <a class="nav-link" href="#cara-kerja">Cara Pickup</a>
 <a class="nav-link" href="#lokasi">Lokasi</a>
 <a class="nav-link" href="#faq">FAQ</a>
-<a class="btn btn-white btn-sm js-admin" href="#">Tanya Admin</a>
+<a class="btn btn-white btn-sm js-admin" href="./tanya-admin/?source=lp1_awareness">Tanya Admin</a>
 </div>
 </div>
 </header>
@@ -486,7 +484,7 @@
 <h1>Kirim Paket Sekarang Sudah Lebih Gampang dari Sebelumnya</h1>
 <p class="hero-sub">Tidak perlu ke konter, tidak perlu antre. Cukup chat Paxel, kurir datang ke lokasi kamu, paket dijemput dan langsung diproses.</p>
 <div class="cta-stack">
-<a class="btn btn-primary js-admin" href="#">Tanya Admin Dulu</a>
+<a class="btn btn-primary js-admin" href="./tanya-admin/?source=lp1_awareness">Tanya Admin Dulu</a>
 <a class="btn btn-ghost js-pickup" href="#">Langsung Pickup</a>
 </div>
 <div class="hero-note">
@@ -574,7 +572,7 @@
 </div>
 </div>
 </div>
-<a class="admin-link js-admin" href="#">Belum yakin? Tanya Admin →</a>
+<a class="admin-link js-admin" href="./tanya-admin/?source=lp1_awareness">Belum yakin? Tanya Admin →</a>
 </div>
 </section>
 <section class="section section-soft" id="cara-kerja">
@@ -602,7 +600,7 @@
 </li>
 </ol>
 <div class="cta-stack" style="justify-content:center;margin-top:28px">
-<a class="btn btn-primary js-admin" href="#">Tanya Admin Dulu</a>
+<a class="btn btn-primary js-admin" href="./tanya-admin/?source=lp1_awareness">Tanya Admin Dulu</a>
 <a class="btn btn-secondary js-pickup" href="#">Langsung Pickup</a>
 </div>
 </div>
@@ -671,7 +669,7 @@
 <div class="use-label">Paket Jualan &amp; Kantor</div>
 </div>
 </div>
-<div style="text-align:center"><a class="admin-link js-admin" href="#">Tanyakan jenis paket Anda →</a></div>
+<div style="text-align:center"><a class="admin-link js-admin" href="./tanya-admin/?source=lp1_awareness">Tanyakan jenis paket Anda →</a></div>
 </div>
 </section>
 <section class="section" id="bukti-pickup">
@@ -727,7 +725,7 @@
 <div style="display:flex;align-items:flex-start;gap:9px;font-size:14.5px;color:#166534;line-height:1.45"><span style="color:#159B57;font-weight:800;flex-shrink:0">✓</span>Slot pickup yang masih tersedia</div>
 <div style="display:flex;align-items:flex-start;gap:9px;font-size:14.5px;color:#166534;line-height:1.45"><span style="color:#159B57;font-weight:800;flex-shrink:0">✓</span>Jenis paket yang bisa dikirim</div>
 </div>
-<a class="btn btn-primary js-admin" href="#">Cek Dulu via WhatsApp</a>
+<a class="btn btn-primary js-admin" href="./tanya-admin/?source=lp1_awareness">Cek Dulu via WhatsApp</a>
 </div>
 </div>
 </section><section class="section section-soft" id="faq">
@@ -762,7 +760,7 @@
 <p>Jadwal pickup bergantung pada area dan slot layanan yang tersedia saat pemesanan.</p>
 </details>
 </div>
-<div style="text-align:center"><a class="btn btn-secondary js-admin" href="#" style="margin-top:24px">Tanya Admin</a></div>
+<div style="text-align:center"><a class="btn btn-secondary js-admin" href="./tanya-admin/?source=lp1_awareness" style="margin-top:24px">Tanya Admin</a></div>
 </div>
 </section>
 <section class="section">
@@ -775,7 +773,7 @@
 <p>Jaman sekarang, cukup chat admin, kurir datang ke lokasi kamu, dan paket langsung diproses. Tidak perlu ke konter, tidak perlu antre.</p>
 </div>
 <div class="cta-stack">
-<a class="btn btn-primary js-admin" href="#">Tanya Admin Dulu</a>
+<a class="btn btn-primary js-admin" href="./tanya-admin/?source=lp1_awareness">Tanya Admin Dulu</a>
 <a class="btn btn-ghost js-pickup" href="#">Langsung Pickup</a>
 </div>
 </div>
@@ -801,7 +799,7 @@
 <div>
 <h3>Bantuan</h3>
 <div class="footer-links">
-<a class="js-admin" href="#">Tanya Admin</a>
+<a class="js-admin" href="./tanya-admin/?source=lp1_awareness">Tanya Admin</a>
 <a class="js-location" href="#">Lokasi Paxel</a>
 <a href="https://paxel.co/id/syarat-dan-ketentuan" rel="noopener" target="_blank">Syarat &amp; Ketentuan</a>
 <a href="https://paxel.co/id/kebijakan-privasi" rel="noopener" target="_blank">Kebijakan Privasi</a>
@@ -812,7 +810,7 @@
 </div>
 </footer>
 <div aria-label="Aksi cepat" class="sticky-mobile">
-<a class="btn btn-primary js-admin" href="#">Tanya Admin Dulu</a>
+<a class="btn btn-primary js-admin" href="./tanya-admin/?source=lp1_awareness">Tanya Admin Dulu</a>
 <a class="btn btn-secondary js-pickup" href="#">Langsung Pickup</a>
 </div>
 <script>
