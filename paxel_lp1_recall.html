@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#5F51A1">
+  <title>Paxel Kuningan & Majalengka — Pick Up Paket via WhatsApp</title>
+  <meta name="description" content="Tidak perlu keluar rumah atau antre. WhatsApp Paxel, kirim detail paket, lalu kami bantu proses pickup sesuai area dan jadwal layanan.">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+  <!-- =========================================================
+   INLINE TANYA ADMIN PANEL
+   Source: awareness LP (Recall V2)
+   Data tracking: source=awareness di Google Form
+   ========================================================= -->
+  <style>
+    /* SLIDE-UP PANEL */
+    .adm-overlay{
+      position:fixed;inset:0;z-index:200;
+      background:rgba(47,38,94,.58);backdrop-filter:blur(4px);
+      display:flex;align-items:flex-end;justify-content:center;
+      opacity:0;pointer-events:none;
+      transition:opacity .28s ease;
+    }
+    .adm-overlay.show{opacity:1;pointer-events:all}
+    .adm-sheet{
+      width:100%;max-width:480px;
+      background:#fff;border-radius:24px 24px 0 0;
+      padding:0 18px calc(28px + env(safe-area-inset-bottom));
+      transform:translateY(100%);
+      transition:transform .38s cubic-bezier(.16,1,.3,1);
+      max-height:92dvh;overflow-y:auto;
+      touch-action:pan-y;
+    }
+    .adm-overlay.show .adm-sheet{transform:translateY(0)}
+    .adm-handle-wrap{
+      display:flex;justify-content:center;
+      padding:14px 0 8px;
+      position:sticky;top:0;background:#fff;z-index:1;
+      border-bottom:1px solid transparent;transition:border-color .2s;
+    }
+    .adm-handle-wrap.scrolled{border-bottom-color:#E7E3EF}
+    .adm-handle{width:44px;height:5px;background:#E7E3EF;border-radius:999px}
+    .adm-top{
+      display:flex;align-items:center;justify-content:space-between;
+      margin-bottom:14px;padding-top:4px;
+    }
+    .adm-top-label{font-family:GothamPaxel,sans-serif;font-size:14px;font-weight:800;color:var(--ink)}
+    .adm-close{
+      width:32px;height:32px;border-radius:50%;
+      background:#F2EFFB;border:none;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      font-size:16px;color:var(--muted);line-height:1;
+    }
+    .adm-title{
+      font-family:GothamPaxel,sans-serif;
+      font-size:22px;font-weight:800;letter-spacing:-.03em;
+      line-height:1.18;color:var(--ink);margin-bottom:6px;
+    }
+    .adm-sub{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:20px}
+
+    /* FORM FIELDS */
+    .adm-field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;position:relative}
+    .adm-label{
+      font-size:10px;font-weight:800;text-transform:uppercase;
+      letter-spacing:.07em;color:#625a78;
+      display:flex;align-items:center;gap:5px;
+    }
+    .adm-label span{font-size:12px;letter-spacing:0}
+    .adm-input{
+      width:100%;border:1.5px solid #E7E3EF;background:#F8F7FC;
+      border-radius:14px;padding:12px 13px;min-height:46px;
+      outline:none;font-family:GothamPaxel,sans-serif;font-size:14px;
+      color:var(--ink);transition:.18s ease;-webkit-appearance:none;
+    }
+    .adm-input::placeholder{color:#aaa4bd;font-size:13px}
+    .adm-input:focus{
+      background:#fff;border-color:rgba(95,81,161,.55);
+      box-shadow:0 0 0 3px rgba(95,81,161,.12);
+    }
+    .adm-input.err{border-color:#e85c5c}
+    .adm-hint{font-size:10px;color:#8a849e;line-height:1.38;margin-top:1px}
+    .adm-err{display:none;font-size:10px;color:#e85c5c;line-height:1.35}
+    .adm-err.show{display:block}
+
+    /* AUTOCOMPLETE */
+    .adm-suggestions{
+      display:none;position:absolute;z-index:9999;
+      left:0;right:0;top:100%;margin-top:4px;
+      background:#fff;border:1.5px solid #E7E3EF;border-radius:14px;
+      overflow:hidden;box-shadow:0 14px 32px rgba(33,27,63,.13);
+      max-height:200px;overflow-y:auto;
+      -webkit-overflow-scrolling:touch;touch-action:pan-y;
+    }
+    .adm-suggestions.show{display:block}
+    .adm-sug-item{
+      width:100%;display:block;border:0;background:#fff;
+      color:var(--ink);text-align:left;padding:11px 13px;
+      font-family:GothamPaxel,sans-serif;font-size:13px;font-weight:700;
+      cursor:pointer;min-height:44px;line-height:1.3;
+    }
+    .adm-sug-item:hover{background:#F2EFFB}
+    .adm-sug-empty{padding:11px 13px;font-size:12px;color:var(--muted)}
+
+    /* COVERAGE */
+    .adm-coverage{
+      border-radius:14px;padding:10px 12px;
+      font-size:12px;line-height:1.45;font-weight:600;
+      margin-bottom:12px;
+    }
+    .adm-coverage strong{display:block;font-size:12.5px;margin-bottom:2px;font-weight:800}
+    .adm-coverage.wait{background:#fff8e6;border:1px solid #ffe2a3;color:#966400}
+    .adm-coverage.ok{background:#eafff1;border:1px solid #b9efca;color:#168348}
+    .adm-coverage.no{background:#fff1f1;border:1px solid #ffd0d0;color:#c0392b}
+
+    /* SUBMIT BUTTON */
+    .adm-btn{
+      width:100%;border:none;border-radius:16px;padding:15px 18px;
+      display:flex;align-items:center;justify-content:center;gap:9px;
+      background:var(--purple);color:#fff;
+      font-family:GothamPaxel,sans-serif;font-size:15px;font-weight:800;
+      cursor:pointer;min-height:50px;
+      box-shadow:0 8px 22px rgba(95,81,161,.24);
+      transition:transform .15s;
+    }
+    .adm-btn:active{transform:scale(.98)}
+    .adm-footer-note{font-size:10.5px;color:#8a849e;text-align:center;line-height:1.45;margin-top:10px}
+
+    /* SUCCESS */
+    .adm-success{
+      position:fixed;inset:0;z-index:300;
+      background:var(--purple-dark);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+      opacity:0;pointer-events:none;transition:opacity .3s;
+    }
+    .adm-success.show{opacity:1;pointer-events:all}
+    .adm-success-icon{
+      width:58px;height:58px;background:rgba(255,255,255,.13);border-radius:50%;
+      display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;
+      animation:admPop .4s cubic-bezier(.175,.885,.32,1.275) both;
+    }
+    @keyframes admPop{from{transform:scale(0)}to{transform:scale(1)}}
+    .adm-success-msg{font-size:15px;font-weight:800;color:#fff}
+    .adm-success-sub{font-size:13px;color:rgba(255,255,255,.6)}
+    @keyframes admShake{
+      0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}
+      40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}
+    }
+    .adm-shake{animation:admShake .35s ease both}
+  </style>
+  <style>
+    @font-face{font-family:GothamPaxel;src:url('https://paxel.co/fonts/gotham-book-webfont.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+    @font-face{font-family:GothamPaxel;src:url('https://paxel.co/fonts/gotham-medium-webfont.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+    @font-face{font-family:GothamPaxel;src:url('https://paxel.co/fonts/gotham-bold-webfont.woff2') format('woff2');font-weight:800;font-style:normal;font-display:swap}
+
+    :root{
+      --purple:#5F51A1;
+      --purple-dark:#40366F;
+      --purple-soft:#F2EFFB;
+      --red:#F05A67;
+      --red-dark:#D94754;
+      --yellow:#FFCA3A;
+      --yellow-soft:rgba(255,202,58,.18);
+      --ink:#29272F;
+      --muted:#6D6977;
+      --line:#E7E3EF;
+      --soft:#F8F7FB;
+      --white:#FFFFFF;
+      --success:#178B67;
+      --shadow:0 16px 40px rgba(47,38,78,.10);
+      --radius:24px;
+      --container:1160px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:GothamPaxel,Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.6}
+    img{display:block;max-width:100%}
+    a{text-decoration:none;color:inherit}
+    button,a{-webkit-tap-highlight-color:transparent}
+    .container{width:min(100% - 36px,var(--container));margin-inline:auto}
+    .section{padding:68px 0}
+    .section-soft{background:var(--soft)}
+    .section-purple{background:var(--purple);color:#fff}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:var(--purple-soft);color:var(--purple);font-size:12px;font-weight:800;letter-spacing:.03em;margin-bottom:16px}
+    .eyebrow.light{background:rgba(255,255,255,.13);color:#fff}
+    h1,h2,h3,p{margin-top:0}
+    h1{font-size:clamp(34px,8vw,58px);line-height:1.06;letter-spacing:-.035em;margin-bottom:18px}
+    h2{font-size:clamp(28px,6vw,42px);line-height:1.12;letter-spacing:-.025em;margin-bottom:14px}
+    h3{font-size:20px;line-height:1.25;margin-bottom:8px}
+    p{color:var(--muted);font-size:16px;margin-bottom:0}
+    .section-purple p{color:rgba(255,255,255,.78)}
+    .lead{font-size:17px;line-height:1.65;max-width:680px}
+    .section-head{max-width:760px;margin-bottom:30px}
+    .section-head.center{text-align:center;margin-inline:auto;margin-bottom:36px}
+
+    .topbar{position:sticky;top:0;z-index:50;background:rgba(95,81,161,.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.12)}
+    .nav{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .brand img{width:116px;height:auto}
+    .nav-actions{display:flex;gap:10px;align-items:center}
+    .nav-link{display:none;color:#fff;font-size:14px;font-weight:600}
+
+    .btn{min-height:52px;border-radius:14px;padding:13px 18px;display:inline-flex;align-items:center;justify-content:center;gap:9px;font-size:15px;font-weight:800;border:1px solid transparent;transition:.2s ease;cursor:pointer;text-align:center}
+    .btn:hover{transform:translateY(-1px)}
+    .btn-primary{background:var(--purple);color:#fff;box-shadow:0 12px 24px rgba(95,81,161,.25)}
+    .btn-primary:hover{background:var(--purple-dark)}
+    .btn-secondary{background:#fff;color:var(--purple);border-color:#D7D0EA}
+    .btn-secondary:hover{border-color:var(--purple)}
+    .btn-white{background:#fff;color:var(--purple)}
+    .btn-ghost{background:transparent;border-color:rgba(255,255,255,.45);color:#fff}
+    .btn-sm{min-height:42px;padding:9px 14px;font-size:13px;border-radius:12px}
+    .btn-block{width:100%}
+    .cta-stack{display:grid;gap:10px;margin-top:22px}
+
+    .hero{position:relative;overflow:hidden;background:linear-gradient(145deg,#4E438D 0%,#6657A9 58%,#7869BB 100%);color:#fff;padding:42px 0 52px}
+    .hero::before{content:"";position:absolute;width:360px;height:360px;border-radius:50%;background:rgba(255,255,255,.06);right:-150px;top:-120px}
+    .hero::after{content:"";position:absolute;width:250px;height:250px;border-radius:50%;background:rgba(240,90,103,.15);left:-130px;bottom:-150px}
+    .hero-grid{position:relative;z-index:1;display:grid;gap:30px;align-items:center}
+    .hero-copy p{color:rgba(255,255,255,.86)}
+    .hero-sub{font-size:17px;max-width:620px}
+    .hero-note{display:flex;align-items:flex-start;gap:9px;margin-top:14px;font-size:13px;color:rgba(255,255,255,.78)}
+    .hero-note svg{flex:0 0 18px;margin-top:2px}
+    .trust-row{display:grid;grid-template-columns:1fr;gap:10px;margin-top:24px}
+    .trust-chip{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:12px 14px;font-size:13px;font-weight:700}
+    .trust-chip svg{width:20px;height:20px;flex:0 0 20px}
+
+    .recall-strip{background:#fff;border-bottom:1px solid var(--line)}
+    .recall-inner{min-height:62px;display:flex;align-items:center;justify-content:center;padding:13px 0;text-align:center}
+    .recall-copy{margin:0;color:var(--purple-dark);font-size:15px;line-height:1.45;font-weight:600}
+    .recall-copy strong{color:var(--purple);font-weight:800}
+
+    .visual-frame{border-radius:28px;overflow:hidden;box-shadow:0 26px 56px rgba(21,15,47,.28);background:#fff}
+    .visual-placeholder{min-height:420px;padding:28px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;background:
+      linear-gradient(180deg,rgba(95,81,161,.05),rgba(95,81,161,.16)),
+      repeating-linear-gradient(135deg,#F8F6FC 0 16px,#F2EFF9 16px 32px);color:var(--ink)}
+    .visual-placeholder::before{content:"VISUAL PLACEHOLDER";position:absolute;top:18px;left:18px;padding:6px 9px;border-radius:999px;background:#fff;color:var(--purple);font-size:10px;font-weight:800;letter-spacing:.08em;box-shadow:0 6px 18px rgba(0,0,0,.08)}
+    .visual-placeholder h3{font-size:18px;color:var(--purple);margin-bottom:8px}
+    .visual-placeholder p{font-size:13px;line-height:1.55;color:#595368}
+    .placeholder-spec{margin-top:12px;display:grid;gap:7px;font-size:12px;color:#595368}
+    .placeholder-spec strong{color:var(--ink)}
+
+    .problem-grid,.benefit-grid{display:grid;gap:14px}
+    .card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 10px 28px rgba(47,38,78,.05)}
+    .icon-wrap{width:48px;height:48px;border-radius:14px;background:var(--purple-soft);display:grid;place-items:center;margin-bottom:16px;color:var(--purple)}
+    .icon-wrap svg{width:24px;height:24px}
+    .card p{font-size:14px;line-height:1.55}
+
+    .compare-wrap{display:grid;gap:14px}
+    .compare-card{border-radius:22px;padding:22px;border:1px solid var(--line)}
+    .compare-card.old{background:#F1F0F3;color:#56515E}
+    .compare-card.new{background:var(--purple-soft);border-color:#DCD5F0;color:var(--purple-dark)}
+    .compare-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+    .compare-title span{font-size:12px;font-weight:800;padding:6px 10px;border-radius:999px;background:#fff}
+    .flow-list{display:grid;gap:10px}
+    .flow-item{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.72);border-radius:14px;padding:12px 14px;font-size:14px;font-weight:700}
+    .flow-index{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#fff;font-size:12px;font-weight:800;flex:0 0 28px}
+    .new .flow-index{background:var(--purple);color:#fff}
+
+    .process{display:grid;gap:16px}
+    .step{position:relative;background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px}
+    .step-number{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--purple);color:#fff;font-size:13px;font-weight:800;margin-bottom:15px}
+    .step p{font-size:14px}
+
+    .proof-stats{display:grid;grid-template-columns:1fr;gap:12px;margin-top:28px}
+    .stat{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px}
+    .stat img{width:48px;height:48px;object-fit:contain}
+    .stat strong{display:block;font-size:22px;color:var(--purple);line-height:1.1}
+    .stat span{font-size:12px;color:var(--muted)}
+
+    .use-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .use-tile{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 4px 14px rgba(47,38,94,.06)}
+    .use-image{
+      aspect-ratio:1/1;
+      overflow:hidden;
+      background:linear-gradient(145deg,#F2EFFB,#E8E2F5);
+      display:grid;place-items:center;
+    }
+    .use-image img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+      display:block;
+      transition:transform .3s ease;
+    }
+    .use-tile:hover .use-image img{transform:scale(1.04)}
+    .use-label{
+      padding:11px 12px;
+      font-size:13px;
+      font-weight:800;
+      text-align:center;
+      color:var(--ink);
+      line-height:1.3;
+    }
+    @media(max-width:380px){
+      .use-grid{gap:8px}
+      .use-label{font-size:12px;padding:10px}
+    }
+
+    .proof-grid{display:grid;gap:16px}
+    .quote-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:var(--shadow)}
+    .quote-mark{font-size:44px;color:var(--purple);line-height:.7;margin-bottom:14px}
+    .quote{font-size:17px;color:var(--ink);line-height:1.6;margin-bottom:16px}
+    .quote-source{font-size:13px;color:var(--muted);font-weight:700}
+
+    .location-card{margin-top:22px;display:grid;gap:16px;align-items:center;background:var(--purple-soft);border:1px solid #DCD5F0;border-radius:22px;padding:22px}
+    .location-main{display:flex;align-items:flex-start;gap:14px}
+    .location-icon{width:46px;height:46px;flex:0 0 46px;border-radius:14px;background:var(--purple);color:#fff;display:grid;place-items:center}
+    .location-icon svg{width:23px;height:23px}
+    .location-copy h3{font-size:19px;margin-bottom:6px;color:var(--purple-dark)}
+    .location-copy p{font-size:15px;line-height:1.58}
+    .location-kicker{display:block;margin-bottom:5px;color:var(--purple);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+    .location-btn{width:100%}
+
+    .faq{display:grid;gap:10px}
+    details{border:1px solid var(--line);border-radius:16px;background:#fff;padding:0 18px}
+    summary{list-style:none;cursor:pointer;padding:18px 30px 18px 0;font-weight:800;position:relative;font-size:15px}
+    summary::-webkit-details-marker{display:none}
+    summary::after{content:"+";position:absolute;right:0;top:50%;transform:translateY(-50%);font-size:24px;color:var(--purple)}
+    details[open] summary::after{content:"–"}
+    details p{padding:0 0 18px;font-size:14px;line-height:1.6}
+
+    .final-cta{border-radius:28px;padding:32px;background:linear-gradient(145deg,#5F51A1 0%,#3A2F72 100%);position:relative;overflow:hidden}
+    .final-cta::before{content:"";position:absolute;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,var(--yellow),transparent 72%);right:-80px;top:-80px;opacity:.22;pointer-events:none}
+    .final-cta::after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.07);left:-60px;bottom:-80px;pointer-events:none}
+    .final-cta-inner{position:relative;z-index:1;display:grid;gap:22px;align-items:center}
+    .final-cta h2{color:#fff}
+    .final-cta p{color:rgba(255,255,255,.82);font-size:15px;line-height:1.58}
+    .final-cta .eyebrow.light{background:rgba(255,202,58,.18);color:var(--yellow);border:1px solid rgba(255,202,58,.3)}
+
+    footer{background:#352C61;color:#fff;padding:46px 0 100px}
+    .footer-grid{display:grid;gap:26px}
+    .footer-logo{width:118px;margin-bottom:14px}
+    footer p,footer a{color:rgba(255,255,255,.72);font-size:13px}
+    .footer-links{display:grid;gap:10px}
+    .footer-note{margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,.14);font-size:12px;color:rgba(255,255,255,.55)}
+
+    .sticky-mobile{position:fixed;left:0;right:0;bottom:0;z-index:60;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:9px}
+    .sticky-mobile .btn{min-height:48px;font-size:13px;padding-inline:10px}
+
+    .admin-link{display:inline-flex;align-items:center;gap:7px;color:var(--purple);font-weight:800;font-size:14px;margin-top:16px}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+    @media(min-width:700px){
+      .section{padding:84px 0}
+      .nav-link{display:inline-flex}
+      .hero{padding:68px 0 72px}
+      .hero-grid{grid-template-columns:1.05fr .95fr;gap:48px}
+      .cta-stack{grid-template-columns:auto auto;justify-content:start}
+      .trust-row{grid-template-columns:repeat(3,1fr)}
+      .problem-grid,.benefit-grid{grid-template-columns:repeat(3,1fr)}
+      .compare-wrap{grid-template-columns:1fr 1fr}
+      .process{grid-template-columns:repeat(3,1fr)}
+      .proof-stats{grid-template-columns:repeat(3,1fr)}
+      .proof-grid{grid-template-columns:1.1fr .9fr}
+      .location-card{grid-template-columns:1fr auto;padding:24px 26px}
+      .location-btn{width:auto;min-width:176px}
+      .final-cta-inner{grid-template-columns:1fr auto}
+      .footer-grid{grid-template-columns:1.3fr .8fr .8fr}
+      .sticky-mobile{display:none}
+      footer{padding-bottom:46px}
+    }
+  </style>
+</head>
+<body>
+  <script>document.documentElement.classList.add('js')</script>
+
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="Paxel Kuningan dan Majalengka">
+        <img src="https://paxel.co/images/icon/paxel_logo_whitetext.png" alt="Paxel" width="116" height="39">
+      </a>
+      <div class="nav-actions">
+        <a class="nav-link" href="#cara-kerja">Cara Pickup</a>
+        <a class="nav-link" href="#lokasi">Lokasi</a>
+        <a class="nav-link" href="#faq">FAQ</a>
+        <a class="btn btn-white btn-sm js-admin" href="#">Tanya Admin</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow light">Paxel Kuningan &amp; Majalengka</span>
+          <h1>Kirim Paket Sekarang Sudah Lebih Gampang dari Sebelumnya</h1>
+          <p class="hero-sub">Tidak perlu ke konter, tidak perlu antre. Cukup chat Paxel, kurir datang ke lokasi kamu, paket dijemput dan langsung diproses.</p>
+          <div class="cta-stack">
+            <a class="btn btn-primary js-admin" href="#">Tanya Admin Dulu</a>
+            <a class="btn btn-ghost js-pickup" href="#">Langsung Pickup</a>
+          </div>
+          <div class="hero-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+            <span>Lebih gampang, pasti cepat, aman, dan garansi terjamin.</span>
+          </div>
+          <div class="trust-row">
+            <div class="trust-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h13M12 5l7 7-7 7"/></svg>
+              Dijemput ke lokasi
+            </div>
+            <div class="trust-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              Pasti cepat diproses
+            </div>
+            <div class="trust-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 7v5c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V7l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg>
+              Garansi terjamin
+            </div>
+          </div>
+        </div>
+
+        <div class="visual-frame" aria-label="Visual hero pickup Paxel">
+          <img src="img/Hero_Pickup_di_Rumah.webp"
+            alt="Kurir Paxel menjemput paket dari rumah customer"
+            width="750" height="940"
+            style="width:100%;height:auto;display:block;border-radius:28px"
+            fetchpriority="high">
+        </div>
+      </div>
+    </section>
+
+    <div class="recall-strip" aria-label="Pesan utama Paxel pickup">
+      <div class="container recall-inner">
+        <p class="recall-copy">Sekarang kirim paket tidak harus keluar rumah. <strong>Chat Paxel → kurir jemput → selesai.</strong></p>
+      </div>
+    </div>
+
+    <section class="section section-soft">
+      <div class="container">
+        <div class="section-head center">
+          <span class="eyebrow">Kebiasaan yang sudah jalan, tapi bisa lebih mudah</span>
+          <h2>Cara Lama Memang Berjalan. Tapi Ada yang Lebih Efisien Sekarang.</h2>
+          <p class="lead">Kalau selama ini sudah terbiasa kirim paket sendiri ke konter — itu bukan salah. Hanya saja sekarang ada cara yang menghemat waktu dan tenaga.</p>
+        </div>
+        <div class="problem-grid">
+          <article class="card">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            </div>
+            <h3>Waktu yang Bisa Dipakai untuk Hal Lain</h3>
+            <p>Waktu tempuh ke konter dan antre bisa mencapai 30–60 menit hanya untuk satu kiriman.</p>
+          </article>
+          <article class="card">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8h16v12H4z"/><path d="m4 8 4-4h8l4 4M12 4v4"/></svg>
+            </div>
+            <h3>Paket Bisa Dijemput dari Lokasi Kamu</h3>
+            <p>Tidak perlu bawa paket keluar. Kurir datang ke rumah, kantor, atau toko kamu.</p>
+          </article>
+          <article class="card">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 20v-2a4 4 0 0 1 4-4h2"/><circle cx="9" cy="7" r="3"/><path d="M14 4h6v6h-6zM16 14h4v6h-4z"/></svg>
+            </div>
+            <h3>Ongkir dan Jadwal Bisa Dicek Dulu</h3>
+            <p>Sebelum pickup, admin bantu cek area, estimasi ongkir, dan slot yang tersedia.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Upgrade cara kirim kamu</span>
+          <h2>Masih Kirim Sendiri ke Konter? Sekarang Ada Cara yang Lebih Praktis.</h2>
+          <p class="lead">Bukan berarti cara lama salah. Tapi kalau ada yang lebih mudah, lebih cepat, dan lebih aman — kenapa tidak dicoba?</p>
+        </div>
+        <div class="compare-wrap">
+          <div class="compare-card old">
+            <div class="compare-title"><h3>Cara Lama</h3><span>Lebih banyak langkah</span></div>
+            <div class="flow-list">
+              <div class="flow-item"><span class="flow-index">1</span>Keluar rumah</div>
+              <div class="flow-item"><span class="flow-index">2</span>Bawa paket sendiri</div>
+              <div class="flow-item"><span class="flow-index">3</span>Datang ke counter</div>
+              <div class="flow-item"><span class="flow-index">4</span>Menunggu antrean</div>
+            </div>
+          </div>
+          <div class="compare-card new">
+            <div class="compare-title"><h3>Lewat Paxel</h3><span>Lebih sederhana</span></div>
+            <div class="flow-list">
+              <div class="flow-item"><span class="flow-index">1</span>WhatsApp Paxel</div>
+              <div class="flow-item"><span class="flow-index">2</span>Kirim detail pickup</div>
+              <div class="flow-item"><span class="flow-index">3</span>Kurir datang</div>
+              <div class="flow-item"><span class="flow-index">4</span>Paket dijemput</div>
+            </div>
+          </div>
+        </div>
+        <a class="admin-link js-admin" href="#">Belum yakin? Tanya Admin →</a>
+      </div>
+    </section>
+
+    <section class="section section-soft" id="cara-kerja">
+      <div class="container">
+        <div class="section-head center">
+          <span class="eyebrow">Hanya tiga langkah</span>
+          <h2>Semudah Chat. Paket Dijemput.</h2>
+          <p class="lead">Tidak perlu install app, tidak perlu ke konter. Cukup WhatsApp admin — sisanya Paxel yang urus.</p>
+        </div>
+        <div class="process">
+          <article class="step">
+            <div class="step-number">1</div>
+            <h3>Kirim Detail Paket</h3>
+            <p>Kirim alamat pickup, tujuan, dan informasi paket lewat WhatsApp.</p>
+          </article>
+          <article class="step">
+            <div class="step-number">2</div>
+            <h3>Jadwalkan Pickup</h3>
+            <p>Admin membantu menyesuaikan area dan jadwal yang tersedia.</p>
+          </article>
+          <article class="step">
+            <div class="step-number">3</div>
+            <h3>Paket Dijemput</h3>
+            <p>Kurir datang, mengambil paket, lalu kiriman masuk proses.</p>
+          </article>
+        </div>
+        <div class="cta-stack" style="justify-content:center;margin-top:28px">
+          <a class="btn btn-primary js-admin" href="#">Tanya Admin Dulu</a>
+          <a class="btn btn-secondary js-pickup" href="#">Langsung Pickup</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head center">
+          <span class="eyebrow">Kenapa pilih Paxel sekarang</span>
+          <h2>Lebih Gampang, Pasti Cepat, Lebih Aman, Garansi Terjamin</h2>
+        </div>
+        <div class="benefit-grid" style="grid-template-columns:repeat(2,1fr)">
+          <article class="card">
+            <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10M9 20v-6h6v6"/></svg></div>
+            <h3>Lebih Gampang</h3>
+            <p>Pickup dimulai dari chat. Tidak perlu keluar, tidak perlu antre.</p>
+          </article>
+          <article class="card">
+            <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg></div>
+            <h3>Pasti Cepat</h3>
+            <p>Paket diproses sesuai jadwal. Tracking aktif begitu kurir menjemput.</p>
+          </article>
+          <article class="card">
+            <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 7v5c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V7l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+            <h3>Lebih Aman</h3>
+            <p>Paket ditangani melalui proses operasional Paxel yang sudah teruji.</p>
+          </article>
+          <article class="card">
+            <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><path d="M12 3 4 7v5c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V7z"/></svg></div>
+            <h3>Garansi Terjamin</h3>
+            <p>Refund tersedia jika ada keterlambatan sesuai ketentuan layanan Paxel.</p>
+          </article>
+        </div>
+
+        <div class="proof-stats">
+          <div class="stat">
+            <img src="https://paxel.co/images/content/ic-users.svg" alt="Ikon pengguna Paxel" loading="lazy" width="48" height="48">
+            <div><strong>2.9jt++</strong><span>Pengguna Paxel</span></div>
+          </div>
+          <div class="stat">
+            <img src="https://paxel.co/images/content/ic-shipments.svg" alt="Ikon pengiriman Paxel" loading="lazy" width="48" height="48">
+            <div><strong>32jt++</strong><span>Pengiriman</span></div>
+          </div>
+          <div class="stat">
+            <img src="https://paxel.co/images/content/ic-ontimedelivery.svg" alt="Ikon pengiriman tepat waktu" loading="lazy" width="48" height="48">
+            <div><strong>99,5%</strong><span>Pengiriman tepat waktu</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft">
+      <div class="container">
+        <div class="section-head center">
+          <span class="eyebrow">Sekarang bisa lebih mudah</span>
+          <h2>Paket Apa Saja Bisa Dijemput dari Lokasi Kamu</h2>
+          <p class="lead">Jaman sekarang, tidak perlu lagi antre di konter. Cukup siapkan paket — Paxel bantu jemput dan proses pengirimannya.</p>
+        </div>
+        <div class="use-grid">
+          <div class="use-tile">
+            <div class="use-image">
+              <img src="img/paxel-tile-dokumen.webp" alt="Pengiriman dokumen via Paxel" loading="lazy" width="400" height="400">
+            </div>
+            <div class="use-label">Dokumen</div>
+          </div>
+          <div class="use-tile">
+            <div class="use-image">
+              <img src="img/paxel-tile-makanan.webp" alt="Pengiriman makanan dan oleh-oleh via Paxel" loading="lazy" width="400" height="400">
+            </div>
+            <div class="use-label">Makanan &amp; Oleh-oleh</div>
+          </div>
+          <div class="use-tile">
+            <div class="use-image">
+              <img src="img/paxel-tile-hadiah.webp" alt="Pengiriman hadiah dan barang keluarga via Paxel" loading="lazy" width="400" height="400">
+            </div>
+            <div class="use-label">Hadiah &amp; Barang Keluarga</div>
+          </div>
+          <div class="use-tile">
+            <div class="use-image">
+              <img src="img/paxel-tile-jualan.webp" alt="Pengiriman paket jualan dan kantor via Paxel" loading="lazy" width="400" height="400">
+            </div>
+            <div class="use-label">Paket Jualan &amp; Kantor</div>
+          </div>
+        </div>
+        </div>
+        <div style="text-align:center"><a class="admin-link js-admin" href="#">Tanyakan jenis paket Anda →</a></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Bukti proses nyata</span>
+          <h2>Dari WhatsApp Sampai Paket Dijemput</h2>
+          <p class="lead">Gunakan foto pickup dan chat asli agar customer melihat prosesnya benar-benar berjalan.</p>
+        </div>
+        <div class="proof-grid">
+          <div class="visual-frame">
+            <img src="img/Foto_Pickup_Aktual_(section proof).webp"
+              alt="Kurir Paxel menjemput paket dari customer"
+              width="750" height="562"
+              style="width:100%;height:auto;display:block"
+              loading="lazy">
+          </div>
+          <div class="quote-card">
+            <div class="quote-mark">“</div>
+            <p class="quote">Biasanya saya harus keluar dulu untuk kirim paket. Sekarang cukup chat, lalu paket dijemput.</p>
+            <div class="quote-source">Customer Paxel — identitas dan sumber proof perlu diisi</div>
+            <div style="background:#F2EFFB;border:1px solid #DCD5F0;border-radius:16px;padding:18px;margin-top:20px">
+              <p style="font-size:12px;color:var(--purple);font-weight:800;margin-bottom:6px">📱 Screenshot Chat Pickup</p>
+              <p style="font-size:12px;color:var(--muted);line-height:1.5">Tambahkan screenshot chat WA asli di sini (750×940px, WebP). Sensor nomor HP dan alamat lengkap. Perlihatkan alur: tanya → admin respons → pickup dikonfirmasi.</p>
+            </div>
+            <a class="btn btn-primary btn-block js-admin" href="#" style="margin-top:18px">Tanya Admin Dulu</a>
+          </div>
+        </div>
+
+        <div class="location-card" id="lokasi">
+          <div class="location-main">
+            <div class="location-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            </div>
+            <div class="location-copy">
+              <span class="location-kicker">Lokasi Paxel</span>
+              <h3>Perlu Datang atau Ingin Cek Titik Layanan?</h3>
+              <p>Pickup tetap bisa dimulai lewat WhatsApp. Untuk melihat lokasi Paxel, buka titiknya di Google Maps.</p>
+            </div>
+          </div>
+          <a class="btn btn-secondary location-btn js-location" href="#">Buka Google Maps</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- DECISION SAFETY -->
+    <section class="section">
+      <div class="container">
+        <div style="background:#F3FDF6;border:1px solid #BFEACF;border-radius:24px;padding:28px 24px;max-width:680px;margin:0 auto">
+          <h2 style="font-size:clamp(22px,4vw,30px);color:#126C3A;margin-bottom:8px">✋ Belum harus langsung pickup.</h2>
+          <p style="font-size:16px;color:#23754A;margin-bottom:20px;line-height:1.55">Tanya admin dulu. Cek area pickup, estimasi ongkir, dan slot yang tersedia — tanpa harus langsung order.</p>
+          <div style="display:grid;gap:10px;margin-bottom:24px">
+            <div style="display:flex;align-items:flex-start;gap:10px;font-size:15px;color:#166534;line-height:1.45">
+              <span style="color:#159B57;font-weight:800;flex-shrink:0">✓</span>Area pickup dari lokasi kamu
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px;font-size:15px;color:#166534;line-height:1.45">
+              <span style="color:#159B57;font-weight:800;flex-shrink:0">✓</span>Estimasi ongkir sesuai rute
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px;font-size:15px;color:#166534;line-height:1.45">
+              <span style="color:#159B57;font-weight:800;flex-shrink:0">✓</span>Slot pickup yang masih tersedia
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px;font-size:15px;color:#166534;line-height:1.45">
+              <span style="color:#159B57;font-weight:800;flex-shrink:0">✓</span>Jenis paket yang bisa dikirim
+            </div>
+          </div>
+          <a class="btn btn-primary js-admin" href="#" style="display:inline-flex;align-items:center;gap:8px;font-size:15px">Cek Dulu via WhatsApp</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft" id="faq">      <div class="container">
+        <div class="section-head center">
+          <span class="eyebrow">Pertanyaan sebelum pickup</span>
+          <h2>Yang Sering Ditanyakan</h2>
+        </div>
+        <div class="faq">
+          <details>
+            <summary>Bisa pickup hanya satu paket?</summary>
+            <p>Bisa ditanyakan langsung ke admin. Ketersediaan pickup mengikuti area, jenis kiriman, dan jadwal layanan.</p>
+          </details>
+          <details>
+            <summary>Area saya termasuk layanan pickup?</summary>
+            <p>Kirim lokasi pickup ke admin agar area dapat dicek sebelum penjadwalan.</p>
+          </details>
+          <details>
+            <summary>Harus install aplikasi?</summary>
+            <p>Untuk alur landing page ini, Anda bisa memulai lewat WhatsApp. Admin akan membantu menjelaskan proses berikutnya.</p>
+          </details>
+          <details>
+            <summary>Bagaimana cara mengetahui ongkir?</summary>
+            <p>Kirim alamat pickup, tujuan, berat, dan ukuran paket. Admin akan membantu mengecek estimasinya.</p>
+          </details>
+          <details>
+            <summary>Paket apa saja yang bisa dikirim?</summary>
+            <p>Jenis paket mengikuti ketentuan layanan Paxel. Tanyakan detail barang Anda sebelum pickup.</p>
+          </details>
+          <details>
+            <summary>Kapan paket bisa dijemput?</summary>
+            <p>Jadwal pickup bergantung pada area dan slot layanan yang tersedia saat pemesanan.</p>
+          </details>
+        </div>
+        <div style="text-align:center"><a class="btn btn-secondary js-admin" href="#" style="margin-top:24px">Tanya Admin</a></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="final-cta">
+          <div class="final-cta-inner">
+            <div>
+              <span class="eyebrow light">Gampang, cepat, aman, dan garansi terjamin</span>
+              <h2>Sekarang Kirim Paket Tidak Perlu Repot Lagi</h2>
+              <p>Jaman sekarang, cukup chat admin, kurir datang ke lokasi kamu, dan paket langsung diproses. Tidak perlu ke konter, tidak perlu antre.</p>
+            </div>
+            <div class="cta-stack">
+              <a class="btn btn-primary js-admin" href="#">Tanya Admin Dulu</a>
+              <a class="btn btn-ghost js-pickup" href="#">Langsung Pickup</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <img class="footer-logo" src="https://paxel.co/images/icon/logo-white.svg" alt="Paxel" loading="lazy" width="118" height="40">
+          <p>Kirim paket lebih mudah dimulai dari WhatsApp. Hubungi admin untuk pickup, pertanyaan area, jadwal, ongkir, dan jenis kiriman.</p>
+        </div>
+        <div>
+          <h3>Layanan</h3>
+          <div class="footer-links">
+            <a href="https://paxel.co/id/layanan-kami" target="_blank" rel="noopener">Layanan Paxel</a>
+            <a href="https://paxel.co/id/lacak-pengiriman" target="_blank" rel="noopener">Lacak Pengiriman</a>
+            <a href="https://paxel.co/id/berita-dan-promo/area-jangkauan-paxel" target="_blank" rel="noopener">Area Jangkauan</a>
+          </div>
+        </div>
+        <div>
+          <h3>Bantuan</h3>
+          <div class="footer-links">
+            <a class="js-admin" href="#">Tanya Admin</a>
+            <a class="js-location" href="#">Lokasi Paxel</a>
+            <a href="https://paxel.co/id/syarat-dan-ketentuan" target="_blank" rel="noopener">Syarat &amp; Ketentuan</a>
+            <a href="https://paxel.co/id/kebijakan-privasi" target="_blank" rel="noopener">Kebijakan Privasi</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-note">© 2026 Paxel. Informasi pickup mengikuti area, jadwal, jenis barang, dan ketentuan layanan yang berlaku.</div>
+    </div>
+  </footer>
+
+  <div class="sticky-mobile" aria-label="Aksi cepat">
+    <a class="btn btn-primary js-admin" href="#">Tanya Admin Dulu</a>
+    <a class="btn btn-secondary js-pickup" href="#">Langsung Pickup</a>
+  </div>
+
+  <!-- =========================================================
+   TANYA ADMIN — INLINE SLIDE-UP PANEL
+   source=awareness → data masuk ke sheet awareness terpisah
+   ========================================================= -->
+  <iframe name="admFormTarget" style="display:none;width:0;height:0;border:0"></iframe>
+
+  <div class="adm-success" id="admSuccess">
+    <div class="adm-success-icon">✓</div>
+    <div class="adm-success-msg">Membuka WhatsApp…</div>
+    <div class="adm-success-sub">Admin siap bantu jawab pertanyaan kamu</div>
+  </div>
+
+  <div class="adm-overlay" id="admOverlay" onclick="admCloseOut(event)">
+    <div class="adm-sheet" id="admSheet">
+      <div class="adm-handle-wrap" id="admHandleWrap">
+        <div class="adm-handle"></div>
+      </div>
+
+      <div class="adm-top">
+        <span class="adm-top-label">Tanya Admin Dulu</span>
+        <button class="adm-close" onclick="admClose()" aria-label="Tutup">✕</button>
+      </div>
+
+      <h2 class="adm-title">Mau tanya dulu soal pickup Paxel?</h2>
+      <p class="adm-sub">Isi nama dan lokasi pickup. Admin langsung bantu cek coverage, ongkir, dan slot yang tersedia via WhatsApp.</p>
+
+      <!-- Nama -->
+      <div class="adm-field">
+        <label class="adm-label" for="adm-nama"><span>👤</span> Nama kamu</label>
+        <input class="adm-input" type="text" id="adm-nama" placeholder="Misal: Budi" autocomplete="given-name">
+        <div class="adm-err" id="adm-err-nama">Nama perlu diisi ya</div>
+      </div>
+
+      <!-- Lokasi Pickup -->
+      <div class="adm-field">
+        <label class="adm-label" for="adm-lokasi"><span>📍</span> Lokasi pickup</label>
+        <input class="adm-input" type="text" id="adm-lokasi"
+          placeholder="Contoh: Kuningan, Jawa Barat, Cigugur, Kec. Cigugur" autocomplete="off">
+        <div class="adm-suggestions" id="adm-sug-lokasi"></div>
+        <div class="adm-hint">Ketik lalu pilih dari rekomendasi. Format: Kota/Kab, Provinsi, Desa/Kelurahan, Kec. Kecamatan.</div>
+        <div class="adm-err" id="adm-err-lokasi">Lokasi pickup perlu diisi ya</div>
+      </div>
+
+      <!-- Coverage status -->
+      <div class="adm-coverage wait" id="adm-coverage">
+        <strong>Cek coverage otomatis</strong>Isi lokasi pickup untuk melihat status coverage Paxel.
+      </div>
+
+      <!-- Submit -->
+      <button class="adm-btn" id="adm-btn" onclick="admSubmit()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Tanya Admin via WhatsApp
+      </button>
+      <p class="adm-footer-note">Data hanya digunakan untuk membantu admin memahami lokasi pickup kamu.</p>
+    </div>
+  </div>
+
+  <script>
+    // ============================================================
+    // KONFIGURASI UTAMA — GANTI DI SINI
+    // ============================================================
+    const WHATSAPP_NUMBER = '628XXXXXXXXXXX'; // Ganti: 628xxxxxxxxxx
+    const LOCATION_URL    = 'https://share.google/QdEfj2MuMFK3P9Gt4';
+
+    // Google Form — awareness LP (sheet terpisah dari retargeting)
+    const ADM_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSeo5qD0zs6KbXJmy6yWJpWGgs7I5WiCrosdv3Q-I1nijXdbUg/formResponse";
+    const ADM_FORM_FIELDS = {
+      nama:           "entry.1504118713",
+      lokasiPickup:   "entry.233196206",
+      statusCoverage: "entry.1908001349",
+      pesanWhatsapp:  "entry.995128602",
+      source:         "entry.SOURCE_FIELD_ID" // Ganti entry ID source di Google Form kamu
+    };
+
+    // URL halaman cek jadwal pickup (redirect, tidak inline)
+    const CEK_JADWAL_URL = "cek-jadwal-pickup.html";
+
+    // ============================================================
+    // PICKUP & ADMIN LINKS (untuk tombol yang tidak buka panel)
+    // ============================================================
+    function waLink(msg){ return `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`; }
+
+    document.querySelectorAll('.js-pickup').forEach(el=>{
+      el.href = CEK_JADWAL_URL;
+      el.rel  = 'noopener';
+    });
+    document.querySelectorAll('.js-location').forEach(el=>{
+      el.href   = LOCATION_URL;
+      el.target = '_blank';
+      el.rel    = 'noopener';
+    });
+
+    // js-admin → buka panel (bukan redirect)
+    document.querySelectorAll('.js-admin').forEach(el=>{
+      el.addEventListener('click', function(e){
+        e.preventDefault();
+        admOpen();
+      });
+    });
+
+    // ============================================================
+    // PANEL OPEN / CLOSE / DRAG
+    // ============================================================
+    function admOpen(){
+      document.getElementById('admOverlay').classList.add('show');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('admSheet').scrollTop = 0;
+    }
+    function admClose(){
+      document.getElementById('admOverlay').classList.remove('show');
+      document.body.style.overflow = '';
+    }
+    function admCloseOut(e){
+      if(e.target === document.getElementById('admOverlay')) admClose();
+    }
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape') admClose(); });
+
+    // Scroll border
+    (function(){
+      const sheet = document.getElementById('admSheet');
+      const hw    = document.getElementById('admHandleWrap');
+      if(!sheet||!hw) return;
+      sheet.addEventListener('scroll',()=>{ hw.classList.toggle('scrolled', sheet.scrollTop>4); });
+    })();
+
+    // Drag to dismiss
+    (function(){
+      const sheet = document.getElementById('admSheet');
+      const hw    = document.getElementById('admHandleWrap');
+      if(!sheet||!hw) return;
+      let startY=0, curY=0, drag=false;
+      hw.addEventListener('touchstart',e=>{
+        if(sheet.scrollTop>0) return;
+        startY=e.touches[0].clientY; drag=true; sheet.style.transition='none';
+      },{passive:true});
+      document.addEventListener('touchmove',e=>{
+        if(!drag) return;
+        curY=e.touches[0].clientY-startY;
+        if(curY<0) curY=0;
+        sheet.style.transform=`translateY(${curY}px)`;
+      },{passive:true});
+      document.addEventListener('touchend',()=>{
+        if(!drag) return; drag=false;
+        sheet.style.transition=''; sheet.style.transform='';
+        if(curY>120) admClose();
+      });
+    })();
+
+    // ============================================================
+    // LOCATION DATABASE (dari paxel-locations.js jika ada,
+    // fallback ke array kosong — autocomplete tetap jalan)
+    // ============================================================
+    const ALL_LOCATIONS  = window.PAXEL_ALL_LOCATIONS  || [];
+    const COVERED_AREAS  = window.PAXEL_COVERED_AREAS  || [];
+
+    function admNormalize(str){
+      return (str||'').toLowerCase().normalize('NFD')
+        .replace(/[\u0300-\u036f]/g,'')
+        .replace(/kelurahan|desa|kecamatan/g,'')
+        .replace(/kabupaten/g,'kab')
+        .replace(/[^a-z0-9\s]/g,' ')
+        .replace(/\s+/g,' ').trim();
+    }
+    function admInList(list,text){
+      return list.some(i=>admNormalize(i)===admNormalize(text));
+    }
+    function admCoverage(text){
+      if(!text) return {status:'incomplete',label:'Belum lengkap'};
+      if(!admInList(ALL_LOCATIONS,text)) return {status:'unknown',covered:false,label:'Perlu dicek admin'};
+      if(admInList(COVERED_AREAS,text))  return {status:'covered',covered:true,label:'Tercover'};
+      return {status:'not_covered',covered:false,label:'Tidak tercover'};
+    }
+
+    function admRenderSug(keyword){
+      const box = document.getElementById('adm-sug-lokasi');
+      box.innerHTML='';
+      if(!keyword){ box.classList.remove('show'); return; }
+      const kw = admNormalize(keyword);
+      const matches = [...new Set(ALL_LOCATIONS.filter(Boolean))]
+        .filter(l=>admNormalize(l).includes(kw))
+        .sort((a,b)=>{
+          const as=admNormalize(a).startsWith(kw)?0:1;
+          const bs=admNormalize(b).startsWith(kw)?0:1;
+          return as-bs||a.length-b.length;
+        }).slice(0,8);
+      if(!matches.length){
+        box.innerHTML='<div class="adm-sug-empty">Lokasi tidak ditemukan di daftar wilayah</div>';
+        box.classList.add('show'); return;
+      }
+      matches.forEach(l=>{
+        const btn=document.createElement('button');
+        btn.type='button'; btn.className='adm-sug-item'; btn.textContent=l;
+        btn.addEventListener('click',()=>{
+          document.getElementById('adm-lokasi').value=l;
+          box.classList.remove('show'); box.innerHTML='';
+          document.getElementById('adm-err-lokasi').classList.remove('show');
+          admUpdateCoverage();
+        });
+        box.appendChild(btn);
+      });
+      box.classList.add('show');
+    }
+
+    function admUpdateCoverage(){
+      const box   = document.getElementById('adm-coverage');
+      const lokasi= document.getElementById('adm-lokasi').value.trim();
+      const cov   = admCoverage(lokasi);
+      if(cov.status==='incomplete'){
+        box.className='adm-coverage wait';
+        box.innerHTML='<strong>Cek coverage otomatis</strong>Isi lokasi pickup untuk melihat status coverage Paxel.';
+      } else if(cov.status==='covered'){
+        box.className='adm-coverage ok';
+        box.innerHTML=`<strong>Area tercover Paxel.</strong>Lokasi pickup ada di database coverage.<br><br><b>Lokasi:</b> ${lokasi}`;
+      } else if(cov.status==='not_covered'){
+        box.className='adm-coverage no';
+        box.innerHTML=`<strong>Area belum tercover Paxel.</strong>Lokasi ada di daftar wilayah, tapi belum masuk coverage.<br><br><b>Lokasi:</b> ${lokasi}`;
+      } else {
+        box.className='adm-coverage wait';
+        box.innerHTML=`<strong>Area perlu dicek admin.</strong>Lokasi belum ada di daftar wilayah.<br><br><b>Lokasi:</b> ${lokasi}`;
+      }
+    }
+
+    // Input listeners
+    const admLokasiEl = document.getElementById('adm-lokasi');
+    if(admLokasiEl){
+      admLokasiEl.addEventListener('input',()=>{
+        document.getElementById('adm-err-lokasi').classList.remove('show');
+        admRenderSug(admLokasiEl.value);
+        admUpdateCoverage();
+      });
+      admLokasiEl.addEventListener('focus',()=>admRenderSug(admLokasiEl.value));
+      admLokasiEl.addEventListener('blur',()=>setTimeout(()=>{
+        document.getElementById('adm-sug-lokasi').classList.remove('show');
+      },180));
+    }
+    document.getElementById('adm-nama')?.addEventListener('input',()=>{
+      document.getElementById('adm-err-nama').classList.remove('show');
+      document.getElementById('adm-nama').classList.remove('err');
+    });
+
+    // ============================================================
+    // SUBMIT — kirim ke Google Form (awareness) + buka WA
+    // ============================================================
+    function admSubmit(){
+      const nama   = document.getElementById('adm-nama').value.trim();
+      const lokasi = document.getElementById('adm-lokasi').value.trim();
+      let valid=true;
+
+      if(!nama){
+        document.getElementById('adm-err-nama').classList.add('show');
+        document.getElementById('adm-nama').classList.add('err');
+        valid=false;
+      }
+      if(!lokasi){
+        document.getElementById('adm-err-lokasi').classList.add('show');
+        document.getElementById('adm-lokasi').classList.add('err');
+        valid=false;
+      }
+      if(!valid){
+        const btn=document.getElementById('adm-btn');
+        btn.classList.add('adm-shake');
+        setTimeout(()=>btn.classList.remove('adm-shake'),400);
+        return;
+      }
+
+      const cov    = admCoverage(lokasi);
+      const covText= cov.status==='covered'?'Area tercover Paxel.':
+                     cov.status==='not_covered'?'Area belum tercover Paxel.':
+                     'Area perlu dicek admin.';
+      const msg = `Halo Paxel 👋\n\nSaya mau tanya-tanya dulu soal pickup Paxel.\n\n• *Nama*           : ${nama}\n• *Lokasi pickup*  : ${lokasi}\n• *Status coverage*: ${covText}\n\nMohon bantu info jadwal pickup, estimasi ongkir, dan ketentuannya ya. Terima kasih 🙏`;
+
+      // Kirim ke Google Form awareness
+      (function(){
+        const form=document.createElement('form');
+        form.method='POST'; form.action=ADM_FORM_ACTION;
+        form.target='admFormTarget'; form.style.display='none';
+        const add=(n,v)=>{const i=document.createElement('input');i.type='hidden';i.name=n;i.value=v||'';form.appendChild(i);};
+        add(ADM_FORM_FIELDS.nama, nama);
+        add(ADM_FORM_FIELDS.lokasiPickup, lokasi);
+        add(ADM_FORM_FIELDS.statusCoverage, covText);
+        add(ADM_FORM_FIELDS.pesanWhatsapp, msg);
+        add(ADM_FORM_FIELDS.source, 'awareness'); // pembeda awareness vs retargeting
+        document.body.appendChild(form); form.submit();
+        setTimeout(()=>form.remove(),2000);
+      })();
+
+      // Tampilkan success + redirect WA
+      document.getElementById('admSuccess').classList.add('show');
+      setTimeout(()=>{ window.location.href=waLink(msg); },1500);
+    }
+  </script>
+</body>
+</html>
