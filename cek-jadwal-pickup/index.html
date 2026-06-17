@@ -740,8 +740,20 @@ const GOOGLE_FORM_FIELDS = {
   asal: "entry.911966518",
   tujuan: "entry.193346608",
   statusCoverage: "entry.291026120",
-  pesanWhatsapp: "entry.2128533278"
+  pesanWhatsapp: "entry.2128533278",
+  source: "entry.80565895"
 };
+
+// ============================================================
+// SOURCE LANDING PAGE — HANYA DIKIRIM KE GOOGLE SHEET
+// ============================================================
+const SOURCE_MAP = {
+  lp1_awareness: "LP1_AWARENESS",
+  lp2_retargeting: "LP2_RETARGETING"
+};
+
+const SOURCE_KEY = new URLSearchParams(window.location.search).get("source");
+const LEAD_SOURCE = SOURCE_MAP[SOURCE_KEY] || "DIRECT_OR_UNKNOWN";
 
 // ============================================================
 // DATABASE LOKASI + COVERAGE
@@ -852,7 +864,7 @@ function renderLocationSuggestions(inputId, boxId) {
     .slice(0, 10);
 
   if (!matches.length) {
-    box.innerHTML = '<div class="suggestion-empty">Lokasi tidak ditemukan di daftar wilayah</div>';
+    box.innerHTML = '<div class="suggestion-empty">Lokasi belum muncul? Tulis lokasi Anda untuk kami cek detailnya.</div>';
     box.classList.add("show");
     return;
   }
@@ -921,12 +933,12 @@ function updateCoverageStatus() {
 
   if (asalCheck.status === "unknown" || tujuanCheck.status === "unknown") {
     box.className = "coverage-status wait";
-    box.innerHTML = `<strong>Area perlu dicek admin.</strong>Ada lokasi yang belum ada di daftar wilayah.<br><br><b>Asal:</b> ${asal} — ${asalCheck.label}<br><b>Tujuan:</b> ${tujuan} — ${tujuanCheck.label}`;
+    box.innerHTML = `<strong>Area perlu dicek admin.</strong>Ada lokasi yang belum muncul di daftar wilayah. Silakan lanjut chat admin untuk memastikan detail lokasi Anda.<br><br><b>Asal:</b> ${asal} — ${asalCheck.label}<br><b>Tujuan:</b> ${tujuan} — ${tujuanCheck.label}`;
     return;
   }
 
   box.className = "coverage-status no";
-  box.innerHTML = `<strong>Ada area yang belum tercover.</strong><b>Asal:</b> ${asal} — ${asalCheck.label}<br><b>Tujuan:</b> ${tujuan} — ${tujuanCheck.label}`;
+  box.innerHTML = `<strong>Ada area yang belum tercover.</strong>Silakan lanjut chat admin untuk memastikan lokasi dan layanan yang tersedia.<br><br><b>Asal:</b> ${asal} — ${asalCheck.label}<br><b>Tujuan:</b> ${tujuan} — ${tujuanCheck.label}`;
 }
 
 function sendToGoogleForm(data) {
@@ -953,6 +965,7 @@ function sendToGoogleForm(data) {
   appendInput(GOOGLE_FORM_FIELDS.tujuan, data.tujuan);
   appendInput(GOOGLE_FORM_FIELDS.statusCoverage, data.statusCoverage);
   appendInput(GOOGLE_FORM_FIELDS.pesanWhatsapp, data.pesanWhatsapp);
+  appendInput(GOOGLE_FORM_FIELDS.source, data.source);
 
   document.body.appendChild(form);
   form.submit();
@@ -1045,9 +1058,9 @@ function submitForm() {
   if (asalCheck.covered && tujuanCheck.covered) {
     statusCoverage = "Area tercover Paxel. Asal dan tujuan ada di database coverage.";
   } else if (asalCheck.status === "unknown" || tujuanCheck.status === "unknown") {
-    statusCoverage = `Perlu dicek admin. Asal: ${asalCheck.label}. Tujuan: ${tujuanCheck.label}.`;
+    statusCoverage = `Perlu dicek admin. Silakan pastikan detail lokasi dengan admin. Asal: ${asalCheck.label}. Tujuan: ${tujuanCheck.label}.`;
   } else {
-    statusCoverage = `Ada area yang belum tercover. Asal: ${asalCheck.label}. Tujuan: ${tujuanCheck.label}.`;
+    statusCoverage = `Ada area yang belum tercover. Silakan pastikan lokasi dan layanan yang tersedia dengan admin. Asal: ${asalCheck.label}. Tujuan: ${tujuanCheck.label}.`;
   }
 
   const cleanNumber = String(WA_NUMBER || "").replace(/\D/g, "");
@@ -1082,7 +1095,8 @@ function submitForm() {
     asal,
     tujuan,
     statusCoverage,
-    pesanWhatsapp: msg
+    pesanWhatsapp: msg,
+    source: LEAD_SOURCE
   };
 
   sendToGoogleForm(leadData);
