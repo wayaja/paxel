@@ -498,7 +498,11 @@
     // Lokasi tidak ada di ALL_LOCATIONS = Perlu dicek admin.
     // ============================================================
     const ALL_LOCATIONS = window.PAXEL_ALL_LOCATIONS || [];
-const COVERED_AREAS = window.PAXEL_COVERED_AREAS || [];
+    const COVERED_AREAS = window.PAXEL_COVERED_AREAS || [];
+
+    // Kedua halaman harus membaca database lokasi yang sama.
+    // Jika path asset salah, tampilkan peringatan agar hasil tidak diam-diam kosong.
+    const LOCATION_DATA_READY = ALL_LOCATIONS.length > 0;
 
     function val(id) {
       const el = document.getElementById(id);
@@ -550,7 +554,7 @@ const COVERED_AREAS = window.PAXEL_COVERED_AREAS || [];
         return {
           status: "unknown",
           covered: false,
-          label: "Perlu dicek admin"
+          label: "Lokasi tidak ada di daftar wilayah"
         };
       }
 
@@ -576,6 +580,12 @@ const COVERED_AREAS = window.PAXEL_COVERED_AREAS || [];
       const box = document.getElementById(boxId);
       if (!input || !box) return;
 
+      if (!LOCATION_DATA_READY) {
+        box.innerHTML = '<div class="suggestion-empty">Lokasi belum muncul? Tulis lokasi Anda untuk kami cek detailnya.</div>';
+        box.classList.add("show");
+        return;
+      }
+
       const keyword = normalizeText(input.value);
       box.innerHTML = "";
 
@@ -586,10 +596,18 @@ const COVERED_AREAS = window.PAXEL_COVERED_AREAS || [];
 
       const matches = getLocationList()
         .filter(lokasi => normalizeText(lokasi).includes(keyword))
-        .slice(0, 8);
+        .sort((a, b) => {
+          const na = normalizeText(a);
+          const nb = normalizeText(b);
+          const aStarts = na.startsWith(keyword) ? 0 : 1;
+          const bStarts = nb.startsWith(keyword) ? 0 : 1;
+          if (aStarts !== bStarts) return aStarts - bStarts;
+          return a.length - b.length;
+        })
+        .slice(0, 10);
 
       if (!matches.length) {
-        box.innerHTML = '<div class="suggestion-empty">Lokasi tidak ditemukan di daftar wilayah</div>';
+        box.innerHTML = '<div class="suggestion-empty">Lokasi belum muncul? Tulis lokasi Anda untuk kami cek detailnya.</div>';
         box.classList.add("show");
         return;
       }
@@ -639,6 +657,13 @@ const COVERED_AREAS = window.PAXEL_COVERED_AREAS || [];
       if (!box) return;
 
       const lokasi = val("lokasiPickup");
+
+      if (!LOCATION_DATA_READY) {
+        box.className = "coverage-status wait";
+        box.innerHTML = "<strong>Database lokasi belum terbaca.</strong>Periksa path file ../assets/paxel-locations.js pada server.";
+        return;
+      }
+
       const coverage = findCoverage(lokasi);
 
       if (coverage.status === "incomplete") {
@@ -660,7 +685,7 @@ const COVERED_AREAS = window.PAXEL_COVERED_AREAS || [];
       }
 
       box.className = "coverage-status wait";
-      box.innerHTML = `<strong>Area perlu dicek admin.</strong>Lokasi belum ada di daftar wilayah.<br><br><b>Lokasi:</b> ${lokasi}`;
+      box.innerHTML = `<strong>Lokasi akan dicek admin.</strong>Lokasi belum muncul di rekomendasi. Detail yang Anda tulis tetap akan kami cek.<br><br><b>Lokasi:</b> ${lokasi}`;
     }
 
     function getCoverageText(lokasi) {
@@ -674,7 +699,7 @@ const COVERED_AREAS = window.PAXEL_COVERED_AREAS || [];
         return "Area belum tercover Paxel.";
       }
 
-      return "Area perlu dicek admin.";
+      return "Lokasi akan dicek admin.";
     }
 
     function sendToGoogleForm(data) {
