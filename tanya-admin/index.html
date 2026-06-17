@@ -477,8 +477,6 @@
     // KONFIGURASI
     // ============================================================
     const WA_NUMBER = "6281111121232"; // Ganti dengan nomor WA admin, contoh: 62812xxxxxxxx
-    const SOURCE_PARAMS = new URLSearchParams(window.location.search);
-    const PAGE_SOURCE = SOURCE_PARAMS.get("source") || SOURCE_PARAMS.get("utm_source") || "direct";
 
     // ============================================================
     // GOOGLE FORM BARU - TANYA ADMIN
@@ -489,9 +487,17 @@
       lokasiPickup: "entry.233196206",
       statusCoverage: "entry.1908001349",
       pesanWhatsapp: "entry.995128602",
-      // Opsional: isi entry ID pertanyaan "Source" jika ingin kolom terpisah di Sheet.
-      source: ""
+      source: "entry.478492848"
     };
+
+    // Source hanya untuk Google Sheet, tidak dimasukkan ke pesan WhatsApp.
+    // Nilai dibatasi agar parameter URL tidak bisa mengirim label sembarang.
+    const SOURCE_MAP = Object.freeze({
+      lp1_awareness: "LP1_AWARENESS",
+      lp2_retargeting: "LP2_RETARGETING"
+    });
+    const SOURCE_KEY = new URLSearchParams(window.location.search).get("source");
+    const LEAD_SOURCE = SOURCE_MAP[SOURCE_KEY] || "DIRECT_OR_UNKNOWN";
 
     // ============================================================
     // DATABASE LOKASI + COVERAGE
@@ -685,7 +691,7 @@
 
       if (coverage.status === "not_covered") {
         box.className = "coverage-status no";
-        box.innerHTML = `<strong>Area belum tercover Paxel.</strong>Lokasi pickup ada di daftar wilayah, tapi belum masuk coverage Paxel.<br><br><b>Lokasi:</b> ${lokasi}`;
+        box.innerHTML = `<strong>Area belum tercover Paxel.</strong>Lokasi pickup ada di daftar wilayah, tapi belum masuk coverage Paxel. Silakan chat admin untuk memastikan lokasi Anda.<br><br><b>Lokasi:</b> ${lokasi}`;
         return;
       }
 
@@ -701,7 +707,7 @@
       }
 
       if (coverage.status === "not_covered") {
-        return "Area belum tercover Paxel.";
+        return "Area belum tercover Paxel. Silakan chat admin untuk memastikan lokasi Anda.";
       }
 
       return "Lokasi akan dicek admin.";
@@ -726,9 +732,7 @@
       appendInput(GOOGLE_FORM_FIELDS.lokasiPickup, data.lokasiPickup);
       appendInput(GOOGLE_FORM_FIELDS.statusCoverage, data.statusCoverage);
       appendInput(GOOGLE_FORM_FIELDS.pesanWhatsapp, data.pesanWhatsapp);
-      if (GOOGLE_FORM_FIELDS.source) {
-        appendInput(GOOGLE_FORM_FIELDS.source, data.source);
-      }
+      appendInput(GOOGLE_FORM_FIELDS.source, data.source);
 
       document.body.appendChild(form);
       form.submit();
@@ -746,7 +750,6 @@ Saya mau tanya-tanya dulu soal pickup Paxel.
 • *Nama*           : ${data.nama}
 • *Lokasi pickup*  : ${data.lokasiPickup}
 • *Status coverage*: ${data.statusCoverage}
-• *Source*         : ${data.source}
 
 Mohon bantu info jadwal pickup, estimasi ongkir, dan ketentuannya ya. Terima kasih 🙏`;
     }
@@ -783,8 +786,7 @@ Mohon bantu info jadwal pickup, estimasi ongkir, dan ketentuannya ya. Terima kas
       const msg = buildWhatsappMessage({
         nama,
         lokasiPickup,
-        statusCoverage,
-        source: PAGE_SOURCE
+        statusCoverage
       });
 
       const cleanNumber = String(WA_NUMBER || "").replace(/\D/g, "");
@@ -799,7 +801,7 @@ Mohon bantu info jadwal pickup, estimasi ongkir, dan ketentuannya ya. Terima kas
         lokasiPickup,
         statusCoverage,
         pesanWhatsapp: msg,
-        source: PAGE_SOURCE
+        source: LEAD_SOURCE
       });
 
       trackMetaLead();
