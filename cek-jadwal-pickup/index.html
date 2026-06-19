@@ -349,6 +349,67 @@ select {
   color:var(--purple);
 }
 
+
+
+/* Pilihan keperluan pengiriman */
+    .radio-group {
+      display:grid;
+      grid-template-columns:1fr;
+      gap:8px;
+      padding:10px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background:#fbfaff;
+      transition:.18s ease;
+    }
+
+    .radio-group:focus-within {
+      background:#fff;
+      border-color:rgba(95,81,161,.55);
+      box-shadow:0 0 0 3px rgba(95,81,161,.12);
+    }
+
+    .radio-group.invalid {
+      border-color:var(--danger);
+      background:#fff8f8;
+    }
+
+    .radio-option {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-height:42px;
+      padding:9px 10px;
+      border:1px solid var(--border);
+      border-radius:11px;
+      background:#fff;
+      color:var(--text);
+      font-size:13.5px;
+      font-weight:700;
+      line-height:1.35;
+      cursor:pointer;
+    }
+
+    .radio-option:has(input:checked) {
+      border-color:rgba(95,81,161,.55);
+      background:var(--soft);
+      color:var(--purple);
+    }
+
+    .radio-option input[type="radio"] {
+      width:18px;
+      height:18px;
+      min-height:18px;
+      padding:0;
+      margin:0;
+      border:0;
+      box-shadow:none;
+      accent-color:var(--purple);
+      flex:0 0 18px;
+      -webkit-appearance:auto;
+      appearance:auto;
+    }
+
 .btn-wa {
   width:100%;
   border:0;
@@ -621,6 +682,25 @@ select {
         <div class="err-msg" id="err-nama">Nama perlu diisi ya</div>
       </div>
 
+      <div class="field" id="field-keperluan">
+        <div class="field-label" id="label-keperluan"><span>🎯</span> Kamu kirim untuk keperluan</div>
+        <div class="radio-group" id="keperluanGroup" role="radiogroup" aria-labelledby="label-keperluan">
+          <label class="radio-option">
+            <input type="radio" name="keperluan" value="Pribadi">
+            <span>Pribadi</span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="keperluan" value="Jualan / usaha">
+            <span>Jualan / usaha</span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="keperluan" value="Kantor / pekerjaan">
+            <span>Kantor / pekerjaan</span>
+          </label>
+        </div>
+        <div class="err-msg" id="err-keperluan">Pilih keperluan pengiriman dulu ya</div>
+      </div>
+
       <div class="field">
         <label class="field-label" for="jenis"><span>📦</span> Jenis kiriman</label>
         <select id="jenis">
@@ -733,6 +813,7 @@ const WA_NUMBER = "6281111121232"; // Ganti dengan nomor WA admin, contoh: 62812
 const GOOGLE_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSd3t38LKKhztHDZtZ7pST6HJNSnsXR4eiICBbdywv2B4GycMg/formResponse";
 const GOOGLE_FORM_FIELDS = {
   nama: "entry.1709834578",
+  keperluan: "entry.1957183502",
   jenis: "entry.832812738",
   ukuran: "entry.525353575",
   tanggalPickup: "entry.535021562",
@@ -771,6 +852,19 @@ function val(id) {
   const el = document.getElementById(id);
   return el ? el.value.trim() : "";
 }
+
+function getKeperluan() {
+  const selected = document.querySelector('input[name="keperluan"]:checked');
+  return selected ? selected.value : "";
+}
+
+function showKeperluanError(show) {
+  const err = document.getElementById("err-keperluan");
+  const group = document.getElementById("keperluanGroup");
+  if (err) err.classList.toggle("show", !!show);
+  if (group) group.classList.toggle("invalid", !!show);
+}
+
 
 function showErr(id, show) {
   const err = document.getElementById("err-" + id);
@@ -957,6 +1051,7 @@ function sendToGoogleForm(data) {
   };
 
   appendInput(GOOGLE_FORM_FIELDS.nama, data.nama);
+  appendInput(GOOGLE_FORM_FIELDS.keperluan, data.keperluan);
   appendInput(GOOGLE_FORM_FIELDS.jenis, data.jenis);
   appendInput(GOOGLE_FORM_FIELDS.ukuran, data.ukuran);
   appendInput(GOOGLE_FORM_FIELDS.tanggalPickup, data.tanggalPickup);
@@ -1016,6 +1111,7 @@ Mohon bantu cek jadwal pickup & estimasi ongkir ya. Terima kasih! 🙏`;
 
 function submitForm() {
   const nama = val("nama");
+  const keperluan = getKeperluan();
   const jenis = val("jenis");
   const ukuran = val("ukuran");
   const tgl = val("tgl");
@@ -1037,6 +1133,11 @@ function submitForm() {
   requiredIds.forEach(id => {
     if (!validateRequired(id)) valid = false;
   });
+
+  if (!keperluan) {
+    showKeperluanError(true);
+    valid = false;
+  }
 
   updateCoverageStatus();
 
@@ -1088,6 +1189,7 @@ function submitForm() {
 
   const leadData = {
     nama,
+    keperluan,
     jenis,
     ukuran,
     tanggalPickup: tglFormatted,
@@ -1129,6 +1231,10 @@ function submitForm() {
       updateCoverageStatus();
     });
   }
+});
+
+document.querySelectorAll('input[name="keperluan"]').forEach(radio => {
+  radio.addEventListener("change", () => showKeperluanError(false));
 });
 
 setupLocationAutocomplete("asalDetail", "suggest-asalDetail");
