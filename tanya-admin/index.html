@@ -452,8 +452,15 @@
 </style>
   <!-- Meta Pixel Placeholder -->
   <script>
-    const META_PIXEL_ID = ""; // Isi dengan Meta Pixel ID kamu, contoh: "123456789012345"
+    // ============================================================
+    // META PIXEL — KONFIGURASI
+    // Isi Pixel ID kamu di bawah ini. Cukup sekali di sini.
+    // ============================================================
+    const META_PIXEL_ID = "1344216904307465"; // Contoh: "1234567890123456"
 
+    // ============================================================
+    // INISIALISASI PIXEL — JANGAN UBAH DI BAWAH INI
+    // ============================================================
     if (META_PIXEL_ID) {
       !function(f,b,e,v,n,t,s)
       {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -466,11 +473,13 @@
 
       fbq('init', META_PIXEL_ID);
       fbq('track', 'PageView');
+      fbq('trackCustom', 'ViewFormTanya');
     }
 
-    function trackMetaLead() {
+    // Dipanggil saat form disubmit — menandai intent rendah (tanya dulu)
+    function trackMetaContact() {
       if (typeof fbq === "function" && META_PIXEL_ID) {
-        fbq('track', 'Lead');
+        fbq('track', 'Contact');
       }
     }
   </script>
@@ -907,7 +916,7 @@ Mohon bantu info jadwal pickup, estimasi ongkir, dan ketentuannya ya. Terima kas
         source: LEAD_SOURCE
       });
 
-      trackMetaLead();
+      trackMetaContact();
 
       const overlay = document.getElementById("successOverlay");
       if (overlay) overlay.classList.add("show");
