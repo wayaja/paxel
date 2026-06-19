@@ -641,6 +641,38 @@ select {
 }
 
 </style>
+<script>
+  // ============================================================
+  // META PIXEL — KONFIGURASI
+  // Isi Pixel ID kamu di bawah ini. Cukup sekali di sini.
+  // ============================================================
+  const META_PIXEL_ID = "1344216904307465"; // Contoh: "1234567890123456"
+
+  // ============================================================
+  // INISIALISASI PIXEL — JANGAN UBAH DI BAWAH INI
+  // ============================================================
+  if (META_PIXEL_ID) {
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+
+    fbq('init', META_PIXEL_ID);
+    fbq('track', 'PageView');
+    fbq('trackCustom', 'ViewFormPickup');
+  }
+
+  // Dipanggil saat form disubmit — menandai intent tinggi (siap kirim)
+  function trackMetaLead() {
+    if (typeof fbq === "function" && META_PIXEL_ID) {
+      fbq('track', 'Lead');
+    }
+  }
+</script>
 </head>
 <body>
 <iframe name="googleFormTarget" style="display:none;width:0;height:0;border:0;"></iframe>
@@ -1202,6 +1234,9 @@ function submitForm() {
   };
 
   sendToGoogleForm(leadData);
+
+  // Pixel: catat Lead — intent tinggi, siap kirim paket
+  trackMetaLead();
 
   const overlay = document.getElementById("successOverlay");
   if (overlay) overlay.classList.add("show");
