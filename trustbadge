@@ -333,7 +333,7 @@
   // ============================================================
   // KONFIGURASI — ubah URL tujuan di sini
   // ============================================================
-  const TARGET_URL = "form_tanya_admin.html";
+  const TARGET_URL = "https://ekspedisiterbaik.netlify.app/tanya-admin/";
   const DELAY_MS   = 4000; // durasi redirect dalam milidetik
 
   // ============================================================
