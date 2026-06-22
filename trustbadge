@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Menghubungkan ke Admin Paxel...</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #F5F3FC;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 22px 18px;
+      width: 100%;
+      max-width: 360px;
+      box-shadow: 0 4px 24px rgba(95, 81, 161, 0.10);
+      text-align: center;
+    }
+
+    /* Logo resmi Paxel */
+    .brand {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    .brand-logo-full {
+      display: block;
+      width: 100%;
+      max-width: 210px;
+      height: auto;
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(95, 81, 161, 0.14);
+    }
+
+    /* Animasi loading utama */
+    .status-loader {
+      position: relative;
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 10px;
+      display: grid;
+      place-items: center;
+    }
+    .loader-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 4px solid #EDE9F8;
+      border-top-color: #5F51A1;
+      border-right-color: #9B8FD4;
+      animation: loader-spin 0.9s linear infinite;
+    }
+    .loader-package {
+      position: relative;
+      z-index: 1;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: #fff;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 5px 16px rgba(95, 81, 161, 0.18);
+      animation: loader-float 1.1s ease-in-out infinite;
+    }
+    .loader-package svg {
+      width: 22px;
+      height: 22px;
+      color: #5F51A1;
+    }
+    .status-loader::after {
+      content: "";
+      position: absolute;
+      bottom: 2px;
+      width: 34px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(95, 81, 161, 0.14);
+      filter: blur(1px);
+      animation: loader-shadow 1.1s ease-in-out infinite;
+    }
+    @keyframes loader-spin {
+      to { transform: rotate(360deg); }
+    }
+    @keyframes loader-float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-5px) scale(1.03); }
+    }
+    @keyframes loader-shadow {
+      0%, 100% { transform: scaleX(1); opacity: .75; }
+      50% { transform: scaleX(.72); opacity: .35; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .loader-ring,
+      .loader-package,
+      .status-loader::after { animation-duration: 2.2s; }
+    }
+
+    .status-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #2D1B69;
+      margin-bottom: 4px;
+    }
+    .status-sub {
+      font-size: 11px;
+      color: #6B7280;
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    /* Progress bar */
+    .progress-wrap {
+      background: #EDE9F8;
+      border-radius: 99px;
+      height: 6px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #5F51A1, #9B8FD4);
+      border-radius: 99px;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+    .progress-label {
+      font-size: 11px;
+      color: #9CA3AF;
+      margin-bottom: 18px;
+    }
+
+    /* Divider */
+    .divider {
+      border: none;
+      border-top: 1px solid #F0EEF8;
+      margin-bottom: 14px;
+    }
+
+    /* Trust stats */
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .stat {
+      flex: 1;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 18px;
+      font-weight: 800;
+      color: #5F51A1;
+      line-height: 1.2;
+    }
+    .stat-label {
+      font-size: 11px;
+      color: #6B7280;
+      margin-top: 2px;
+    }
+
+    /* Trust items */
+    .trust-list {
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .trust-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .trust-dot {
+      width: 20px;
+      height: 20px;
+      background: #EDE9F8;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+    .trust-dot svg { width: 11px; height: 11px; }
+    .trust-text {
+      font-size: 11px;
+      color: #374151;
+      line-height: 1.4;
+    }
+    .trust-text strong {
+      color: #2D1B69;
+      font-weight: 600;
+    }
+
+    /* Manual CTA */
+    .manual-link {
+      display: block;
+      margin-top: 14px;
+      font-size: 11px;
+      color: #9CA3AF;
+    }
+    .manual-link a {
+      color: #5F51A1;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- Logo resmi Paxel -->
+  <div class="brand">
+    <img
+      class="brand-logo-full"
+      src="https://i.ibb.co.com/v4VWPJbH/Meta-Ads.webp"
+      alt="Paxel - Kirim Paket Cepat Aman"
+      width="260"
+    />
+  </div>
+
+  <!-- Animasi loading -->
+  <div class="status-loader" aria-label="Sedang menghubungkan ke admin Paxel" role="status">
+    <div class="loader-ring" aria-hidden="true"></div>
+    <div class="loader-package" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5v-9Z"/>
+        <path d="m4 7.5 8 4.5 8-4.5M12 12v9M8 5.25l8 4.5"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="status-title">Menghubungkan ke admin Paxel</div>
+  <div class="status-sub">Sebentar ya — kamu akan langsung<br>terhubung dengan admin kami.</div>
+
+  <!-- Progress Bar -->
+  <div class="progress-wrap">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+  <div class="progress-label" id="progressLabel">Menyiapkan chat...</div>
+
+  <hr class="divider"/>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-number">2.9jt++</div>
+      <div class="stat-label">Pengguna</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">32jt++</div>
+      <div class="stat-label">Pengiriman</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">99.5%</div>
+      <div class="stat-label">Tepat waktu</div>
+    </div>
+  </div>
+
+  <!-- Trust Items -->
+  <div class="trust-list">
+    <div class="trust-item">
+      <div class="trust-dot">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#5F51A1" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+        </svg>
+      </div>
+      <div class="trust-text">
+        <strong>Pickup ke lokasi kamu.</strong> Tidak perlu keluar rumah atau ke konter.
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-dot">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#5F51A1" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 7v5l3 2"/>
+        </svg>
+      </div>
+      <div class="trust-text">
+        <strong>Kirim hari ini, sampainya hari ini</strong> untuk pengiriman sameday.
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-dot">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#5F51A1" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 7v5l3 3"/>
+        </svg>
+      </div>
+      <div class="trust-text">
+        <strong>Tracking aktif</strong> begitu kurir menjemput paketmu.
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-dot">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#5F51A1" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+      </div>
+      <div class="trust-text">
+        <strong>Garansi refund</strong> jika ada keterlambatan sesuai ketentuan layanan.
+      </div>
+    </div>
+  </div>
+
+  <!-- Manual fallback -->
+  <div class="manual-link">
+    Tidak otomatis? <a id="manualLink" href="#">Klik di sini</a>
+  </div>
+
+</div>
+
+<script>
+  // ============================================================
+  // KONFIGURASI — ubah URL tujuan di sini
+  // ============================================================
+  const TARGET_URL = "form_tanya_admin.html";
+  const DELAY_MS   = 4000; // durasi redirect dalam milidetik
+
+  // ============================================================
+  // Ambil parameter dari URL dan teruskan ke halaman tujuan
+  // ============================================================
+  const currentParams = window.location.search;
+  const finalURL = TARGET_URL + (currentParams || "");
+
+  // Set manual link
+  document.getElementById("manualLink").href = finalURL;
+
+  // ============================================================
+  // Progress bar animation
+  // ============================================================
+  const bar    = document.getElementById("progressBar");
+  const label  = document.getElementById("progressLabel");
+  const steps  = [
+    { pct: 30, text: "Menyiapkan chat...",         time: 0    },
+    { pct: 65, text: "Menghubungkan admin...",      time: 1200 },
+    { pct: 90, text: "Hampir selesai...",           time: 2400 },
+    { pct: 100, text: "Siap! Mengarahkan kamu...", time: 3400 }
+  ];
+
+  steps.forEach(s => {
+    setTimeout(() => {
+      bar.style.width   = s.pct + "%";
+      label.textContent = s.text;
+    }, s.time);
+  });
+
+  // ============================================================
+  // Auto redirect
+  // ============================================================
+  setTimeout(() => {
+    window.location.href = finalURL;
+  }, DELAY_MS);
+</script>
+
+</body>
+</html>
