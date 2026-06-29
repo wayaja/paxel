@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#5F51A1">
+<meta name="description" content="Kirim paket, dokumen, dan makanan melalui WhatsApp dengan layanan pickup Paxel.">
+<title>Paxel — Kirim Cepat & Aman via WhatsApp</title>
+<style>
+:root{
+  --primary:#5F51A1;--secondary:#F05A67;--success:#2E7D32;--wa:#25D366;
+  --ink:#1A1A1A;--body:#4A4A4A;--bg:#FFFFFF;--soft:#F9F9F9;
+  --proof:#9E9E9E;--line:#ECECEC;--shadow:0 8px 24px rgba(0,0,0,.06);
+  --container:1120px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,"Plus Jakarta Sans",Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}a{color:inherit;text-decoration:none}button,a{-webkit-tap-highlight-color:transparent}
+.container{width:min(100% - 36px,var(--container));margin-inline:auto}
+.section{padding:52px 0}.section-soft{background:var(--soft)}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:24px;line-height:32px;font-weight:700;margin-bottom:0}
+h2{font-size:20px;line-height:28px;font-weight:700;margin-bottom:0}
+h3{font-size:15px;line-height:22px;font-weight:600;margin-bottom:0}
+p{font-size:13px;line-height:20px;color:var(--body);margin-bottom:0}
+.center{text-align:center}.section-head{max-width:720px;margin:0 auto 24px}.section-head p{margin-top:10px}
+
+.topbar{position:sticky;top:0;z-index:40;background:rgba(95,81,161,.96);border-bottom:1px solid rgba(255,255,255,.12);backdrop-filter:blur(12px)}
+.nav{min-height:60px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:inline-flex;align-items:center;gap:8px}
+.nav-link{font-size:12px;font-weight:600;color:rgba(255,255,255,.88)}
+
+.btn{min-height:50px;width:100%;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 20px;border:0;border-radius:8px;font-size:15px;font-weight:700;line-height:1.3;text-align:center;cursor:pointer;transition:.18s ease}
+.btn:hover{transform:translateY(-1px)}.btn:focus-visible{outline:3px solid rgba(230,81,0,.24);outline-offset:3px}
+.btn-wa{color:#fff;background:var(--wa);box-shadow:0 4px 10px rgba(37,211,102,.30)}
+
+.hero{padding:24px 0 28px;background:linear-gradient(145deg,#4E438D 0%,#6657A9 58%,#7869BB 100%);color:#fff}
+.hero-grid{display:grid;gap:20px;align-items:center}
+.preheadline{margin:0 0 8px;color:rgba(255,255,255,.78);font-size:12px;line-height:18px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.hero-sub{margin-top:12px;font-size:14px;line-height:22px;color:rgba(255,255,255,.88)}.hero .btn{margin-top:18px}
+.hero-visual{overflow:hidden;border-radius:18px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);box-shadow:0 26px 56px rgba(21,15,47,.28)}
+.hero-visual img{width:100%;height:auto}
+
+.logo-banner{padding:16px 0;background:#fff;overflow:hidden;border-block:1px solid #F2F2F2}
+.logo-caption{padding-inline:18px;color:var(--proof);font-size:11px;line-height:16px;font-weight:500;letter-spacing:.08em;text-align:center;text-transform:uppercase;margin:0 0 14px}
+.logo-marquee{display:flex;overflow:hidden;mask-image:linear-gradient(to right,transparent 0,#000 8%,#000 92%,transparent 100%);-webkit-mask-image:linear-gradient(to right,transparent 0,#000 8%,#000 92%,transparent 100%)}
+.logo-track{display:flex;min-width:max-content;flex-shrink:0;align-items:center;gap:30px;padding-right:30px;animation:logoScroll 24s linear infinite}
+.logo-item{width:126px;height:38px;display:flex;align-items:center;justify-content:center}.logo-item img{width:auto;max-width:126px;height:32px;object-fit:contain;opacity:.78}
+@keyframes logoScroll{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+
+.quote-slider{display:grid;grid-auto-flow:column;grid-auto-columns:88%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 18px 16px;margin-inline:-18px;scrollbar-width:none}
+.quote-slider::-webkit-scrollbar{display:none}
+.quote-card{scroll-snap-align:start;padding:18px;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+.stars{color:#FFC107;letter-spacing:2px;font-size:14px;margin-bottom:10px}.quote-text{font-size:13px;line-height:21px;color:var(--ink)}
+.quote-id{margin-top:14px;font-size:11px;line-height:17px;font-weight:600;color:var(--body)}.swipe-hint{margin-top:4px;color:var(--proof);font-size:11px;text-align:center}
+
+.segment-grid{display:grid;gap:12px;margin-top:22px}.segment-card{padding:18px;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:var(--shadow)}
+.segment-icon{font-size:22px;margin-bottom:8px}.segment-card p{margin-top:8px}
+
+.journey{position:relative;display:grid;gap:18px;max-width:680px;margin:26px auto 0}
+.journey::before{content:"";position:absolute;top:26px;bottom:26px;left:18px;border-left:1px dashed #CFCFCF}
+.journey-step{position:relative;display:grid;grid-template-columns:38px 1fr;gap:14px;align-items:start}
+.step-num{position:relative;z-index:1;width:38px;height:38px;display:grid;place-items:center;border-radius:50%;color:#fff;background:var(--primary);font-size:13px;font-weight:700}
+.step-copy{padding:2px 0 0}.step-copy p{margin-top:5px}
+
+.faq{display:grid;gap:10px;max-width:760px;margin:24px auto 0}
+details{border:1px solid var(--line);border-radius:12px;background:#fff;padding:0 16px}
+summary{position:relative;list-style:none;cursor:pointer;padding:16px 26px 16px 0;font-size:13px;font-weight:700;line-height:20px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:0;top:50%;transform:translateY(-50%);font-size:22px;color:var(--primary)}
+details[open] summary::after{content:"–"}details p{padding:0 0 16px}
+
+.final{padding:52px 0;color:#fff;background:linear-gradient(135deg,#5F51A1,#40366F)}.final h2{color:#fff}
+.final p{margin-top:10px;color:rgba(255,255,255,.88)}.final .btn{margin-top:20px}
+footer{padding:26px 0 92px;background:#352C61}footer p{color:rgba(255,255,255,.65);text-align:center;font-size:11px}
+
+.sticky-mobile{position:fixed;z-index:60;left:0;right:0;bottom:0;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.96);border-top:1px solid var(--line);backdrop-filter:blur(12px)}
+.toast{position:fixed;z-index:100;left:16px;right:16px;bottom:88px;max-width:520px;margin:auto;padding:12px 14px;border-radius:10px;color:#fff;background:#1A1A1A;font-size:12px;font-weight:600;text-align:center;opacity:0;pointer-events:none;transform:translateY(10px);transition:.2s ease}
+.toast.show{opacity:1;transform:translateY(0)}
+
+@media(min-width:700px){
+  h1{font-size:40px;line-height:52px}h2{font-size:30px;line-height:38px}h3{font-size:18px;line-height:26px}p{font-size:15px;line-height:24px}
+  .section{padding:76px 0}.hero{padding:54px 0}.hero-grid{grid-template-columns:1.05fr .95fr;gap:42px}
+  .segment-grid{grid-template-columns:repeat(3,1fr)}
+  .quote-slider{grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-flow:initial;overflow:visible;padding:4px 0 16px;margin:0}
+  .swipe-hint{display:none}.final .btn{max-width:520px;margin-inline:auto}.sticky-mobile{display:none}footer{padding-bottom:26px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .logo-marquee{overflow-x:auto;mask-image:none;-webkit-mask-image:none;scrollbar-width:none}.logo-track{animation:none}.logo-track[aria-hidden="true"]{display:none}
+}
+
+/* ── Form Prospecting Embedded ── */
+.form-prospecting-wrap{
+  background:var(--soft);
+  padding:52px 0;
+}
+@media(min-width:700px){.form-prospecting-wrap{padding:76px 0;}}
+.form-prospecting-inner{
+  max-width:560px;
+  margin-inline:auto;
+}
+.fp-title{font-size:20px;font-weight:700;margin-bottom:6px;color:#1A1A1A;text-align:center}
+@media(min-width:700px){.fp-title{font-size:28px;}}
+.fp-sub{font-size:13px;color:#4A4A4A;text-align:center;margin-bottom:22px}
+.fp-card{
+  background:#fff;
+  border:1px solid #e7e1f6;
+  border-radius:22px;
+  padding:20px 18px;
+  box-shadow:0 14px 34px rgba(95,81,161,.10);
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  overflow:visible;
+}
+.fp-field{display:flex;flex-direction:column;gap:6px;position:relative;overflow:visible;}
+.fp-label{display:flex;align-items:center;gap:6px;font-size:10.5px;line-height:1;font-weight:800;color:#625a78;letter-spacing:.075em;text-transform:uppercase;}
+.fp-label span{font-size:13px;letter-spacing:0;}
+.fp-input{width:100%;border:1px solid #e7e1f6;background:#fbfaff;border-radius:14px;padding:12px 13px;min-height:43px;outline:none;font-family:inherit;font-size:14px;color:#211b3f;transition:.18s ease;-webkit-appearance:none;}
+.fp-input::placeholder{color:#aaa4bd;}
+.fp-input:focus{background:#fff;border-color:rgba(95,81,161,.55);box-shadow:0 0 0 3px rgba(95,81,161,.12);}
+.fp-hint{font-size:10.5px;color:#8a849e;line-height:1.35;opacity:.82;margin-top:1px;}
+.fp-err{display:none;font-size:10.5px;color:#e85c5c;line-height:1.35;}
+.fp-err.show{display:block;}
+.fp-suggestions{display:none;position:absolute;z-index:9999;left:0;right:0;top:100%;margin-top:4px;background:#fff;border:1px solid #e7e1f6;border-radius:14px;overflow:hidden;box-shadow:0 14px 32px rgba(33,27,63,.13);max-height:260px;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;}
+.fp-suggestions.show{display:block;}
+.fp-suggest-item{width:100%;display:block;border:0;background:#fff;color:#211b3f;text-align:left;padding:11px 13px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;min-height:48px;line-height:1.35;white-space:normal;}
+.fp-suggest-item:hover{background:#f3f0ff;}
+.fp-suggest-empty{background:#fff;color:#746d8a;padding:11px 13px;font-size:12px;}
+.fp-radio-group{display:grid;grid-template-columns:1fr;gap:8px;padding:10px;border:1px solid #e7e1f6;border-radius:14px;background:#fbfaff;transition:.18s ease;}
+.fp-radio-group:focus-within{background:#fff;border-color:rgba(95,81,161,.55);box-shadow:0 0 0 3px rgba(95,81,161,.12);}
+.fp-radio-group.invalid{border-color:#e85c5c;background:#fff8f8;}
+.fp-radio-opt{display:flex;align-items:center;gap:10px;min-height:42px;padding:9px 10px;border:1px solid #e7e1f6;border-radius:11px;background:#fff;color:#211b3f;font-size:13.5px;font-weight:700;line-height:1.35;cursor:pointer;}
+.fp-radio-opt:has(input:checked){border-color:rgba(95,81,161,.55);background:#f3f0ff;color:#5f51a1;}
+.fp-radio-opt input[type="radio"]{width:18px;height:18px;min-height:18px;padding:0;margin:0;border:0;box-shadow:none;accent-color:#5f51a1;flex:0 0 18px;-webkit-appearance:auto;appearance:auto;}
+.fp-coverage{display:block;border-radius:14px;padding:10px 12px;font-size:12px;line-height:1.45;font-weight:600;}
+.fp-coverage strong{display:block;font-size:12.5px;margin-bottom:2px;font-weight:800;}
+.fp-coverage.wait{background:#fff8e6;border:1px solid #ffe2a3;color:#966400;}
+.fp-coverage.ok{background:#eafff1;border:1px solid #b9efca;color:#168348;}
+.fp-coverage.no{background:#fff1f1;border:1px solid #ffd0d0;color:#c0392b;}
+.fp-submit{width:100%;border:0;border-radius:16px;padding:15px 18px;display:flex;align-items:center;justify-content:center;gap:10px;background:#25D366;color:#fff;font-family:inherit;font-size:15.5px;font-weight:800;cursor:pointer;box-shadow:0 10px 28px rgba(37,211,102,.28);transition:.16s ease;}
+.fp-submit:active{transform:scale(.98);}
+.fp-microcopy{text-align:center;color:#8a849e;font-size:10.5px;line-height:1.45;}
+.fp-overlay{position:fixed;inset:0;z-index:999;background:#fff;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;opacity:0;pointer-events:none;transition:.2s ease;}
+.fp-overlay.show{opacity:1;pointer-events:all;}
+.fp-overlay-icon{width:62px;height:62px;border-radius:50%;background:#ecfff3;color:#1c8a4c;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;}
+@keyframes fp-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.fp-shake{animation:fp-shake .35s ease both;}
+
+/* ── Small Visual Icon System ── */
+.ui-icon{
+  width:20px;
+  height:20px;
+  flex:0 0 20px;
+  display:block;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.9;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.btn .ui-icon,
+.fp-submit .ui-icon{
+  width:19px;
+  height:19px;
+  flex-basis:19px;
+}
+.segment-icon{
+  width:44px;
+  height:44px;
+  display:grid;
+  place-items:center;
+  margin-bottom:12px;
+  border-radius:13px;
+  background:#F1EEFB;
+  color:var(--primary);
+  box-shadow:inset 0 0 0 1px rgba(95,81,161,.09);
+}
+.segment-icon .ui-icon{
+  width:23px;
+  height:23px;
+}
+.step-copy h3{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.step-copy h3 .ui-icon{
+  width:18px;
+  height:18px;
+  color:var(--primary);
+}
+.stars{
+  display:flex;
+  align-items:center;
+  gap:3px;
+  margin-bottom:10px;
+  color:#FFC107;
+  letter-spacing:0;
+  font-size:0;
+}
+.star-icon{
+  width:15px;
+  height:15px;
+  display:block;
+  fill:currentColor;
+  stroke:none;
+}
+.fp-label .ui-icon{
+  width:15px;
+  height:15px;
+  flex:0 0 15px;
+  color:#5F51A1;
+}
+.fp-overlay-icon .ui-icon{
+  width:30px;
+  height:30px;
+  stroke-width:2.4;
+}
+
+</style>
+
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+// ── GANTI dengan Pixel ID kamu ──
+fbq('init', '2052078112065963');
+
+// 1. PageView — otomatis saat halaman dimuat
+fbq('track', 'PageView');
+
+// 2. ViewContent — saat user scroll 50%
+(function(){
+  let fired50 = false;
+  function checkScroll() {
+    if (fired50) return;
+    const scrolled = window.scrollY + window.innerHeight;
+    const total    = document.documentElement.scrollHeight;
+    if (scrolled / total >= 0.5) {
+      fired50 = true;
+      fbq('track', 'ViewContent', {
+        content_name: 'LP Paxel Pickup',
+        content_category: 'landing_page'
+      });
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'scroll_50_percent' });
+    }
+  }
+  window.addEventListener('scroll', checkScroll, { passive: true });
+})();
+</script>
+<noscript>
+  <img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=PIXEL_ID_KAMU&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel -->
+</head>
+<body>
+<header class="topbar">
+  <div class="container nav">
+    <a class="brand" href="#top" aria-label="Paxel"><img src="https://i.ibb.co.com/nNnQpD8X/Logo-paxel-putih.webp" alt="Paxel" width="100" height="34" style="display:block;height:34px;width:auto;"></a>
+    <a class="nav-link" href="#form-pickup">Tanya Sekarang</a>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <p class="preheadline">Takut paket telat sampai, dokumen berharga hilang, atau makanan basi di jalan?</p>
+      <h1>Kirim Paket <em style="font-style:italic;font-weight:700;">Dijamin Cepat &amp; Aman, </em>Sampai di Hari yang Sama dengan <strong style="color:#F9A8B0;font-weight:800;">Proteksi Penuh</strong></h1>
+      <p class="hero-sub">Nggak pakai ribet. Tanpa perlu download aplikasi atau isi formulir panjang. Cukup klik tombol di bawah, tim kurir Hero Paxel langsung jemput dokumen atau makanan Anda melalui WhatsApp.</p>
+      <a class="btn btn-wa js-wa" data-source="hero" href="#"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="M21 11.5a8.5 8.5 0 0 1-12.7 7.4L3 21l2.1-5.1A8.5 8.5 0 1 1 21 11.5Z"/>
+  <path d="M8.2 7.9c.3 2.9 2.7 5.3 5.6 5.8"/>
+  <path d="m8.1 7.8 1.4-.4.9 2.1-1.1.9"/>
+  <path d="m13.7 12.6.9-1.1 2.1.9-.4 1.4"/>
+</svg><span>Kirim Cepat &amp; Aman via WhatsApp</span></a>
+    </div>
+    <div class="hero-visual">
+      <img src="https://i.ibb.co.com/3yBH68GS/hero-paxel.webp" alt="Kurir Paxel menyerahkan paket kepada pelanggan di depan rumah" width="750" height="938" loading="eager" fetchpriority="high" decoding="async">
+    </div>
+  </div>
+</section>
+
+<section class="logo-banner" aria-labelledby="logo-title">
+  <p id="logo-title" class="logo-caption">Telah dipercaya oleh ekosistem dan perusahaan terkemuka di Indonesia:</p>
+  <div class="logo-marquee" aria-label="Logo perusahaan">
+    <div class="logo-track"><div class="logo-item"><img src="data:image/webp;base64,UklGRtQEAABXRUJQVlA4TMcEAAAvqUAMELVQsG3bbdto/oM4k8X/DwDDMD25EYvcoC7xSGaJkHVt2+HW4ue400G7d1Tb1iSpbdtGnNq2bdu2rVmTVbeH3wTkb7uRoxESzpoihWtK1g0rAGGvJ3i6bjB0bUEpxQOiGEEIujpYkzwLvutLfU+Cg0r5ytAin7MQoB7WEmiHaJW5VSHYXznwoxK4KtQq77PBXmuBRgoWWVX6dTfiAUcSycIdbC6MCIFHOCajsCYCPmFYjkGdRKQLweiMgePHd5xLY2ETA+8O8zm6DQgmbLKK5zgqVUoHoOTz6hBZQAsP1PLl8EQzqgX0mAI0WTwWYNLEr0MoEsBUipOgosLrYPnNNsNorwI1FhkYs1ePwEn2R/tHzDoYc28RogPPIoUd/Lb2IaZAanFL4HwvlhkfwaZKVJI9n1a3PxuYWT6h2yDfMssNfK1OQa51YqdC2kw+VZm4TVCnWxVhiQiVvSSgPKlQX5J88qryiPyAc3X7M8mOO5WjwbPqN8JgAcOlRfV7EmhblTcyEgyJYmoK3FXZwS1BixhkqtCn4TNtUN5UPNMkWPWjdUxAoVSsk1ACUKaBMwTnQKX8BkrwVy/opEmHSlISXlXG0kSbNxVuQpXKEliacDAZt1dpThOMLZXceUgEKI3pwlOp6aHJgkpbkpx0Cy1tFC8qcPKm4p8ulPKYkAjQb+k+qHQmkLqFme69SkkJK5X1G6j7clJ25mFCRb0XfpT7FoccqT4nCYRKc/rvKr43UFRu0kesoh1mVWqPXdg75S1oq1SlRnEJgXruhS51nr3eprioYI0upUmIUvEv4KJSECwASnkBa4ASGt4cDwuOSvAMtKgpwlehzcILQE4qjyq6NelISFdxKqCp0hEcVMIKMFQy44TonFTcCs8quSX6FapCqor2LFwrd5UHFfUGhywvbPKregmxKr6Fd5XG4KniUXhWEU+CJebqXeGrSkqJRnWVWFeRK3CgPjQgkoRB9S3/qwgLd+pTA+cC7ioJYVO5zNgXlYLCFaB4ld5U9FaIUpWo3rvKYRqwB+8qVYGmcl5gWsWxcSowoGIepCp6PfBGuFAeC5yoKJYwU7/2YE5Em9rBUoWE3mFLhd+CGESlK2FDfesQrCLLGLxU7hJUVA7AWtDPrKM6QKBS2iERoN9TCtfqsXXLwkRkqfi2woR6xmjwwbLKa2r8KN3JURV+gxRVEjuc4dEgEaASloQqldvjAF2elD+CkwBDqjvgAemqxxFXVbIGJz6fJ0LNfgKNG1XO6KCWfYfYJsFZhd3gpRGkqnyzyvKJL1UG08JZT8xQwtQJoG4zZEH15wO5rDuESJJXhwvljPOmSmOGoL0cVCEZpmzRZyKmCQOVfHJuFackAS/Q3wq5Vl9S6dOf9sHqNU2iB90l7X0PeXbsP6M+Uait5Pqjx8HtDdSE30OTt1YIu+vwS156p5fOltj0qezdndLFkeceteni1gswVR0escxuoqCCEOlwkFzIZXFZFqrhpI8Wiag0EnzxbCSEMbgsC+MkgacSWIiY5oVvNsn9SBX6E9sCZIn0c4p3xDKyLAuzZMFKERphWLeSO3xp5wWSBQqAb6AEQ1JQmOQXP8A5m/HvU3hsUJcNKhxsUKjStzklYOfN6W+BAQA=" alt="Tokopedia" width="150" height="32"></div><div class="logo-item"><img src="data:image/webp;base64,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" alt="Unilever" width="150" height="32"></div><div class="logo-item"><img src="data:image/webp;base64,UklGRuIEAABXRUJQVlA4TNUEAAAvhAANELXQjmxbtd28/IPoZM9ea28Z/miKafmKWXqOkAQAANlGec+2bdtW19m2bdu2bdu2baOdbd9lAvIXjiS4yjUK5ux2c3q7PdfDj8ifETyBFnzo4E8N3R1QogTlrdqkBAJ/Lnh1uRaD4w44SE2fP2mIfk/ffmOaVeJO/fwX2L0OfKskjI0bhr4DF7jpUA3FPZTstIDd25XPZDxRL6ABN+UdQWgmNQSbswT/VSSM+O0o3ZmZF3Ba6JRN2ynhhYId1UfkUmm8mtJ1I/Y3vs/JJw3KDmbbFu4E/uzqOOItNZ1psmzIINRTdWSEFWrnpKZEz9aHEzSkN3R2PjQQaWl9m7MvFli8z1HYwTTblk78/K/xruOpERstDYfmQm3OSk2s79k/4SZNUx1XHSU4G0iApxElVObwm5CafVcHUOvviO+o74CKazw8lqCaw9zvgHg+4O0AC0Ed5B0CndiqPk9TVBJ8lYvkx6kEiTYre3NANtkVI50OFH1WWRn/Lt2eAfbFwyohWxFLEicF14ie7nsG2CF8fy3Bw8zQSpIPvwWLMBZmgVfJ4CtfQufqDMLCFOyGzCpJIM7aZxBP8xGslDQ8OsnVe/Hy/QP4nKvgWUu1dXnPZ9ZfFxLJN8CLWxJs5gr00dwQkjbcC90pyf54AK4WwJr65cnUUC/cOFYQpwa7nxpPYE2tNAe9F37j8kGhbIzIGRU+GxQujF9X1BpN/VAT7o074CCjKfkEvPq59+mCocN0hsk0KV8oyqyUHjCdJFYqUSf8qyDGSYV878clHYMOvGnrwL8QUV15ODAuoSRT4zvAfEo1ybsKy57rBZ/GKNA+zce5gsgvoM9Rk0HdgHvAvwp9YrsicIojqK3qtdwKnB4dGBdG4gqGlQbZH156LgYP2QaiPbZT2k1io3q35+pCD+jpNTbahleiFmaYoOHicPhfvvEp1Fe5GikevmlQ2ZvDNPaswEkibmbGpwQ0YmZGsIiZUfpUkNuZGdUX6QwKP4W1BYtCPd6G3i2Op5juKQBJwuoyM6rJzggUARzW0mYt9WIK/Qo+sBSxkFkYQ94YwjtzmtMeWyFJoPhbjRP2w1fkyP4xJfKLt6w/VvguFKZUmc6ANnhICLdj/PawGUgSONZm5rvLGUHDU9R8nHHvygVwwFDk+qnQWX348EGDj6lZxXJnjIMmEHCw1j6D+A6Y46L34ueSoEaVJEI9q/760rYNRVCSwH2XJYiKYk4nXFtNneF9TsYBPdgXpQJGdNl+U5z+MzIrlKdkJDmDOtMEWzaUHmD+vnfUddbcTiUJhxNmwr8hKsv7StMBaPcL9BJuW59X2PUWRs/4j+gSywdwZpq/tvQfiEEcF5UPqYhgGkzoFoRvXzRlvi7UkyrmqKVbljBcbtmLkIbBbJk58UrL5eHX2yf70HToQmVb+x0AIlWwXkSxZXnhOWtsR9ilqWXnTaZJcs/mibj/noSamm//q4crWRcey5yC1MoTUXxpSCf6/A5IxDwsBG6BqfyePr77lseIbPjJ3v0RCNxMi4OdBA41+DrkUmB+ByT6uQTkcRJUj8YytOK3iFWQRW8Lw8LQ5XeJW6U5CfizC6rM16j/mD/Ze72uLMijC7J+pWGA3n9RzZ8zEjJc5Bh38FyXMtEM8EDMX4kCAA==" alt="Bca" width="150" height="32"></div><div class="logo-item"><img src="data:image/webp;base64,UklGRj4EAABXRUJQVlA4TDIEAAAvfcAMEDVQjiTJkSQF/0QoswmqZmXrd8AmQhq2bcfb3L+THm2O1LZt27bN2bZt27a3sEhmPLNtb8/svRPQPwCSCpOtToN8keTfpNIqdLRV819BhWG/v0z/HLkU6JpSyl/Afu+L9x9jJnps+KfYgFYqk9VIEqPCCIolAR9iMaqoZA6OQm1ASR18h0Gosorh4NY0WX0HO1RZMvjr/jlmonKEwWeRo0ro4LNUobJq8LOCDLbSbnPUkt8xUmUhlT0mi38gQE9zzdQq5hWmGiy02zw9BbxkBSp1P6LIBby3iu2JhbXE3ivdLqQ5iLZWCERl4BVzi/HeSgavOISK3w+Q2IgvPZW6k+QTcamLbGcCOut8IthdfEZkb6CK7QU9urVrUHbjlcoRV/AqfhHpL1F574STS85u9EGr9VY5hLY3nD3BFaLwDFf2vsXygu6KepBeuDKPx6DkOo/LXZJBeUmUjxoGxd5MojJxULxQZSOPQal5RIPLXYWDEk6PS80LFKj4XNBfNchjXMYPtszdwKXvIAOJ8pPrYGsIUf6SDbIKlVGDLVen7iTh8ojdYJWCy90XbEYl68JCq46oaAfScbk6OCrCpWOQs0TpNTi6TZSqAWtUtIOj/nfm4tJ7UImzEa9ynxmCyuSLS1R2DUzApf8pz3ANIirSkz5EWTlQicqAE887elxMB4z0dB6v9BpInwlEpYvRM5GoTB5YjEvKhaO4uDIhyp3BWQRRlAM9UMk/dec6zmuhlnmNK88sFDh41VFURj4zE5XCgeW4xF/Yhksoc6LcvOBGlNMDvR7QXbmJj7o0kA5eVoAqKU8EoYpsYDwulRe6cLEdEOXLhRSi7BuoQKXHiSG60rXxzDxegx+0F5VTIu+YOYrKqEGKcNl8YofLvUGuECXmZCVRRgz4o7LxJPXOYlxuqhn8LE+nUaXhRjwNKjoWg0hxJftAgcuCQSYS5S7JTjJRcR2kA5XCHakjd/Jxecl8x1WHsHeSsGS3ImYLiTLb0SpmUJmGyyvJG5txxXEQEz+JomO4iPWTKHsHpQ5VkhdSq9BdruFygd8i3X2c6e8kkgZt6Wy3mRrtlQxWMhdxZZ8RhpvpDq4MHFQaicpHy0w0mYqofGQzqGxFleV66GYwNXoiGa+0plnoAq5cIXunX3M3t5IHe06u41tTB1sjiFtv+A9WcnvQ/U3ql6NTnAevS6K8oTOQ2eDM0IaTx3IHR+k+nhwlHxyNOdAqeJJIN06WkA5+UriB1jnkhFOOWG+EmMFD2fYurplCPrgkM9ezRaeqwS1rrdbR0VqhPzlvVFoHqTDs95fpEokxzuLcttsI1oNPlIVK8eBrxepzMgyVgI+Rbi9K2Y4zKqcHH6sbqvRZxNOgMvxrshVVTphtrIOo0kX+OSwp0K2gwfeSWXKyn9vgkwUZZBUtvfUmKBj8QyE=" alt="Google" width="150" height="32"></div><div class="logo-item"><img src="data:image/webp;base64,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" alt="Bluebird" width="150" height="32"></div><div class="logo-item"><img src="data:image/webp;base64,UklGRvYEAABXRUJQVlA4TOkEAAAvl0AKEJXQkiRJkmLV/Q+hl63MrKpGZr7e4k0LDi1sEdKwbTve5v3d5Ei+rEhquw1ru41q27Yxe+Vs27a32rZtm88E5B9jHXDYIdmUkvB9OvjksULHJV9dpf1nA225J1HZ1v8FR1t7rXME/mja2OKhJKGHK67+zhgB2wIxhYOynghSQOEK8k5KJnQZG3nYL8CPTKnVr5miPpK4UUcnuvp+xXutU7nMlXr4AlTOsOr7zE0gK4mUyp1oLdsrcG7B1bp3e3YtzmTU+ZmYakIOeeMVtIB9BW6tU70Bd29PaTmNYCbLdRZDNff4rjHit2LjuudLEFob9HbwrlUL4QWq/oJWOeqGFnDyS5slIyILlHgKFcQKdgyNx+8nGyJLdHiJEEAPLi4t0OXxyo/RzwrcO9/XMIE/A+YfsCobE5W3upbOhlaR0Flj/mxoBZu2qrYmhUzk22pbDZgH7r6BvTFhM4xn9xo+XJgwUgX2ujnM2Ors/u39hNinFgytMMmF2irZcodidgh+tB9adbUluYQPWlNadLX1EDbAaWtIswlQA97XvZ2ItobVGGorbSS6rTHNxtqKOyER4FGr0wFqOchAyH1FK7D7xpUUcWaKW+obStjUiihCCaqqerHC2C5Q/AWXUJQN6jUsCYat+saMQB4M3G7rfhLerac/SVAVtY7shIO6iJUETa5ZnqckBgHHHPatTqxoaykmCSUTQFGScGaZPd+ahp8hmANeIGbIt+W5oURPvf/NnoCbAxqtkxsaS21ZbyiM26+MieZkw+VyzHcgd0VrXc3Qo/q7m0qrHRIzgcA8xUxdA/4nHFuMjEnZ2SmsNiKTqO1P8lNVSJPTDZ7hD5C/xmvkdJWPUDDYCpFnvSU18wp4kjk5UMQoqorHJO7U3cDU1InMudYQPIrOSsvVevt6zN8juCMHwOcO3/9OZ4jqgZyFWC21eFs3NjTnW3c3RNZk8ReI1x4SFctldJluwOOYf1Wwhj1yaIfkbttaMOiT60vagIwVU6WaT+DCAse6F3LfxVsg3BKiZq10LtNZXmfIO090qwAbjSTChrisRClwbqUlGU+AZwuS6m5IGK7EBcxaRCRrstwv87UOHiKgt5LP86dOZMhrgFMb90Re1SDN8GoqkVz9RGca6l7ibT1dcLj+BV5xXb1MONB1iHbL4byv0h3JHGDXFvUNhW7Le4JspC4kFFohk4/W/eTRsphQt1MpG4rkWqdzFVm75XpEbk0RPk9xXRmQNlgbJDYUZi3tJM7XDv8Bsg+1gbmhxPGW+4CB6QGCfzVMb0BFTfWSSgjpqla0AUVFKCfFJWCX+hqFVlhWtZTtyMGqSoSDeoaJTENO2+JuKCitS99fiZ+tr6y/qDhkt8Xf0N53UE+ZEMVyvzVb95LESOvOFzKq023JZW+xdQkdGVV+6+VZFPUA/WwW4HFsA283tKy5XyM5O0IeduyVyZZVorCtCoSgeNzxB16GxL3oWK4rdWdH1U8wVk5jQ0NqijtWiXpWqChvveQI28F/+tT6QHyNkwyiI3Rpr0lguO6r1+O/c9iIjD1ym9SGAsfPV92KkjyYOqFYnUrPBJLKFI6l8/7pUekSqwd9aUx2QXr7fH6pcp0TkUwJY7v20K3Udc7IGzofzo221emrN+rbVm7+Jpm4abBDQ+4xyt8m7Hm/P3/yz84A" alt="Halodoc" width="150" height="32"></div></div>
+    <div class="logo-track" aria-hidden="true"><div class="logo-item"><img src="data:image/webp;base64,UklGRtQEAABXRUJQVlA4TMcEAAAvqUAMELVQsG3bbdto/oM4k8X/DwDDMD25EYvcoC7xSGaJkHVt2+HW4ue400G7d1Tb1iSpbdtGnNq2bdu2rVmTVbeH3wTkb7uRoxESzpoihWtK1g0rAGGvJ3i6bjB0bUEpxQOiGEEIujpYkzwLvutLfU+Cg0r5ytAin7MQoB7WEmiHaJW5VSHYXznwoxK4KtQq77PBXmuBRgoWWVX6dTfiAUcSycIdbC6MCIFHOCajsCYCPmFYjkGdRKQLweiMgePHd5xLY2ETA+8O8zm6DQgmbLKK5zgqVUoHoOTz6hBZQAsP1PLl8EQzqgX0mAI0WTwWYNLEr0MoEsBUipOgosLrYPnNNsNorwI1FhkYs1ePwEn2R/tHzDoYc28RogPPIoUd/Lb2IaZAanFL4HwvlhkfwaZKVJI9n1a3PxuYWT6h2yDfMssNfK1OQa51YqdC2kw+VZm4TVCnWxVhiQiVvSSgPKlQX5J88qryiPyAc3X7M8mOO5WjwbPqN8JgAcOlRfV7EmhblTcyEgyJYmoK3FXZwS1BixhkqtCn4TNtUN5UPNMkWPWjdUxAoVSsk1ACUKaBMwTnQKX8BkrwVy/opEmHSlISXlXG0kSbNxVuQpXKEliacDAZt1dpThOMLZXceUgEKI3pwlOp6aHJgkpbkpx0Cy1tFC8qcPKm4p8ulPKYkAjQb+k+qHQmkLqFme69SkkJK5X1G6j7clJ25mFCRb0XfpT7FoccqT4nCYRKc/rvKr43UFRu0kesoh1mVWqPXdg75S1oq1SlRnEJgXruhS51nr3eprioYI0upUmIUvEv4KJSECwASnkBa4ASGt4cDwuOSvAMtKgpwlehzcILQE4qjyq6NelISFdxKqCp0hEcVMIKMFQy44TonFTcCs8quSX6FapCqor2LFwrd5UHFfUGhywvbPKregmxKr6Fd5XG4KniUXhWEU+CJebqXeGrSkqJRnWVWFeRK3CgPjQgkoRB9S3/qwgLd+pTA+cC7ioJYVO5zNgXlYLCFaB4ld5U9FaIUpWo3rvKYRqwB+8qVYGmcl5gWsWxcSowoGIepCp6PfBGuFAeC5yoKJYwU7/2YE5Em9rBUoWE3mFLhd+CGESlK2FDfesQrCLLGLxU7hJUVA7AWtDPrKM6QKBS2iERoN9TCtfqsXXLwkRkqfi2woR6xmjwwbLKa2r8KN3JURV+gxRVEjuc4dEgEaASloQqldvjAF2elD+CkwBDqjvgAemqxxFXVbIGJz6fJ0LNfgKNG1XO6KCWfYfYJsFZhd3gpRGkqnyzyvKJL1UG08JZT8xQwtQJoG4zZEH15wO5rDuESJJXhwvljPOmSmOGoL0cVCEZpmzRZyKmCQOVfHJuFackAS/Q3wq5Vl9S6dOf9sHqNU2iB90l7X0PeXbsP6M+Uait5Pqjx8HtDdSE30OTt1YIu+vwS156p5fOltj0qezdndLFkeceteni1gswVR0escxuoqCCEOlwkFzIZXFZFqrhpI8Wiag0EnzxbCSEMbgsC+MkgacSWIiY5oVvNsn9SBX6E9sCZIn0c4p3xDKyLAuzZMFKERphWLeSO3xp5wWSBQqAb6AEQ1JQmOQXP8A5m/HvU3hsUJcNKhxsUKjStzklYOfN6W+BAQA=" alt="" width="150" height="32"></div><div class="logo-item"><img src="data:image/webp;base64,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" alt="" width="150" height="32"></div><div class="logo-item"><img src="data:image/webp;base64,UklGRuIEAABXRUJQVlA4TNUEAAAvhAANELXQjmxbtd28/IPoZM9ea28Z/miKafmKWXqOkAQAANlGec+2bdtW19m2bdu2bdu2baOdbd9lAvIXjiS4yjUK5ux2c3q7PdfDj8ifETyBFnzo4E8N3R1QogTlrdqkBAJ/Lnh1uRaD4w44SE2fP2mIfk/ffmOaVeJO/fwX2L0OfKskjI0bhr4DF7jpUA3FPZTstIDd25XPZDxRL6ABN+UdQWgmNQSbswT/VSSM+O0o3ZmZF3Ba6JRN2ynhhYId1UfkUmm8mtJ1I/Y3vs/JJw3KDmbbFu4E/uzqOOItNZ1psmzIINRTdWSEFWrnpKZEz9aHEzSkN3R2PjQQaWl9m7MvFli8z1HYwTTblk78/K/xruOpERstDYfmQm3OSk2s79k/4SZNUx1XHSU4G0iApxElVObwm5CafVcHUOvviO+o74CKazw8lqCaw9zvgHg+4O0AC0Ed5B0CndiqPk9TVBJ8lYvkx6kEiTYre3NANtkVI50OFH1WWRn/Lt2eAfbFwyohWxFLEicF14ie7nsG2CF8fy3Bw8zQSpIPvwWLMBZmgVfJ4CtfQufqDMLCFOyGzCpJIM7aZxBP8xGslDQ8OsnVe/Hy/QP4nKvgWUu1dXnPZ9ZfFxLJN8CLWxJs5gr00dwQkjbcC90pyf54AK4WwJr65cnUUC/cOFYQpwa7nxpPYE2tNAe9F37j8kGhbIzIGRU+GxQujF9X1BpN/VAT7o074CCjKfkEvPq59+mCocN0hsk0KV8oyqyUHjCdJFYqUSf8qyDGSYV878clHYMOvGnrwL8QUV15ODAuoSRT4zvAfEo1ybsKy57rBZ/GKNA+zce5gsgvoM9Rk0HdgHvAvwp9YrsicIojqK3qtdwKnB4dGBdG4gqGlQbZH156LgYP2QaiPbZT2k1io3q35+pCD+jpNTbahleiFmaYoOHicPhfvvEp1Fe5GikevmlQ2ZvDNPaswEkibmbGpwQ0YmZGsIiZUfpUkNuZGdUX6QwKP4W1BYtCPd6G3i2Op5juKQBJwuoyM6rJzggUARzW0mYt9WIK/Qo+sBSxkFkYQ94YwjtzmtMeWyFJoPhbjRP2w1fkyP4xJfKLt6w/VvguFKZUmc6ANnhICLdj/PawGUgSONZm5rvLGUHDU9R8nHHvygVwwFDk+qnQWX348EGDj6lZxXJnjIMmEHCw1j6D+A6Y46L34ueSoEaVJEI9q/760rYNRVCSwH2XJYiKYk4nXFtNneF9TsYBPdgXpQJGdNl+U5z+MzIrlKdkJDmDOtMEWzaUHmD+vnfUddbcTiUJhxNmwr8hKsv7StMBaPcL9BJuW59X2PUWRs/4j+gSywdwZpq/tvQfiEEcF5UPqYhgGkzoFoRvXzRlvi7UkyrmqKVbljBcbtmLkIbBbJk58UrL5eHX2yf70HToQmVb+x0AIlWwXkSxZXnhOWtsR9ilqWXnTaZJcs/mibj/noSamm//q4crWRcey5yC1MoTUXxpSCf6/A5IxDwsBG6BqfyePr77lseIbPjJ3v0RCNxMi4OdBA41+DrkUmB+ByT6uQTkcRJUj8YytOK3iFWQRW8Lw8LQ5XeJW6U5CfizC6rM16j/mD/Ze72uLMijC7J+pWGA3n9RzZ8zEjJc5Bh38FyXMtEM8EDMX4kCAA==" alt="" width="150" height="32"></div><div class="logo-item"><img src="data:image/webp;base64,UklGRj4EAABXRUJQVlA4TDIEAAAvfcAMEDVQjiTJkSQF/0QoswmqZmXrd8AmQhq2bcfb3L+THm2O1LZt27bN2bZt27a3sEhmPLNtb8/svRPQPwCSCpOtToN8keTfpNIqdLRV819BhWG/v0z/HLkU6JpSyl/Afu+L9x9jJnps+KfYgFYqk9VIEqPCCIolAR9iMaqoZA6OQm1ASR18h0Gosorh4NY0WX0HO1RZMvjr/jlmonKEwWeRo0ro4LNUobJq8LOCDLbSbnPUkt8xUmUhlT0mi38gQE9zzdQq5hWmGiy02zw9BbxkBSp1P6LIBby3iu2JhbXE3ivdLqQ5iLZWCERl4BVzi/HeSgavOISK3w+Q2IgvPZW6k+QTcamLbGcCOut8IthdfEZkb6CK7QU9urVrUHbjlcoRV/AqfhHpL1F574STS85u9EGr9VY5hLY3nD3BFaLwDFf2vsXygu6KepBeuDKPx6DkOo/LXZJBeUmUjxoGxd5MojJxULxQZSOPQal5RIPLXYWDEk6PS80LFKj4XNBfNchjXMYPtszdwKXvIAOJ8pPrYGsIUf6SDbIKlVGDLVen7iTh8ojdYJWCy90XbEYl68JCq46oaAfScbk6OCrCpWOQs0TpNTi6TZSqAWtUtIOj/nfm4tJ7UImzEa9ynxmCyuSLS1R2DUzApf8pz3ANIirSkz5EWTlQicqAE887elxMB4z0dB6v9BpInwlEpYvRM5GoTB5YjEvKhaO4uDIhyp3BWQRRlAM9UMk/dec6zmuhlnmNK88sFDh41VFURj4zE5XCgeW4xF/Yhksoc6LcvOBGlNMDvR7QXbmJj7o0kA5eVoAqKU8EoYpsYDwulRe6cLEdEOXLhRSi7BuoQKXHiSG60rXxzDxegx+0F5VTIu+YOYrKqEGKcNl8YofLvUGuECXmZCVRRgz4o7LxJPXOYlxuqhn8LE+nUaXhRjwNKjoWg0hxJftAgcuCQSYS5S7JTjJRcR2kA5XCHakjd/Jxecl8x1WHsHeSsGS3ImYLiTLb0SpmUJmGyyvJG5txxXEQEz+JomO4iPWTKHsHpQ5VkhdSq9BdruFygd8i3X2c6e8kkgZt6Wy3mRrtlQxWMhdxZZ8RhpvpDq4MHFQaicpHy0w0mYqofGQzqGxFleV66GYwNXoiGa+0plnoAq5cIXunX3M3t5IHe06u41tTB1sjiFtv+A9WcnvQ/U3ql6NTnAevS6K8oTOQ2eDM0IaTx3IHR+k+nhwlHxyNOdAqeJJIN06WkA5+UriB1jnkhFOOWG+EmMFD2fYurplCPrgkM9ezRaeqwS1rrdbR0VqhPzlvVFoHqTDs95fpEokxzuLcttsI1oNPlIVK8eBrxepzMgyVgI+Rbi9K2Y4zKqcHH6sbqvRZxNOgMvxrshVVTphtrIOo0kX+OSwp0K2gwfeSWXKyn9vgkwUZZBUtvfUmKBj8QyE=" alt="" width="150" height="32"></div><div class="logo-item"><img src="data:image/webp;base64,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" alt="" width="150" height="32"></div><div class="logo-item"><img src="data:image/webp;base64,UklGRvYEAABXRUJQVlA4TOkEAAAvl0AKEJXQkiRJkmLV/Q+hl63MrKpGZr7e4k0LDi1sEdKwbTve5v3d5Ei+rEhquw1ru41q27Yxe+Vs27a32rZtm88E5B9jHXDYIdmUkvB9OvjksULHJV9dpf1nA225J1HZ1v8FR1t7rXME/mja2OKhJKGHK67+zhgB2wIxhYOynghSQOEK8k5KJnQZG3nYL8CPTKnVr5miPpK4UUcnuvp+xXutU7nMlXr4AlTOsOr7zE0gK4mUyp1oLdsrcG7B1bp3e3YtzmTU+ZmYakIOeeMVtIB9BW6tU70Bd29PaTmNYCbLdRZDNff4rjHit2LjuudLEFob9HbwrlUL4QWq/oJWOeqGFnDyS5slIyILlHgKFcQKdgyNx+8nGyJLdHiJEEAPLi4t0OXxyo/RzwrcO9/XMIE/A+YfsCobE5W3upbOhlaR0Flj/mxoBZu2qrYmhUzk22pbDZgH7r6BvTFhM4xn9xo+XJgwUgX2ujnM2Ors/u39hNinFgytMMmF2irZcodidgh+tB9adbUluYQPWlNadLX1EDbAaWtIswlQA97XvZ2ItobVGGorbSS6rTHNxtqKOyER4FGr0wFqOchAyH1FK7D7xpUUcWaKW+obStjUiihCCaqqerHC2C5Q/AWXUJQN6jUsCYat+saMQB4M3G7rfhLerac/SVAVtY7shIO6iJUETa5ZnqckBgHHHPatTqxoaykmCSUTQFGScGaZPd+ahp8hmANeIGbIt+W5oURPvf/NnoCbAxqtkxsaS21ZbyiM26+MieZkw+VyzHcgd0VrXc3Qo/q7m0qrHRIzgcA8xUxdA/4nHFuMjEnZ2SmsNiKTqO1P8lNVSJPTDZ7hD5C/xmvkdJWPUDDYCpFnvSU18wp4kjk5UMQoqorHJO7U3cDU1InMudYQPIrOSsvVevt6zN8juCMHwOcO3/9OZ4jqgZyFWC21eFs3NjTnW3c3RNZk8ReI1x4SFctldJluwOOYf1Wwhj1yaIfkbttaMOiT60vagIwVU6WaT+DCAse6F3LfxVsg3BKiZq10LtNZXmfIO090qwAbjSTChrisRClwbqUlGU+AZwuS6m5IGK7EBcxaRCRrstwv87UOHiKgt5LP86dOZMhrgFMb90Re1SDN8GoqkVz9RGca6l7ibT1dcLj+BV5xXb1MONB1iHbL4byv0h3JHGDXFvUNhW7Le4JspC4kFFohk4/W/eTRsphQt1MpG4rkWqdzFVm75XpEbk0RPk9xXRmQNlgbJDYUZi3tJM7XDv8Bsg+1gbmhxPGW+4CB6QGCfzVMb0BFTfWSSgjpqla0AUVFKCfFJWCX+hqFVlhWtZTtyMGqSoSDeoaJTENO2+JuKCitS99fiZ+tr6y/qDhkt8Xf0N53UE+ZEMVyvzVb95LESOvOFzKq023JZW+xdQkdGVV+6+VZFPUA/WwW4HFsA283tKy5XyM5O0IeduyVyZZVorCtCoSgeNzxB16GxL3oWK4rdWdH1U8wVk5jQ0NqijtWiXpWqChvveQI28F/+tT6QHyNkwyiI3Rpr0lguO6r1+O/c9iIjD1ym9SGAsfPV92KkjyYOqFYnUrPBJLKFI6l8/7pUekSqwd9aUx2QXr7fH6pcp0TkUwJY7v20K3Udc7IGzofzo221emrN+rbVm7+Jpm4abBDQ+4xyt8m7Hm/P3/yz84A" alt="" width="150" height="32"></div></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head center">
+      <h2>Dipakai untuk Kebutuhan Kantor, UMKM Kuliner, dan Pengiriman Personal</h2>
+      <p>Tiga kebutuhan berbeda, satu alur pickup yang sama-sama praktis melalui WhatsApp.</p>
+    </div>
+    <div class="quote-slider" aria-label="Testimoni pengguna">
+      <article class="quote-card">
+        <div class="stars" aria-label="5 dari 5 bintang"><svg class="star-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="m12 2.5 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z"/>
+</svg><svg class="star-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="m12 2.5 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z"/>
+</svg><svg class="star-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="m12 2.5 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z"/>
+</svg><svg class="star-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="m12 2.5 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z"/>
+</svg><svg class="star-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="m12 2.5 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z"/>
+</svg></div>
+        <p class="quote-text">“Pengiriman dokumen kontrak kerja sama antar kantor cabang kini jauh lebih tenang. Manajemen dokumen rahasia lebih aman dan opsi proteksi membantu memperkecil risiko operasional kami.”</p>
+        <p class="quote-id">Rian S. — Operations Lead, Enterprise Client Partner</p>
+      </article>
+      <article class="quote-card">
+        <div class="stars" aria-label="5 dari 5 bintang"><svg class="star-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="m12 2.5 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z"/>
+</svg><svg class="star-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="m12 2.5 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z"/>
+</svg><svg class="star-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="m12 2.5 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z"/>
+</svg><svg class="star-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="m12 2.5 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z"/>
+</svg><svg class="star-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="m12 2.5 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z"/>
+</svg></div>
+        <p class="quote-text">“Dulu selalu tegang kalau kirim produk frozen food ke luar kota. Dengan dukungan fasilitas pendingin, makanan dapat dikirim di hari yang sama dalam kondisi lebih terjaga.”</p>
+        <p class="quote-id">Amelia R. — Owner Dapur Frozen Kuliner</p>
+      </article>
+      <article class="quote-card">
+        <div class="stars" aria-label="5 dari 5 bintang"><svg class="star-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="m12 2.5 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z"/>
+</svg><svg class="star-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="m12 2.5 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z"/>
+</svg><svg class="star-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="m12 2.5 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z"/>
+</svg><svg class="star-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="m12 2.5 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z"/>
+</svg><svg class="star-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="m12 2.5 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z"/>
+</svg></div>
+        <p class="quote-text">“Paling malas kalau harus unduh aplikasi baru cuma untuk kirim satu paket. Lewat WhatsApp tinggal chat, lalu kurir menjemput ke rumah.”</p>
+        <p class="quote-id">Bagas K. — Pengguna Personal</p>
+      </article>
+    </div>
+    <p class="swipe-hint" aria-hidden="true">Geser untuk membaca testimoni lainnya →</p>
+  </div>
+</section>
+
+<section class="section section-soft">
+  <div class="container">
+    <div class="section-head center">
+      <h2>Infrastruktur Logistik Skala Besar, Kini Siap Mendukung Efisiensi Bisnis Anda.</h2>
+      <p>Sinergi teknologi Paxel bersama para pemimpin pasar membuktikan komitmen kami dalam menjaga ketepatan waktu, keamanan dokumen, dan transparansi biaya pengiriman.</p>
+    </div>
+    <div class="segment-grid">
+      <article class="segment-card">
+        <div class="segment-icon" aria-hidden="true"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="M4 21V5l8-3 8 3v16"/>
+  <path d="M8 8h2M14 8h2M8 12h2M14 12h2M8 16h2M14 16h2"/>
+  <path d="M2 21h20"/>
+</svg></div>
+        <h3>Untuk Kantor / Corporate</h3>
+        <p>Pengiriman dokumen resmi dan berkas legal dengan opsi layanan korporat serta penagihan invoice bulanan.</p>
+      </article>
+      <article class="segment-card">
+        <div class="segment-icon" aria-hidden="true"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="m3 7 9-4 9 4-9 4-9-4Z"/>
+  <path d="M3 7v10l9 4 9-4V7"/>
+  <path d="M12 11v10"/>
+  <path d="m7.5 5 9 4"/>
+</svg></div>
+        <h3>Untuk UMKM Kuliner</h3>
+        <p>Kirim makanan dan frozen food dengan dukungan jaringan Cold Chain untuk membantu menjaga kondisi produk selama proses pengiriman.</p>
+      </article>
+      <article class="segment-card">
+        <div class="segment-icon" aria-hidden="true"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <circle cx="6" cy="18" r="2.5"/>
+  <circle cx="18" cy="18" r="2.5"/>
+  <path d="M8.5 18h6l2-7h-5l-2 4H7"/>
+  <path d="M15 7h3l2 4"/>
+  <path d="M4 11h4"/>
+</svg></div>
+        <h3>Untuk Personal / Individu</h3>
+        <p>Kirim paket ke keluarga atau teman tanpa proses panjang. Klik WhatsApp, lalu kurir menjemput ke lokasi Anda.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head center">
+      <h2>Cara Kerja Pickup via WhatsApp</h2>
+      <p>Tiga langkah sederhana untuk memulai pengiriman.</p>
+    </div>
+    <div class="journey">
+      <article class="journey-step">
+        <div class="step-num">1</div>
+        <div class="step-copy"><h3><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="M21 11.5a8.5 8.5 0 0 1-12.7 7.4L3 21l2.1-5.1A8.5 8.5 0 1 1 21 11.5Z"/>
+  <path d="M8.2 7.9c.3 2.9 2.7 5.3 5.6 5.8"/>
+  <path d="m8.1 7.8 1.4-.4.9 2.1-1.1.9"/>
+  <path d="m13.7 12.6.9-1.1 2.1.9-.4 1.4"/>
+</svg><span>Klik Tombol WhatsApp</span></h3><p>Gunakan tombol utama yang tersedia di halaman ini.</p></div>
+      </article>
+      <article class="journey-step">
+        <div class="step-num">2</div>
+        <div class="step-copy"><h3><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <rect x="5" y="4" width="14" height="17" rx="2"/>
+  <path d="M9 4V2h6v2"/>
+  <path d="M9 10h6M9 14h6M9 18h4"/>
+</svg><span>Kirim Detail Pickup</span></h3><p>Berikan alamat jemput dan tujuan kepada tim admin Paxel.</p></div>
+      </article>
+      <article class="journey-step">
+        <div class="step-num">3</div>
+        <div class="step-copy"><h3><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="M3 6h11v10H3z"/>
+  <path d="M14 10h4l3 3v3h-7z"/>
+  <circle cx="7" cy="18" r="2"/>
+  <circle cx="18" cy="18" r="2"/>
+</svg><span>Kurir Menjemput Paket</span></h3><p>Kurir terdekat datang menjemput setelah detail dan jadwal dikonfirmasi.</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<div class="fp-overlay" id="fpOverlay">
+  <div class="fp-overlay-icon" aria-hidden="true"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="m5 12 4 4L19 6"/>
+</svg></div>
+  <div style="font-size:16px;font-weight:800;">Membuka WhatsApp…</div>
+  <div style="font-size:12.5px;color:#746d8a;">Admin siap bantu jawab pertanyaan kamu</div>
+</div>
+
+<section class="form-prospecting-wrap" id="form-pickup">
+  <div class="container">
+    <div class="form-prospecting-inner">
+      <h2 class="fp-title">Paket mau dijemput tapi masih ada yang ingin ditanya?</h2>
+      <p class="fp-sub">Isi form — admin Paxel siap jawab soal ongkir, area, jadwal, dan ketentuannya.</p>
+
+      <iframe name="fpGoogleFormTarget" style="display:none;"></iframe>
+
+      <div class="fp-card">
+        <div class="fp-field">
+          <label class="fp-label" for="fp-nama"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <circle cx="12" cy="8" r="4"/>
+  <path d="M4.5 21c.7-4.1 3.2-6.2 7.5-6.2s6.8 2.1 7.5 6.2"/>
+</svg><span>Nama kamu</span></label>
+          <input class="fp-input" type="text" id="fp-nama" placeholder="Misal: Budi" autocomplete="given-name">
+          <div class="fp-err" id="fp-err-nama">Nama perlu diisi ya</div>
+        </div>
+
+        <div class="fp-field">
+          <div class="fp-label" id="fp-label-keperluan"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <circle cx="12" cy="12" r="8"/>
+  <circle cx="12" cy="12" r="3"/>
+  <path d="M15 9 21 3M16.5 3H21v4.5"/>
+</svg><span>Kamu kirim untuk keperluan</span></div>
+          <div class="fp-radio-group" id="fpKeperluanGroup" role="radiogroup" aria-labelledby="fp-label-keperluan">
+            <label class="fp-radio-opt"><input type="radio" name="fp-keperluan" value="Pribadi"><span>Pribadi</span></label>
+            <label class="fp-radio-opt"><input type="radio" name="fp-keperluan" value="Jualan / usaha"><span>Jualan / usaha</span></label>
+            <label class="fp-radio-opt"><input type="radio" name="fp-keperluan" value="Kantor / pekerjaan"><span>Kantor / pekerjaan</span></label>
+          </div>
+          <div class="fp-err" id="fp-err-keperluan">Pilih keperluan pengiriman dulu ya</div>
+        </div>
+
+        <div class="fp-field">
+          <label class="fp-label" for="fp-lokasi"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/>
+  <circle cx="12" cy="10" r="2.5"/>
+</svg><span>Lokasi pickup</span></label>
+          <input class="fp-input" type="text" id="fp-lokasi" placeholder="Contoh: Kuningan, Jawa Barat" autocomplete="off">
+          <div class="fp-suggestions" id="fp-suggest-lokasi"></div>
+          <div class="fp-hint">Tulis kota atau kecamatan untuk cek coverage Paxel.</div>
+          <div class="fp-err" id="fp-err-lokasi">Lokasi pickup perlu diisi ya</div>
+        </div>
+
+        <div id="fpCoverageStatus" class="fp-coverage wait">
+          <strong>Cek coverage otomatis</strong>Isi lokasi pickup untuk melihat status coverage Paxel.
+        </div>
+
+        <button type="button" class="fp-submit fp-shake-target" id="fpBtnWa" onclick="fpSubmitForm()">
+          <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="M21 11.5a8.5 8.5 0 0 1-12.7 7.4L3 21l2.1-5.1A8.5 8.5 0 1 1 21 11.5Z"/>
+  <path d="M8.2 7.9c.3 2.9 2.7 5.3 5.6 5.8"/>
+  <path d="m8.1 7.8 1.4-.4.9 2.1-1.1.9"/>
+  <path d="m13.7 12.6.9-1.1 2.1.9-.4 1.4"/>
+</svg><span>Kirim via WhatsApp</span>
+        </button>
+
+        <p class="fp-microcopy">Data hanya digunakan untuk membantu admin memahami kebutuhan pickup kamu.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="container center">
+    <h2>Tunggu Apa Lagi? Amankan Dokumen Bisnis &amp; Paket Makanan Anda Sekarang!</h2>
+    <p>Sameday sampai, tersedia opsi proteksi, dan tanpa ribet install aplikasi. Tim Kurir Hero Paxel siap menjemput ke lokasi Anda.</p>
+    <p style="margin-top:14px;font-size:13px;color:rgba(255,255,255,.72);line-height:1.6;">Belum tahu ongkirnya?<br>Belum yakin area kamu terjangkau?<br><br>Isi form di bawah atau langsung chat — <strong style="color:#fff;">tanya dulu, gratis, tanpa komitmen.</strong></p>
+    <a class="btn btn-wa js-wa" data-source="final" href="#" style="margin-top:20px;"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="M21 11.5a8.5 8.5 0 0 1-12.7 7.4L3 21l2.1-5.1A8.5 8.5 0 1 1 21 11.5Z"/>
+  <path d="M8.2 7.9c.3 2.9 2.7 5.3 5.6 5.8"/>
+  <path d="m8.1 7.8 1.4-.4.9 2.1-1.1.9"/>
+  <path d="m13.7 12.6.9-1.1 2.1.9-.4 1.4"/>
+</svg><span>Kirim Cepat &amp; Aman via WhatsApp Sekarang</span></a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <p>Informasi layanan, area pickup, estimasi, Cold Chain, dan perlindungan pengiriman mengikuti ketentuan yang berlaku saat pemesanan.</p>
+  </div>
+</footer>
+
+<div class="sticky-mobile">
+  <a class="btn btn-wa js-wa" data-source="sticky" href="#"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="M21 11.5a8.5 8.5 0 0 1-12.7 7.4L3 21l2.1-5.1A8.5 8.5 0 1 1 21 11.5Z"/>
+  <path d="M8.2 7.9c.3 2.9 2.7 5.3 5.6 5.8"/>
+  <path d="m8.1 7.8 1.4-.4.9 2.1-1.1.9"/>
+  <path d="m13.7 12.6.9-1.1 2.1.9-.4 1.4"/>
+</svg><span>Kirim via WhatsApp</span></a>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+// Toast utility
+const toast = document.getElementById("toast");
+let toastTimer;
+function showToast(message){
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 3200);
+}
+
+// Semua button WA → scroll smooth ke form pickup
+document.querySelectorAll(".js-wa").forEach((link) => {
+  link.href = "#form-pickup";
+  link.target = "_self";
+  link.rel = "";
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+    const formSection = document.getElementById("form-pickup");
+    if (formSection) formSection.scrollIntoView({ behavior: "smooth" });
+    setTimeout(() => {
+      const namaField = document.getElementById("fp-nama");
+      if (namaField) namaField.focus();
+    }, 600);
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: "cta_scroll_to_form", cta_source: link.dataset.source || "unknown" });
+  });
+});
+</script>
+
+<script>
+// ── Form Prospecting Embedded JS ──
+(function(){
+  const FP_WA_NUMBER = "628XXXXXXXXXXX"; // Ganti nomor WA
+  const FP_GOOGLE_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSeo5qD0zs6KbXJmy6yWJpWGgs7I5WiCrosdv3Q-I1nijXdbUg/formResponse";
+  const FP_FIELDS = {
+    nama:"entry.1504118713", keperluan:"entry.1847521759",
+    lokasiPickup:"entry.233196206", statusCoverage:"entry.1908001349",
+    pesanWhatsapp:"entry.995128602", source:"entry.478492848"
+  };
+
+  const ALL_LOC  = window.PAXEL_ALL_LOCATIONS || [];
+  const COV_AREA = window.PAXEL_COVERED_AREAS || [];
+  const LOC_READY = ALL_LOC.length > 0;
+
+  function fpVal(id){ const el=document.getElementById(id); return el?el.value.trim():""; }
+  function fpGetKeperluan(){ const s=document.querySelector('input[name="fp-keperluan"]:checked'); return s?s.value:""; }
+  function fpShowErr(id,show){
+    const err=document.getElementById("fp-err-"+id);
+    const inp=document.getElementById("fp-"+id);
+    if(err) err.classList.toggle("show",show);
+    if(inp) inp.style.borderColor=show?"#e85c5c":"";
+  }
+  function fpShowKeperluanErr(show){
+    const err=document.getElementById("fp-err-keperluan");
+    const grp=document.getElementById("fpKeperluanGroup");
+    if(err) err.classList.toggle("show",show);
+    if(grp) grp.classList.toggle("invalid",show);
+  }
+  function fpNorm(str){
+    return (str||"").toString().toLowerCase().normalize("NFD")
+      .replace(/[\u0300-\u036f]/g,"").replace(/kelurahan|desa|kecamatan/g,"")
+      .replace(/kabupaten/g,"kab").replace(/[^a-z0-9\s]/g," ").replace(/\s+/g," ").trim();
+  }
+  function fpFindCoverage(lok){
+    if(!lok) return "incomplete";
+    const inAll = ALL_LOC.some(i=>fpNorm(i)===fpNorm(lok));
+    if(!inAll) return "unknown";
+    return COV_AREA.some(i=>fpNorm(i)===fpNorm(lok)) ? "covered" : "not_covered";
+  }
+  function fpCoverageText(lok){
+    const s=fpFindCoverage(lok);
+    if(s==="covered") return "Area tercover Paxel.";
+    if(s==="not_covered") return "Area belum tercover Paxel. Silakan chat admin untuk memastikan.";
+    return "Lokasi akan dicek admin.";
+  }
+  function fpUpdateCoverage(){
+    const box=document.getElementById("fpCoverageStatus");
+    if(!box) return;
+    const lok=fpVal("fp-lokasi");
+    const s=fpFindCoverage(lok);
+    if(!lok||s==="incomplete"){
+      box.className="fp-coverage wait";
+      box.innerHTML="<strong>Cek coverage otomatis</strong>Isi lokasi pickup untuk melihat status coverage Paxel.";
+    } else if(s==="covered"){
+      box.className="fp-coverage ok";
+      box.innerHTML=`<strong>Area tercover Paxel.</strong>Lokasi pickup ada di database coverage.<br><b>Lokasi:</b> ${lok}`;
+    } else if(s==="not_covered"){
+      box.className="fp-coverage no";
+      box.innerHTML=`<strong>Area belum tercover Paxel.</strong>Silakan chat admin untuk memastikan.<br><b>Lokasi:</b> ${lok}`;
+    } else {
+      box.className="fp-coverage wait";
+      box.innerHTML=`<strong>Lokasi akan dicek admin.</strong>Detail yang kamu tulis tetap akan kami cek.<br><b>Lokasi:</b> ${lok}`;
+    }
+  }
+  function fpRenderSuggestions(){
+    const input=document.getElementById("fp-lokasi");
+    const box=document.getElementById("fp-suggest-lokasi");
+    if(!input||!box) return;
+    const kw=fpNorm(input.value);
+    box.innerHTML="";
+    if(!kw){box.classList.remove("show");return;}
+    if(!LOC_READY){
+      box.innerHTML='<div class="fp-suggest-empty">Tulis lokasi Anda untuk kami cek detailnya.</div>';
+      box.classList.add("show"); return;
+    }
+    const matches=[...new Set(ALL_LOC.filter(Boolean))]
+      .filter(l=>fpNorm(l).includes(kw))
+      .sort((a,b)=>{
+        const as=fpNorm(a).startsWith(kw)?0:1,bs=fpNorm(b).startsWith(kw)?0:1;
+        return as!==bs?as-bs:a.length-b.length;
+      }).slice(0,10);
+    if(!matches.length){
+      box.innerHTML='<div class="fp-suggest-empty">Lokasi belum muncul? Tulis lokasi Anda untuk kami cek.</div>';
+      box.classList.add("show"); return;
+    }
+    matches.forEach(lok=>{
+      const btn=document.createElement("button");
+      btn.type="button"; btn.className="fp-suggest-item"; btn.textContent=lok;
+      btn.addEventListener("click",()=>{
+        input.value=lok; box.classList.remove("show"); box.innerHTML="";
+        fpShowErr("lokasi",false); fpUpdateCoverage();
+      });
+      box.appendChild(btn);
+    });
+    box.classList.add("show");
+  }
+
+  const fpLokasiInput=document.getElementById("fp-lokasi");
+  if(fpLokasiInput){
+    fpLokasiInput.addEventListener("input",()=>{fpShowErr("lokasi",false);fpRenderSuggestions();fpUpdateCoverage();});
+    fpLokasiInput.addEventListener("focus",fpRenderSuggestions);
+    fpLokasiInput.addEventListener("blur",()=>setTimeout(()=>{
+      const b=document.getElementById("fp-suggest-lokasi");
+      if(b) b.classList.remove("show");
+    },180));
+  }
+  document.querySelectorAll('input[name="fp-keperluan"]').forEach(r=>{
+    r.addEventListener("change",()=>fpShowKeperluanErr(false));
+  });
+  const fpNamaInput=document.getElementById("fp-nama");
+  if(fpNamaInput) fpNamaInput.addEventListener("input",()=>fpShowErr("nama",false));
+
+  window.fpSubmitForm = function(){
+    const nama=fpVal("fp-nama");
+    const keperluan=fpGetKeperluan();
+    const lok=fpVal("fp-lokasi");
+    let valid=true;
+    if(!nama){fpShowErr("nama",true);valid=false;}
+    if(!keperluan){fpShowKeperluanErr(true);valid=false;}
+    if(!lok){fpShowErr("lokasi",true);valid=false;}
+    fpUpdateCoverage();
+    if(!valid){
+      const btn=document.getElementById("fpBtnWa");
+      if(btn){btn.classList.add("fp-shake");setTimeout(()=>btn.classList.remove("fp-shake"),400);}
+      return;
+    }
+    const statusCoverage=fpCoverageText(lok);
+    const msg=`Halo Paxel 👋\n\nSaya mau tanya-tanya dulu soal pickup Paxel.\n\n• *Nama*           : ${nama}\n• *Keperluan*      : ${keperluan}\n• *Lokasi pickup*  : ${lok}\n• *Status coverage*: ${statusCoverage}\n\nMohon bantu info jadwal pickup, estimasi ongkir, dan ketentuannya ya. Terima kasih 🙏`;
+
+    // kirim ke Google Form (silent)
+    const gForm=document.createElement("form");
+    gForm.method="POST"; gForm.action=FP_GOOGLE_FORM_ACTION;
+    gForm.target="fpGoogleFormTarget"; gForm.style.display="none";
+    const fields={[FP_FIELDS.nama]:nama,[FP_FIELDS.keperluan]:keperluan,[FP_FIELDS.lokasiPickup]:lok,[FP_FIELDS.statusCoverage]:statusCoverage,[FP_FIELDS.pesanWhatsapp]:msg,[FP_FIELDS.source]:"LP_INLINE_FORM"};
+    Object.entries(fields).forEach(([n,v])=>{const i=document.createElement("input");i.type="hidden";i.name=n;i.value=v||"";gForm.appendChild(i);});
+    document.body.appendChild(gForm); gForm.submit();
+    setTimeout(()=>gForm.remove(),2000);
+
+    // Meta Pixel — AddToCart event saat form disubmit
+    if(typeof fbq==="function"){
+      fbq("track","AddToCart",{
+        content_name: "Form Pickup Paxel",
+        content_category: "pickup_form"
+      });
+    }
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: "form_submit_add_to_cart" });
+
+    // overlay + redirect WA
+    const overlay=document.getElementById("fpOverlay");
+    if(overlay) overlay.classList.add("show");
+    const clean=FP_WA_NUMBER.replace(/\D/g,"");
+    setTimeout(()=>{ window.location.href=`https://wa.me/${clean}?text=${encodeURIComponent(msg)}`; },1500);
+  };
+})();
+</script>
+
+</body>
+</html>
