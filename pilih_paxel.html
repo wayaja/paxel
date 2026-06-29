@@ -565,6 +565,11 @@ document.querySelectorAll(".js-wa").forEach((link) => {
 });
 </script>
 
+
+<!-- Database lokasi Paxel -->
+<script src="assets/paxel-locations.js"></script>
+<script src="assets/paxel-covered-areas.js"></script>
+
 <script>
 // ── Form Prospecting Embedded JS ──
 (function(){
@@ -576,9 +581,31 @@ document.querySelectorAll(".js-wa").forEach((link) => {
     pesanWhatsapp:"entry.995128602", source:"entry.478492848"
   };
 
-  const ALL_LOC  = window.PAXEL_ALL_LOCATIONS || [];
-  const COV_AREA = window.PAXEL_COVERED_AREAS || [];
+  const FP_SOURCE_MAP = Object.freeze({
+    lp1_prospecting: "LP1_PROSPECTING",
+    lp2_retargeting: "LP2_RETARGETING",
+    tanya_admin: "TANYA_ADMIN"
+  });
+  const FP_SOURCE_KEY = new URLSearchParams(window.location.search).get("source");
+  const FP_LEAD_SOURCE = FP_SOURCE_MAP[FP_SOURCE_KEY] || "DIRECT_OR_UNKNOWN";
+
+  const ALL_LOC = Array.isArray(window.PAXEL_ALL_LOCATIONS)
+    ? window.PAXEL_ALL_LOCATIONS
+    : [];
+
+  const COV_AREA = Array.isArray(window.PAXEL_COVERED_AREAS)
+    ? window.PAXEL_COVERED_AREAS
+    : [];
+
   const LOC_READY = ALL_LOC.length > 0;
+
+  if (!LOC_READY) {
+    console.error(
+      "[Paxel] Database lokasi tidak terbaca. Pastikan file tersedia di:\n" +
+      "assets/paxel-locations.js\n" +
+      "assets/paxel-covered-areas.js"
+    );
+  }
 
   function fpVal(id){ const el=document.getElementById(id); return el?el.value.trim():""; }
   function fpGetKeperluan(){ const s=document.querySelector('input[name="fp-keperluan"]:checked'); return s?s.value:""; }
@@ -614,6 +641,13 @@ document.querySelectorAll(".js-wa").forEach((link) => {
   function fpUpdateCoverage(){
     const box=document.getElementById("fpCoverageStatus");
     if(!box) return;
+
+    if(!LOC_READY){
+      box.className="fp-coverage wait";
+      box.innerHTML="<strong>Database lokasi belum terbaca.</strong>Periksa file assets/paxel-locations.js dan assets/paxel-covered-areas.js di GitHub.";
+      return;
+    }
+
     const lok=fpVal("fp-lokasi");
     const s=fpFindCoverage(lok);
     if(!lok||s==="incomplete"){
@@ -638,8 +672,9 @@ document.querySelectorAll(".js-wa").forEach((link) => {
     box.innerHTML="";
     if(!kw){box.classList.remove("show");return;}
     if(!LOC_READY){
-      box.innerHTML='<div class="fp-suggest-empty">Tulis lokasi Anda untuk kami cek detailnya.</div>';
-      box.classList.add("show"); return;
+      box.innerHTML='<div class="fp-suggest-empty">Database lokasi belum terbaca. Periksa file assets/paxel-locations.js dan assets/paxel-covered-areas.js.</div>';
+      box.classList.add("show");
+      return;
     }
     const matches=[...new Set(ALL_LOC.filter(Boolean))]
       .filter(l=>fpNorm(l).includes(kw))
@@ -662,6 +697,12 @@ document.querySelectorAll(".js-wa").forEach((link) => {
     });
     box.classList.add("show");
   }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    console.info("[Paxel] Jumlah lokasi:", ALL_LOC.length);
+    console.info("[Paxel] Jumlah area tercover:", COV_AREA.length);
+    fpUpdateCoverage();
+  });
 
   const fpLokasiInput=document.getElementById("fp-lokasi");
   if(fpLokasiInput){
@@ -699,7 +740,7 @@ document.querySelectorAll(".js-wa").forEach((link) => {
     const gForm=document.createElement("form");
     gForm.method="POST"; gForm.action=FP_GOOGLE_FORM_ACTION;
     gForm.target="fpGoogleFormTarget"; gForm.style.display="none";
-    const fields={[FP_FIELDS.nama]:nama,[FP_FIELDS.keperluan]:keperluan,[FP_FIELDS.lokasiPickup]:lok,[FP_FIELDS.statusCoverage]:statusCoverage,[FP_FIELDS.pesanWhatsapp]:msg,[FP_FIELDS.source]:"LP_INLINE_FORM"};
+    const fields={[FP_FIELDS.nama]:nama,[FP_FIELDS.keperluan]:keperluan,[FP_FIELDS.lokasiPickup]:lok,[FP_FIELDS.statusCoverage]:statusCoverage,[FP_FIELDS.pesanWhatsapp]:msg,[FP_FIELDS.source]:FP_LEAD_SOURCE};
     Object.entries(fields).forEach(([n,v])=>{const i=document.createElement("input");i.type="hidden";i.name=n;i.value=v||"";gForm.appendChild(i);});
     document.body.appendChild(gForm); gForm.submit();
     setTimeout(()=>gForm.remove(),2000);
@@ -715,9 +756,14 @@ document.querySelectorAll(".js-wa").forEach((link) => {
     window.dataLayer.push({ event: "form_submit_add_to_cart" });
 
     // overlay + redirect WA
+    const clean=FP_WA_NUMBER.replace(/\D/g,"");
+    if(!/^62\d{8,15}$/.test(clean)){
+      showToast("Nomor WhatsApp belum dikonfigurasi dengan benar.");
+      return;
+    }
+
     const overlay=document.getElementById("fpOverlay");
     if(overlay) overlay.classList.add("show");
-    const clean=FP_WA_NUMBER.replace(/\D/g,"");
     setTimeout(()=>{ window.location.href=`https://wa.me/${clean}?text=${encodeURIComponent(msg)}`; },1500);
   };
 })();
