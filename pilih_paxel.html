@@ -220,6 +220,54 @@ footer{padding:26px 0 92px;background:#352C61}footer p{color:rgba(255,255,255,.6
   stroke-width:2.4;
 }
 
+/* ── Identity Qualifier ── */
+.qualifier{padding:28px 0;background:#fff}
+.qualifier-card{max-width:760px;margin:0 auto;text-align:center}
+.qualifier-icons{display:flex;justify-content:center;gap:18px;margin-bottom:16px}
+.qualifier-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:12px;background:#F1EEFB;color:var(--primary)}
+.qualifier-icon .ui-icon{width:24px;height:24px}
+.qualifier-text{font-size:14px;line-height:23px;color:var(--body)}
+.qualifier-text b{color:var(--ink);font-weight:700}
+.qualifier-pivot{margin-top:14px;font-size:13px;font-weight:700;color:var(--primary)}
+@media(min-width:700px){.qualifier{padding:36px 0}.qualifier-text{font-size:16px;line-height:26px}}
+
+/* ── Identity Qualifier — Yes/No Filter Variant ── */
+.qualifier-yn-card{max-width:760px;margin:0 auto;text-align:center}
+.qualifier-yn-card h2{margin-bottom:14px}
+.qualifier-yn-list{font-size:14px;line-height:24px;color:var(--ink);text-align:left;max-width:620px;margin:0 auto}
+.qualifier-yn-list b{color:var(--primary);font-weight:800}
+.qualifier-yes{margin-top:14px;font-size:16px;font-weight:800;color:var(--success)}
+.qualifier-exclude{margin-top:18px;padding:12px 16px;border-radius:12px;background:#FFF8E6;border:1px solid #FFE2A3;color:#7A5B00;font-size:12.5px;line-height:19px;text-align:left;max-width:620px;margin-inline:auto}
+@media(min-width:700px){.qualifier-yn-list{font-size:16px;line-height:26px}.qualifier-yes{font-size:18px}}
+
+/* ── Real-World Evidence ── */
+.evidence-list{display:grid;gap:14px;max-width:760px;margin:24px auto 0}
+.evidence-item{padding:18px;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:var(--shadow)}
+.evidence-flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--primary);margin-bottom:8px;text-transform:uppercase;letter-spacing:.02em}
+.evidence-flow .arrow{color:var(--proof);font-weight:400}
+.evidence-item p{margin-top:6px}
+.evidence-review{max-width:760px;margin:18px auto 0;padding:18px;border-radius:14px;background:var(--soft);border:1px dashed var(--line)}
+.evidence-review p{font-style:italic;color:var(--ink);font-size:13px;line-height:21px}
+.evidence-review .quote-id{margin-top:10px;font-style:normal}
+
+/* ── Conversion Bridge ── */
+.conversion-bridge{max-width:680px;margin:28px auto 0;padding:20px;border-radius:16px;background:linear-gradient(135deg,#F1EEFB,#fff);border:1px solid #E4DCF7;text-align:center}
+.conversion-bridge p{font-size:13.5px;line-height:22px;color:var(--ink)}
+.conversion-bridge p:first-child{margin-top:0}
+.conversion-bridge p+p{margin-top:8px}
+
+/* ── Exit Intent Pop-up ── */
+.exit-overlay{position:fixed;inset:0;z-index:200;background:rgba(26,18,46,.55);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:.22s ease}
+.exit-overlay.show{opacity:1;pointer-events:all}
+.exit-modal{width:100%;max-width:400px;background:#fff;border-radius:20px;padding:26px 22px;text-align:center;box-shadow:0 30px 60px rgba(0,0,0,.3);transform:scale(.92);transition:.22s ease}
+.exit-overlay.show .exit-modal{transform:scale(1)}
+.exit-close{position:absolute;top:14px;right:18px;font-size:20px;color:var(--proof);background:none;border:0;cursor:pointer;line-height:1}
+.exit-modal{position:relative}
+.exit-modal h3{font-size:18px;line-height:25px;margin-bottom:8px}
+.exit-modal p{font-size:13px;line-height:20px;margin-bottom:0}
+.exit-actions{display:grid;gap:8px;margin-top:18px}
+.exit-btn-secondary{min-height:44px;width:100%;border:1px solid var(--line);background:#fff;color:var(--body);border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
+
 </style>
 
 <!-- Meta Pixel -->
@@ -275,8 +323,8 @@ fbq('track', 'PageView');
   <div class="container hero-grid">
     <div>
       <p class="preheadline">Takut paket telat sampai, dokumen berharga hilang, atau makanan basi di jalan?</p>
-      <h1>Kirim Paket <em style="font-style:italic;font-weight:700;">Dijamin Cepat &amp; Aman, </em>Sampai di Hari yang Sama dengan <strong style="color:#F9A8B0;font-weight:800;">Proteksi Penuh</strong></h1>
-      <p class="hero-sub">Nggak pakai ribet. Tanpa perlu download aplikasi atau isi formulir panjang. Cukup klik tombol di bawah, tim kurir Hero Paxel langsung jemput dokumen atau makanan Anda melalui WhatsApp.</p>
+      <h1>Kirim Paket <strong style="color:#F9A8B0;font-weight:800;">Dijamin Cepat &amp; Aman</strong>, Sampai di Hari yang Sama dengan <em style="font-style:italic;font-weight:700;">Tanpa</em> Drama Paket Hilang</h1>
+      <p class="hero-sub">Nggak pakai ribet. Tanpa perlu download aplikasi atau isi formulir panjang. Cukup klik tombol di bawah, tim kurir Hero Paxel langsung jemput dokumen atau makanan kamu melalui WhatsApp.</p>
       <a class="btn btn-wa js-wa" data-source="hero" href="#"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
   <path d="M21 11.5a8.5 8.5 0 0 1-12.7 7.4L3 21l2.1-5.1A8.5 8.5 0 1 1 21 11.5Z"/>
   <path d="M8.2 7.9c.3 2.9 2.7 5.3 5.6 5.8"/>
@@ -287,6 +335,15 @@ fbq('track', 'PageView');
     <div class="hero-visual">
       <img src="https://i.ibb.co.com/3yBH68GS/hero-paxel.webp" alt="Kurir Paxel menyerahkan paket kepada pelanggan di depan rumah" width="750" height="938" loading="eager" fetchpriority="high" decoding="async">
     </div>
+  </div>
+</section>
+
+<section class="qualifier" aria-label="Untuk siapa Paxel">
+  <div class="container qualifier-yn-card">
+    <h2>Apakah Ini yang Kamu Cari?</h2>
+    <p class="qualifier-yn-list">Jika kamu adalah <b>Staf Kantor</b> yang dikejar deadline dokumen, <b>Owner Kuliner</b> yang cemas makanan rusak di jalan, atau <b>seseorang</b> yang mau kirim kado ke keluarga dengan praktis...</p>
+    <p class="qualifier-yes">Yes, kamu berada di tempat yang benar!</p>
+   
   </div>
 </section>
 
@@ -301,7 +358,7 @@ fbq('track', 'PageView');
 <section class="section">
   <div class="container">
     <div class="section-head center">
-      <h2>Dipakai untuk Kebutuhan Kantor, UMKM Kuliner, dan Pengiriman Personal</h2>
+      <h2>Pilih Proteksi Terbaik yang Sesuai dengan Jenis Paket Kamu</h2>
       <p>Tiga kebutuhan berbeda, satu alur pickup yang sama-sama praktis melalui WhatsApp.</p>
     </div>
     <div class="quote-slider" aria-label="Testimoni pengguna">
@@ -433,6 +490,81 @@ fbq('track', 'PageView');
   </div>
 </section>
 
+<section id="safety-features" style="padding: 60px 20px; font-family: sans-serif; max-width: 1200px; margin: 0 auto;">
+  
+  <!-- HEADLINE & SUB-HEADLINE (DIBUAT LEBIH RINGKAS & FOKUS) -->
+  <div style="text-align: center; margin-bottom: 40px;">
+    <h2 style="font-size: 28px; color: #333; font-weight: 800; margin-bottom: 12px; line-height: 1.3;">
+      Bukan Sekadar Janji Cepat. <br style="display: block; content: ''; margin-bottom: 4px;">Begini Cara Paxel Menjaga Paketmu Tetap Aman.
+    </h2>
+    <p style="font-size: 16px; color: #666; max-width: 700px; margin: 0 auto; line-height: 1.5;">
+      Sistem keamanan yang terintegrasi di setiap langkah perjalanan—memastikan Anda tahu persis bagaimana paket Anda dilindungi.
+    </p>
+  </div>
+
+  <!-- GRID CONTAINER (3 KOLOM DI DEKSTOP, 1 KOLOM DI MOBILE) -->
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+    
+    <!-- CARD 1: CCTV -->
+    <div style="background: #fff; border: 1px solid #e0e0e0; border-radius: 12px; padding: 24px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+          <h3 style="font-size: 18px; color: #333; margin: 0; font-weight: 700;">CCTV Terpusat 24/7</h3>
+          <span style="font-size: 12px; font-weight: bold; color: #F9A8B0; background: #FFF0F2; padding: 4px 8px; border-radius: 20px;">MONITORING</span>
+        </div>
+        <p style="font-size: 14px; color: #555; line-height: 1.5; margin: 0 0 20px 0;">
+          Setiap proses sortir dan penanganan terekam penuh di gudang transit Paxel.
+        </p>
+      </div>
+      <div style="background: #F4FBF7; border-left: 4px solid #2ECC71; padding: 12px 16px; border-radius: 0 8px 8px 0;">
+        <strong style="display: block; font-size: 12px; color: #27AE60; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">✔ Efek Nyata:</strong>
+        <p style="font-size: 13px; color: #2C3E50; margin: 0; font-weight: 500; line-height: 1.4;">
+          Paket tidak ditumpuk sembarangan atau dibanting. Anda bebas was-was dari risiko barang rusak di jalan.
+        </p>
+      </div>
+    </div>
+
+    <!-- CARD 2: ASURANSI -->
+    <div style="background: #fff; border: 1px solid #e0e0e0; border-radius: 12px; padding: 24px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+          <h3 style="font-size: 18px; color: #333; margin: 0; font-weight: 700;">Asuransi Otomatis s.d Rp 50 Juta</h3>
+          <span style="font-size: 12px; font-weight: bold; color: #F9A8B0; background: #FFF0F2; padding: 4px 8px; border-radius: 20px;">PROTEKSI</span>
+        </div>
+        <p style="font-size: 14px; color: #555; line-height: 1.5; margin: 0 0 20px 0;">
+          Perlindungan finansial yang langsung aktif secara otomatis begitu paket diserahterimakan ke kurir.
+        </p>
+      </div>
+      <div style="background: #F4FBF7; border-left: 4px solid #2ECC71; padding: 12px 16px; border-radius: 0 8px 8px 0;">
+        <strong style="display: block; font-size: 12px; color: #27AE60; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">✔ Efek Nyata:</strong>
+        <p style="font-size: 13px; color: #2C3E50; margin: 0; font-weight: 500; line-height: 1.4;">
+          Tanpa perlu daftar form terpisah. Jika terjadi kendala, proses klaimnya transparan, cepat, dan anti-drama.
+        </p>
+      </div>
+    </div>
+
+    <!-- CARD 3: COLD CHAIN -->
+    <div style="background: #fff; border: 1px solid #e0e0e0; border-radius: 12px; padding: 24px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+          <h3 style="font-size: 18px; color: #333; margin: 0; font-weight: 700;">Cold Chain Facilities</h3>
+          <span style="font-size: 12px; font-weight: bold; color: #F9A8B0; background: #FFF0F2; padding: 4px 8px; border-radius: 20px;">FROZEN FOOD</span>
+        </div>
+        <p style="font-size: 14px; color: #555; line-height: 1.5; margin: 0 0 20px 0;">
+          Tersedia fasilitas freezer dan chiller khusus di setiap titik transit untuk menjaga rantai dingin makanan.
+        </p>
+      </div>
+      <div style="background: #F4FBF7; border-left: 4px solid #2ECC71; padding: 12px 16px; border-radius: 0 8px 8px 0;">
+        <strong style="display: block; font-size: 12px; color: #27AE60; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">✔ Efek Nyata:</strong>
+        <p style="font-size: 13px; color: #2C3E50; margin: 0; font-weight: 500; line-height: 1.4;">
+          Suhu makanan beku tetap terjaga prima. Pesanan sampai ke tangan pelanggan dalam kondisi segar dan anti-basi.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 
 <div class="fp-overlay" id="fpOverlay">
   <div class="fp-overlay-icon" aria-hidden="true"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -446,7 +578,7 @@ fbq('track', 'PageView');
   <div class="container">
     <div class="form-prospecting-inner">
       <h2 class="fp-title">Paket mau dijemput tapi masih ada yang ingin ditanya?</h2>
-      <p class="fp-sub">Isi form — admin Paxel siap jawab soal ongkir, area, jadwal, dan ketentuannya.</p>
+      <p class="fp-sub">Isi form, admin Paxel siap jawab soal ongkir, area, jadwal, dan ketentuannya.</p>
 
       <iframe name="fpGoogleFormTarget" style="display:none;"></iframe>
 
@@ -504,17 +636,47 @@ fbq('track', 'PageView');
   </div>
 </section>
 
+<section class="section">
+  <div class="container">
+    <div class="section-head center">
+      <h2>Pertanyaan yang Sering Ditanyakan</h2>
+      <p>Beberapa hal yang biasanya ditanyakan sebelum pakai layanan pickup Paxel.</p>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>Apakah ada biaya tersembunyi selain ongkir?</summary>
+        <p>Tidak ada. Ongkir yang muncul di awal adalah harga final tanpa biaya pickup tambahan, tanpa biaya admin tersembunyi.</p>
+      </details>
+      <details>
+        <summary>Kalau paket rusak atau hilang, bagaimana proses klaimnya?</summary>
+        <p>Setiap paket otomatis terlindungi asuransi hingga Rp 50 juta tanpa perlu daftar terpisah. Kamu cukup hubungi admin dengan bukti foto, prosesnya transparan dan tidak berbelit.</p>
+      </details>
+      <details>
+        <summary>Apakah bisa pickup di hari yang sama saya chat?</summary>
+        <p>Bisa, selama area kamu masuk slot pickup hari ini. Karena jadwal kurir berbeda tiap area, kirim lokasi pickup-mu lewat WhatsApp dan admin akan konfirmasi slot tercepat yang tersedia.</p>
+      </details>
+      <details>
+        <summary>Berapa lama estimasi sampai untuk pengiriman luar kota?</summary>
+        <p>Estimasi standar berbeda tergantung kota tujuan dan jenis layanan yang dipilih. Kirim kota asal dan tujuanmu via WhatsApp, admin akan kasih estimasi waktu paling akurat untuk rute kamu.</p>
+      </details>
+      <details>
+        <summary>Apakah area rumah saya sudah tercover Paxel?</summary>
+        <p>Sebagian besar kota besar di Jawa, Bali, Sumatera, Kalimantan, dan Sulawesi sudah tercover. Ketik lokasi kamu di form pickup di atas untuk cek otomatis, atau tanya langsung ke admin.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
 <section class="final">
   <div class="container center">
-    <h2>Tunggu Apa Lagi? Amankan Dokumen Bisnis &amp; Paket Makanan Anda Sekarang!</h2>
-    <p>Sameday sampai, tersedia opsi proteksi, dan tanpa ribet install aplikasi. Tim Kurir Hero Paxel siap menjemput ke lokasi Anda.</p>
-    <p style="margin-top:14px;font-size:13px;color:rgba(255,255,255,.72);line-height:1.6;">Belum tahu ongkirnya?<br>Belum yakin area kamu terjangkau?<br><br>Isi form di bawah atau langsung chat — <strong style="color:#fff;">tanya dulu, gratis, tanpa komitmen.</strong></p>
+    <h2>"Saya mau coba kirim lewat Paxel, tapi <em style="font-style:italic">berapa biaya</em> yang harus saya keluarkan untuk paket saya sampai dengan aman?"</h2>
+    <p>Tenang, ongkir Paxel transparan tanpa biaya tersembunyi, dan setiap paket otomatis dilindungi <strong style="color:#fff">asuransi hingga Rp 50 juta</strong>. Tim kami siap hitungkan estimasi terbaik untuk kirimanmu sekarang.</p>
     <a class="btn btn-wa js-wa" data-source="final" href="#" style="margin-top:20px;"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
   <path d="M21 11.5a8.5 8.5 0 0 1-12.7 7.4L3 21l2.1-5.1A8.5 8.5 0 1 1 21 11.5Z"/>
   <path d="M8.2 7.9c.3 2.9 2.7 5.3 5.6 5.8"/>
   <path d="m8.1 7.8 1.4-.4.9 2.1-1.1.9"/>
   <path d="m13.7 12.6.9-1.1 2.1.9-.4 1.4"/>
-</svg><span>Kirim Cepat &amp; Aman via WhatsApp Sekarang</span></a>
+</svg><span>Tanyakan Estimasi Ongkir via WhatsApp</span></a>
   </div>
 </section>
 </main>
@@ -535,6 +697,24 @@ fbq('track', 'PageView');
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<div class="exit-overlay" id="exitOverlay">
+  <div class="exit-modal">
+    <button type="button" class="exit-close" id="exitClose" aria-label="Tutup">×</button>
+    <h3>Sekarang paket yang biasanya bikin kamu was-was di jalan, bisa berhenti jadi masalah hari ini.</h3>
+    <p>Tanya dulu estimasi ongkir dan cek area kamu via WhatsApp, gratis, tanpa komitmen, dan tidak perlu langsung pesan.</p>
+    <div class="exit-actions">
+      <a class="btn btn-wa js-wa" data-source="exit-intent" href="#"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <path d="M21 11.5a8.5 8.5 0 0 1-12.7 7.4L3 21l2.1-5.1A8.5 8.5 0 1 1 21 11.5Z"/>
+  <path d="M8.2 7.9c.3 2.9 2.7 5.3 5.6 5.8"/>
+  <path d="m8.1 7.8 1.4-.4.9 2.1-1.1.9"/>
+  <path d="m13.7 12.6.9-1.1 2.1.9-.4 1.4"/>
+</svg><span>Ya, Saya Mau Tanya Dulu</span></a>
+      <button type="button" class="exit-btn-secondary" id="exitDismiss">Nanti Saja</button>
+    </div>
+  </div>
+</div>
+
+
 <script>
 // Toast utility
 const toast = document.getElementById("toast");
@@ -546,6 +726,57 @@ function showToast(message){
   toastTimer = setTimeout(() => toast.classList.remove("show"), 3200);
 }
 
+// ── Exit Intent Pop-up ──
+(function(){
+  const overlay = document.getElementById("exitOverlay");
+  const closeBtn = document.getElementById("exitClose");
+  const dismissBtn = document.getElementById("exitDismiss");
+  if(!overlay) return;
+
+  const STORAGE_KEY = "paxel_exit_intent_shown";
+  let shown = false;
+
+  function hasShown(){
+    try { return sessionStorage.getItem(STORAGE_KEY) === "1"; }
+    catch(e){ return shown; }
+  }
+  function markShown(){
+    shown = true;
+    try { sessionStorage.setItem(STORAGE_KEY, "1"); } catch(e){}
+  }
+  function openExit(){
+    if(hasShown()) return;
+    markShown();
+    overlay.classList.add("show");
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: "exit_intent_shown" });
+  }
+  function closeExit(){
+    overlay.classList.remove("show");
+  }
+
+  // Desktop: mouse keluar dari viewport atas
+  document.addEventListener("mouseleave", (e) => {
+    if (e.clientY <= 0) openExit();
+  });
+
+  // Mobile: scroll mencapai ~72% halaman
+  let mobileChecked = false;
+  window.addEventListener("scroll", () => {
+    if (mobileChecked || hasShown()) return;
+    const scrolled = window.scrollY + window.innerHeight;
+    const total = document.documentElement.scrollHeight;
+    if (scrolled / total >= 0.72) {
+      mobileChecked = true;
+      openExit();
+    }
+  }, { passive: true });
+
+  closeBtn?.addEventListener("click", closeExit);
+  dismissBtn?.addEventListener("click", closeExit);
+  overlay.addEventListener("click", (e) => { if (e.target === overlay) closeExit(); });
+})();
+
 // Semua button WA → scroll smooth ke form pickup
 document.querySelectorAll(".js-wa").forEach((link) => {
   link.href = "#form-pickup";
@@ -553,6 +784,8 @@ document.querySelectorAll(".js-wa").forEach((link) => {
   link.rel = "";
   link.addEventListener("click", (event) => {
     event.preventDefault();
+    const exitOv = document.getElementById("exitOverlay");
+    if (exitOv) exitOv.classList.remove("show");
     const formSection = document.getElementById("form-pickup");
     if (formSection) formSection.scrollIntoView({ behavior: "smooth" });
     setTimeout(() => {
