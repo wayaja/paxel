@@ -456,6 +456,24 @@ footer{padding:26px 0 92px;background:#352C61}footer p{color:rgba(255,255,255,.6
   .evidence-photo-card figcaption{font-size:13px;line-height:20px}
 }
 
+/* ── Footer Micro-Hook untuk menjaga scroll depth ── */
+.section-hook{
+  margin:24px auto 0;
+  max-width:680px;
+  text-align:center;
+  color:var(--primary);
+  font-size:13px;
+  line-height:1.45;
+  font-weight:800;
+}
+.section-hook::after{
+  content:" ↓";
+  color:#AAA4BD;
+}
+@media(min-width:700px){
+  .section-hook{margin-top:30px;font-size:14px;}
+}
+
 </style>
 
 <!-- Meta Pixel -->
@@ -494,7 +512,7 @@ fbq('track', 'PageView');
 </script>
 <noscript>
   <img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=PIXEL_ID_KAMU&ev=PageView&noscript=1"/>
+    src="https://www.facebook.com/tr?id=2052078112065963&ev=PageView&noscript=1"/>
 </noscript>
 <!-- End Meta Pixel -->
 </head>
@@ -597,6 +615,7 @@ fbq('track', 'PageView');
       </article>
     </div>
     <p class="swipe-hint" aria-hidden="true">Geser untuk membaca testimoni lainnya →</p>
+    <p class="section-hook">Berikut solusi yang sesuai dengan kebutuhan kirimanmu.</p>
   </div>
 </section>
 
@@ -638,6 +657,7 @@ fbq('track', 'PageView');
         <p>Kirim paket ke keluarga atau teman tanpa proses panjang. Klik WhatsApp, lalu kurir menjemput ke lokasi Anda.</p>
       </article>
     </div>
+    <p class="section-hook">Mau mulai kirim? Prosesnya cuma 3 langkah.</p>
   </div>
 </section>
 
@@ -675,6 +695,7 @@ fbq('track', 'PageView');
 </svg><span>Kurir Menjemput Paket</span></h3><p>Kurir terdekat datang menjemput setelah detail dan jadwal dikonfirmasi.</p></div>
       </article>
     </div>
+    <p class="section-hook">Lalu, bagaimana paketmu dijaga selama perjalanan?</p>
   </div>
 </section>
 
@@ -751,6 +772,7 @@ fbq('track', 'PageView');
     </div>
 
   </div>
+  <p class="section-hook">Sistem aman, tinggal tunggu di tempat. Kurir kami yang jemput paket kamu.</p>
 </section>
 
 
