@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Paxel Sameday — Solution Aware Mockup</title>
+<meta name="description" content="Mockup mobile-first landing page Paxel Sameday — Solution Aware">
+<style>
+:root{
+  --paxel:#5F51A1;
+  --paxel-deep:#43377F;
+  --paxel-soft:#EEEAF8;
+  --paxel-soft-2:#F6F3FB;
+  --yellow:#FFC928;
+  --ink:#19181D;
+  --body:#47454E;
+  --muted:#716E78;
+  --paper:#FCFBFD;
+  --white:#FFFFFF;
+  --line:#E8E4EF;
+  --soft:#F4F3F6;
+  --green:#1F9D62;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:#EDEBF1;color:var(--ink);
+  font-family:Gotham,"Avenir Next",Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.page{
+  width:min(100%,430px);margin:0 auto;background:var(--paper);
+  min-height:100vh;box-shadow:0 0 40px rgba(29,23,55,.10);overflow:hidden;
+}
+.wrap{padding-left:22px;padding-right:22px}
+section{position:relative}
+.eyebrow{
+  font-size:11px;line-height:1.2;letter-spacing:.12em;text-transform:uppercase;
+  font-weight:800;color:var(--paxel);margin:0 0 10px
+}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:38px;line-height:1.02;letter-spacing:-.045em;margin-bottom:14px}
+h2{font-size:29px;line-height:1.08;letter-spacing:-.035em;margin-bottom:14px}
+h3{font-size:18px;line-height:1.18;letter-spacing:-.015em;margin-bottom:8px}
+p{font-size:16px;line-height:1.55;color:var(--body);margin-bottom:0}
+.small{font-size:13px;line-height:1.45;color:var(--muted)}
+.body-strong{font-weight:750;color:var(--ink)}
+.hl-purple{font-weight:800;color:var(--paxel-deep)}
+.marker{
+  display:inline;font-weight:800;color:var(--ink);padding:0 .06em;
+  background:linear-gradient(transparent 56%,rgba(255,201,40,.42) 56%,rgba(255,201,40,.42) 91%,transparent 91%);
+  -webkit-box-decoration-break:clone;box-decoration-break:clone;
+}
+.marker-soft{
+  display:inline;font-weight:800;color:var(--ink);padding:0 .06em;
+  background:linear-gradient(transparent 57%,rgba(95,81,161,.16) 57%,rgba(95,81,161,.16) 92%,transparent 92%);
+  -webkit-box-decoration-break:clone;box-decoration-break:clone;
+}
+.pill{
+  display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border-radius:999px;
+  background:var(--paxel-soft);color:var(--paxel-deep);font-size:12px;line-height:1.25;
+  font-weight:800;margin-bottom:16px
+}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--yellow);flex:0 0 auto}
+
+
+.hero{
+  background:linear-gradient(155deg,#fff 0%,#f9f7fc 52%,#eee9f8 100%);
+  padding:22px 0 28px;
+}
+.brandbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:25px}
+.wordmark{font-size:25px;font-weight:900;letter-spacing:-.055em;color:var(--paxel)}
+.wordmark span{color:var(--yellow)}
+.logo-box{background:var(--paxel);padding:7px 10px;border-radius:10px;display:flex;align-items:center}.logo-box img{display:block;width:auto;height:28px}
+.service{font-size:10px;font-weight:800;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.hero-stage{position:relative;min-height:182px;margin:14px -22px 18px;overflow:hidden}
+.rational-card{
+  position:absolute;z-index:3;left:22px;top:18px;width:58%;padding:14px;
+  background:rgba(255,255,255,.93);border-radius:16px;box-shadow:0 12px 30px rgba(48,37,91,.10)
+}
+.rational-card strong{display:block;font-size:17px;line-height:1.16;letter-spacing:-.02em}
+.rational-card span{display:block;font-size:12px;line-height:1.42;color:var(--muted);margin-top:6px}
+.route-scene{
+  position:absolute;right:-10px;bottom:-6px;width:58%;height:170px;border-radius:34px 0 0 12px;
+  background:linear-gradient(145deg,#7568B7,#5F51A1 55%,#342A65);
+}
+.route-scene:before{
+  content:"";position:absolute;left:25px;bottom:20px;width:92px;height:65px;border-radius:10px;
+  background:#C69B6B;box-shadow:inset 0 -8px rgba(79,51,28,.10)
+}
+.route-scene:after{
+  content:"SAMEDAY";position:absolute;right:16px;top:56px;color:#fff;font-size:12px;font-weight:900;
+  letter-spacing:.08em;transform:rotate(90deg);opacity:.92
+}
+.banner{background:var(--ink);color:#fff;border-radius:18px;padding:17px;margin:0 0 12px}
+.banner h3{font-size:20px;line-height:1.15;margin:0;color:#fff}
+.dual{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.dual>div{padding:14px;border-radius:16px;min-height:144px}
+.dual .problem{background:var(--soft)}
+.dual .solution{background:var(--paxel-soft)}
+.kicker{font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;color:var(--muted)}
+.dual .solution .kicker{color:var(--paxel)}
+.dual p{font-size:13px;line-height:1.42;color:var(--ink)}
+.trust-spec{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:15px
+}
+.spec{
+  background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px 9px;text-align:left
+}
+.spec strong{display:block;font-size:15px;line-height:1.05;color:var(--paxel)}
+.spec span{display:block;font-size:9.5px;line-height:1.3;color:var(--muted);margin-top:5px}
+.barrier{margin-top:15px;padding-top:12px;border-top:1px solid rgba(95,81,161,.18);font-size:14px;line-height:1.5;color:#39363f}
+
+
+.process{padding:56px 0;background:#fff}
+.process-rail{margin-top:24px;position:relative}
+.process-rail:before{
+  content:"";position:absolute;left:18px;top:14px;bottom:14px;width:1px;background:#D9D3E8
+}
+.step-row{
+  position:relative;display:grid;grid-template-columns:38px 1fr;gap:12px;padding:0 0 25px
+}
+.step-row:last-child{padding-bottom:0}
+.step-no{
+  width:38px;height:38px;border-radius:12px;background:var(--paxel-soft);color:var(--paxel);
+  display:grid;place-items:center;font-size:11px;font-weight:900;z-index:2;border:1px solid #D8D0EA
+}
+.step-row h3{font-size:17px;margin:1px 0 6px}
+.step-row p{font-size:14px;line-height:1.48}
+.step-visual{
+  margin-top:12px;border-radius:16px;min-height:88px;background:linear-gradient(145deg,#F5F2FA,#E7E1F2);
+  position:relative;overflow:hidden
+}
+.step-visual.app:after{
+  content:"PICK-UP  •  14:00";position:absolute;left:16px;right:16px;top:22px;padding:13px 10px;border-radius:11px;background:#fff;color:var(--paxel);font-size:10px;font-weight:900;text-align:center;box-shadow:0 8px 18px rgba(0,0,0,.06)
+}
+.step-visual.fragile:after{
+  content:"FRAGILE";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-6deg);padding:7px 10px;border:2px solid #B33B3B;color:#B33B3B;font-size:11px;font-weight:900
+}
+.step-visual.cold:after{
+  content:"COLD CHAIN / CHILLER";position:absolute;left:14px;bottom:14px;color:var(--paxel);font-size:10px;font-weight:900
+}
+.step-visual.track:after{
+  content:"STATUS: DALAM PENGIRIMAN";position:absolute;left:14px;right:14px;top:28px;padding:10px;border-radius:10px;background:#fff;color:var(--paxel);font-size:10px;font-weight:900;text-align:center
+}
+
+
+.comparison{padding:58px 0;background:#fff;border-top:1px solid var(--line)}
+.comp-table{margin-top:22px;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#fff}
+.comp-head,.comp-row{display:grid;grid-template-columns:1.1fr .9fr .9fr}
+.comp-head{background:#F4F2F6}
+.comp-head div,.comp-row div{padding:12px 10px}
+.comp-head div{font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.comp-head div:last-child{background:var(--paxel-soft);color:var(--paxel)}
+.comp-row{border-top:1px solid var(--line)}
+.comp-row div{font-size:11px;line-height:1.35;color:var(--body)}
+.comp-row .aspect{font-weight:800;color:var(--ink)}
+.comp-row .pax{background:#F8F5FC;color:var(--ink);font-weight:800}
+
+
+.proof{padding:58px 0;background:var(--paxel-soft-2)}
+.quote{
+  background:#fff;border-radius:22px;padding:22px;margin-top:20px;border:1px solid var(--line)
+}
+.quote-mark{font-size:44px;line-height:.7;color:var(--yellow);font-weight:900}
+.quote p{font-size:19px;line-height:1.42;color:var(--ink);font-weight:700;letter-spacing:-.015em;margin:8px 0 14px}
+.person{display:flex;align-items:center;gap:10px}
+.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(145deg,#c8c2d8,#9188ac)}
+.person b{display:block;font-size:12px}.person span{font-size:11px;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.stat{background:var(--paxel);color:#fff;border-radius:17px;padding:15px 10px}
+.stat strong{display:block;font-size:21px;line-height:1;color:#fff;letter-spacing:-.04em}
+.stat span{display:block;font-size:9.5px;color:#e9e4f6;margin-top:6px}
+
+
+.promo{padding:52px 0;background:var(--paxel);color:#fff;overflow:hidden}
+.promo:before{
+  content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:rgba(255,201,40,.14);right:-110px;top:-95px
+}
+.promo .eyebrow{color:#E8E1FA}
+.promo h2{font-size:34px;color:#fff}
+.promo .discount{font-size:70px;line-height:.9;font-weight:950;letter-spacing:-.07em;color:var(--yellow);margin:16px 0 8px}
+.promo p{color:#F4F1FA}
+.promo .small{color:#D9D2EA;margin-top:10px}
+
+
+.cta{padding:58px 0 120px;background:#fff}
+.steps{display:flex;align-items:center;gap:6px;overflow:hidden;margin:18px 0 22px}
+.step{font-size:10px;font-weight:800;color:var(--paxel);white-space:nowrap}.arrow{font-size:10px;color:#aaa}
+.form{display:grid;gap:12px}
+label{font-size:12px;font-weight:800;color:#3e3b44}
+input{
+  width:100%;height:52px;border:1px solid #dcd8e4;border-radius:14px;padding:0 14px;
+  font:inherit;font-size:15px;outline:none;background:#fff
+}
+input:focus{border-color:var(--paxel);box-shadow:0 0 0 3px rgba(95,81,161,.10)}
+.wa-preview{background:#EAF7EF;border-radius:17px;padding:13px;margin-top:3px}
+.wa-preview .label{font-size:10px;font-weight:900;color:#47815e;margin-bottom:7px}
+.bubble{background:#fff;border-radius:5px 14px 14px 14px;padding:11px 12px;font-size:12px;line-height:1.45;color:#333;box-shadow:0 3px 8px rgba(0,0,0,.05)}
+.btn{
+  border:0;width:100%;min-height:54px;border-radius:15px;background:var(--paxel);color:#fff;
+  font:inherit;font-size:16px;font-weight:900;padding:15px 18px;cursor:pointer;text-align:center;text-decoration:none;display:block
+}
+.final-push{margin-top:38px;border-top:1px solid var(--line);padding-top:30px}
+.push-stage{padding:16px 0;border-bottom:1px solid var(--line)}
+.push-stage:last-child{border-bottom:0}
+.push-stage .tag{font-size:10px;letter-spacing:.11em;text-transform:uppercase;font-weight:900;color:var(--muted);margin-bottom:8px}
+.push-stage p{font-size:15px;line-height:1.52}
+.push-stage.escalate p{font-size:16px;color:var(--body);font-weight:400}
+.push-stage.solution{background:var(--paxel-soft);border:0;border-radius:18px;padding:18px;margin-top:14px}
+.push-stage.solution .tag{color:var(--paxel)}
+.push-stage.solution p{color:var(--body);font-weight:400}
+.closing{font-size:21px!important;line-height:1.3!important;font-weight:700!important;color:var(--ink)!important;letter-spacing:-.02em}
+.soft-cta-wrap{margin-top:18px}
+.soft-cta{
+  min-height:50px;width:100%;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--paxel);
+  border-radius:15px;background:#fff;color:var(--paxel-deep);font-size:15px;font-weight:900;text-decoration:none;padding:13px 16px
+}
+.soft-cta-note{font-size:11px;line-height:1.4;color:var(--muted);text-align:center;margin-top:7px}
+
+
+.sticky{
+  position:fixed;z-index:20;left:50%;bottom:0;transform:translateX(-50%);
+  width:min(100%,430px);padding:9px 12px calc(9px + env(safe-area-inset-bottom));
+  background:rgba(255,255,255,.95);backdrop-filter:blur(14px);
+  border-top:1px solid rgba(95,81,161,.14);box-shadow:0 -10px 28px rgba(35,27,67,.08);
+  opacity:0;pointer-events:none;transition:.22s ease
+}
+.sticky.show{opacity:1;pointer-events:auto}
+.sticky-inner{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.sticky-brand{min-width:0;display:flex;align-items:center;gap:9px}
+.sticky-mark{
+  width:32px;height:32px;border-radius:10px;background:var(--paxel);color:#fff;display:grid;place-items:center;
+  font-size:15px;font-weight:950;letter-spacing:-.06em;flex:0 0 auto
+}
+.sticky-mark img{display:block;width:100%;height:auto;object-fit:contain}.sticky-copy strong{display:block;font-size:12px;line-height:1.12;color:var(--ink);white-space:nowrap}
+.sticky-copy span{display:block;font-size:9.5px;line-height:1.2;color:var(--muted);margin-top:3px;white-space:nowrap}
+.sticky-btn{
+  flex:0 0 auto;min-height:42px;border-radius:12px;background:var(--paxel);color:#fff;text-decoration:none;
+  font-size:12px;font-weight:900;padding:12px 14px;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 5px 12px rgba(95,81,161,.16)
+}
+.footer{background:var(--paxel-deep);color:#fff;padding:24px 22px 92px}
+.footer b{font-size:18px}.footer p{font-size:11px;color:#d8d2e7;margin-top:7px}
+@media(min-width:700px){body{padding:30px 0}.page{border-radius:26px}}
+
+.route-scene{overflow:hidden;background:#ded8eb}
+.route-scene:before,.route-scene:after{display:none!important}
+.route-scene img{width:100%;height:100%;display:block;object-fit:cover;object-position:center}
+.step-visual{height:112px!important;min-height:112px!important;overflow:hidden;background:#f1eef6}
+.step-visual:after{display:none!important}
+.step-visual img{width:100%;height:100%;display:block;object-fit:cover;object-position:center}
+.avatar{overflow:hidden!important;background:#d7d2e3!important;flex:0 0 auto}
+.avatar img{width:100%;height:100%;display:block;object-fit:cover;object-position:center}
+
+.hero h1{
+  font-size:27px;
+  line-height:1.08;
+  letter-spacing:-.035em;
+  margin-bottom:14px;
+}
+.hero-hl{
+  color:var(--paxel-deep);
+  font-weight:850;
+}
+.hero-marker{
+  display:inline;
+  font-weight:850;
+  color:var(--ink);
+  padding:0 .03em;
+  background:linear-gradient(
+    transparent 59%,
+    rgba(255,201,40,.40) 59%,
+    rgba(255,201,40,.40) 91%,
+    transparent 91%
+  );
+  -webkit-box-decoration-break:clone;
+  box-decoration-break:clone;
+}
+@media(max-width:380px){
+  .hero h1{font-size:27px;letter-spacing:-.035em}
+}
+</style>
+</head>
+<body>
+<main class="page">
+
+<section class="hero" id="hero">
+  <div class="wrap">
+    <div class="brandbar">
+      <div class="logo-box"><img src="https://i.ibb.co.com/nNnQpD8X/Logo-paxel-putih.webp" alt="Paxel" width="100" height="34" fetchpriority="high" decoding="async"></div>
+      <div class="service">Sameday Delivery</div>
+    </div>
+
+    <div class="pill"><span class="dot"></span>Cara Lebih Pasti Jaga Margin Saat Kirim Jauh, dengan Garansi Ongkir & Asuransi Resmi</div>
+
+    <h1>Kirim Sameday Sampai Tujuan,<br>Ongkir Flat Tanpa Bikin<br><span class="hero-marker">Margin Makin Tipis.</span></h1>
+
+    <div class="hero-stage" aria-label="Placeholder visual operasional Paxel Sameday">
+      <div class="rational-card">
+        <strong>Lebih jelas dari awal.</strong>
+        <span>Tarif, perlindungan, dan proses kirim bisa dipahami sebelum paket jalan.</span>
+      </div>
+      <div class="route-scene"><img src="https://i.ibb.co.com/35qqqJkx/Hero-SA.webp" alt="Kurir Paxel Sameday menerima paket makanan siap kirim" width="1080" height="740" fetchpriority="high" decoding="async"></div>
+    </div>
+
+    <div class="banner">
+      <h3>Solusi untuk Biaya Kirim yang Diam-Diam Bikin Margin Makin Tipis</h3>
+    </div>
+
+    <div class="dual">
+      <div class="problem">
+        <div class="kicker">Masalahnya...</div>
+        <p>Ekspedisi tanpa garansi yang jelas — begitu barang rusak, <span class="marker">kerugiannya harus kamu tutup sendiri dari margin.</span></p>
+      </div>
+      <div class="solution">
+        <div class="kicker">Pakai Paxel...</div>
+        <p>Tarif flat berdasarkan volume, asuransi otomatis, dan ongkir kembali kalau telat — <span class="body-strong">semuanya jelas dari awal.</span></p>
+      </div>
+    </div>
+
+    <div class="trust-spec">
+      <div class="spec"><strong>≤5 kg*</strong><span>Tarif flat berdasarkan volume, bukan berat</span></div>
+      <div class="spec"><strong>Rp1 jt*</strong><span>Asuransi gratis otomatis per pengiriman</span></div>
+      <div class="spec"><strong>Garansi*</strong><span>Ongkir kembali jika telat dari estimasi</span></div>
+    </div>
+
+    <p class="barrier">Semua rincian ongkir dan garansi bisa kamu cek sebelum kirim — jadi <span class="marker-soft">gak ada biaya tersembunyi</span> yang tiba-tiba muncul di tengah jalan.</p>
+  </div>
+</section>
+
+<section class="process">
+  <div class="wrap">
+    <div class="eyebrow">Cara kerjanya</div>
+    <h2>Begini Alur Pengirimannya</h2>
+    <p>Empat langkah dari penjemputan sampai paket tiba di hari yang sama.</p>
+
+    <div class="process-rail">
+      <div class="step-row">
+        <div class="step-no">01</div>
+        <div>
+          <h3>Jadwalkan pick-up lewat aplikasi</h3>
+          <p>Pilih sendiri jam penjemputannya. Gak perlu antar paket ke counter.</p>
+          <div class="step-visual app"><img src="https://i.ibb.co.com/fGrmDmm9/04-C-BENEFIT-JADWAL-PICK-UP.png" alt="Tampilan jadwal pick-up pada aplikasi Paxel" width="1080" height="1080" loading="lazy" decoding="async"></div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-no">02</div>
+        <div>
+          <h3>Kurir (Hero) cek kondisi paket</h3>
+          <p>Kalau paket dilaporkan fragile, kurir langsung menempelkan stiker untuk penanganan khusus.</p>
+          <div class="step-visual fragile"><img src="https://i.ibb.co.com/FkxzpyT6/04-B-BENEFIT-FRAGILE.png" alt="Paket fragile dengan penanganan khusus Paxel" width="1200" height="720" loading="lazy" decoding="async"></div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-no">03</div>
+        <div>
+          <h3>Barang diproses lewat rute Sameday</h3>
+          <p>Untuk frozen food, paket masuk jalur <span class="hl-purple">cold chain/chiller</span> di titik transit.</p>
+          <div class="step-visual cold"><img src="https://i.ibb.co.com/7JtsgMLg/04-A-BENEFIT-COLD-CHAIN.png" alt="Penanganan cold chain untuk frozen food" width="1200" height="720" loading="lazy" decoding="async"></div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-no">04</div>
+        <div>
+          <h3>Sampai di hari yang sama</h3>
+          <p>Status pengiriman bisa kamu pantau secara real-time lewat fitur lacak pengiriman di aplikasi.</p>
+          <div class="step-visual track"><img src="https://i.ibb.co.com/svJ51Cs5/05-CARA-KERJA-TRACKING-REAL-TIME.webp" alt="Tracking pengiriman real-time Paxel" width="1200" height="315" loading="lazy" decoding="async"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="comparison">
+  <div class="wrap">
+    <div class="eyebrow">Bandingkan sendiri</div>
+    <h2>Paxel vs Ekspedisi Reguler</h2>
+    <p>Fokus ke hal yang paling berpengaruh ke proses kirim makanan.</p>
+
+    <div class="comp-table">
+      <div class="comp-head"><div>Aspek</div><div>Reguler</div><div>Paxel</div></div>
+      <div class="comp-row"><div class="aspect">Kecepatan</div><div>2–3 hari kerja</div><div class="pax">Sameday</div></div>
+      <div class="comp-row"><div class="aspect">Perlindungan Suhu</div><div>Tidak ada penanganan khusus</div><div class="pax">Cold chain/chiller</div></div>
+      <div class="comp-row"><div class="aspect">Perlindungan Kerugian</div><div>Ditanggung sendiri kalau rusak</div><div class="pax">Garansi ongkir + asuransi otomatis</div></div>
+      <div class="comp-row"><div class="aspect">Sertifikasi</div><div>Umum</div><div class="pax">Logistik bersertifikasi Halal pertama di Indonesia</div></div>
+      <div class="comp-row"><div class="aspect">Kerusakan Makanan</div><div>Tidak ada skema baku</div><div class="pax">Jaminan Makanan Aman (JMA)</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="proof">
+  <div class="wrap">
+    <div class="eyebrow">Terbukti di lapangan</div>
+    <h2>Data yang Bisa Kamu Lihat Sebelum Memutuskan</h2>
+
+    <div class="quote">
+      <div class="quote-mark">“</div>
+      <p>Udah coba beberapa ekspedisi, yang paling aman buat kirim frozen food ya Paxel, karena ada cold chain-nya.</p>
+      <div class="person"><div class="avatar"><img src="https://i.ibb.co.com/spMJdpLT/07-SOCIAL-PROOF-TESTIMONIAL-DIMAS.webp" alt="Foto Dimas, pemilik usaha frozen food" width="600" height="600" loading="lazy" decoding="async"></div><div><b>Dimas — Usaha Frozen Food</b><span>Malang</span></div></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><strong>2,9 JT++</strong><span>pengguna</span></div>
+      <div class="stat"><strong>32 JT++</strong><span>pengiriman</span></div>
+      <div class="stat"><strong>99,5%</strong><span>tepat waktu*</span></div>
+    </div>
+  </div>
+</section>
+
+
+<section class="promo">
+  <div class="wrap">
+    <div class="eyebrow">Tarif Sameday</div>
+    <h2>Kirim Hingga 5 kg, Tarif Mulai dari</h2>
+    <div class="discount">Rp14K</div>
+    <p>Tarif Sameday <strong>mulai dari Rp14.000*</strong> untuk pengiriman hingga 5 kg, tergantung rute dan area pengiriman.</p>
+    <div class="small">*Tarif akhir mengikuti kota asal, kota tujuan, dan ketentuan layanan yang berlaku.</div>
+  </div>
+</section>
+
+<section class="cta" id="cta">
+  <div class="wrap">
+    <div class="eyebrow">Kalau angkanya masuk, lanjut kirim</div>
+    <h2>Cek Tarif & Jadwalkan Sekarang</h2>
+
+    <div class="steps">
+      <span class="step">Isi Form</span><span class="arrow">→</span>
+      <span class="step">Kirim WA</span><span class="arrow">→</span>
+      <span class="step">Dapat Penawaran</span><span class="arrow">→</span>
+      <span class="step">Kirim Sekarang</span>
+    </div>
+
+    <form class="form" onsubmit="return sendWA(event)">
+      <label>Nama<input id="nama" placeholder="Nama kamu" autocomplete="name"></label>
+      <label>Jenis & berat paket<input id="jenis" placeholder="Contoh: frozen food 3 kg"></label>
+      <label>Kota asal<input id="asal" placeholder="Contoh: Cirebon"></label>
+      <label>Kota tujuan<input id="tujuan" placeholder="Contoh: Bandung"></label>
+
+      <div class="wa-preview">
+        <div class="label">LIVE PREVIEW WHATSAPP</div>
+        <div class="bubble" id="preview">Halo, saya [Nama], mau cek ongkir untuk kirim [Jenis & Berat Paket] dari [Kota Asal] ke [Kota Tujuan] pakai Paxel Sameday.</div>
+      </div>
+
+      <button class="btn" type="submit">Cek Tarif Sekarang →</button>
+      
+    </form>
+
+    <div class="final-push">
+      <div class="push-stage">
+        <div class="tag">Yang Perlu Diingat</div>
+        <p>Ongkir kelihatannya cuma satu biaya. Tapi begitu kiriman bermasalah dan gak ada perlindungan yang jelas, <span class="marker">margin yang akhirnya ikut menanggung.</span></p>
+      </div>
+
+      <div class="push-stage escalate">
+        <div class="tag">Kalau kejadian berulang</div>
+        <p>Kalau kejadian yang sama terus berulang, bukan cuma biaya kirim yang keluar. Ada <span class="body-strong">barang pengganti, ongkir ulang,</span> dan kerugian yang harus ditutup dari margin sendiri.</p>
+      </div>
+
+      <div class="push-stage solution">
+        <div class="tag">Pakai Paxel</div>
+        <p>Paxel Sameday memberi kepastian dari awal: tarif flat berdasarkan volume, <span class="hl-purple">asuransi otomatis</span>, dan <span class="hl-purple">garansi ongkir kembali</span> kalau pengiriman telat dari estimasi.</p>
+      </div>
+
+      <div class="push-stage">
+        <div class="tag">Masih mau bandingkan?</div>
+        <p class="closing">Cek tarifnya dulu. Kalau angkanya masuk, baru jadwalkan pengirimannya.</p>
+        <div class="soft-cta-wrap">
+          <a class="soft-cta" href="#cta">Cek Tarif Paxel →</a>
+          <div class="soft-cta-note">Lihat tarif dulu. Belum harus langsung kirim.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <img src="https://i.ibb.co.com/nNnQpD8X/Logo-paxel-putih.webp" alt="Paxel" width="100" height="34" loading="lazy" decoding="async" style="display:block;width:auto;height:30px;">
+  <p>Sameday Delivery untuk kebutuhan pengiriman makanan.</p>
+</footer>
+</main>
+
+<div class="sticky" id="sticky">
+  <div class="sticky-inner">
+    <div class="sticky-brand">
+      <div class="sticky-mark"><img src="https://i.ibb.co.com/nNnQpD8X/Logo-paxel-putih.webp" alt="" width="58" height="20"></div>
+      <div class="sticky-copy">
+        <strong>Paxel Sameday</strong>
+        <span>Tarif jelas • proteksi jelas</span>
+      </div>
+    </div>
+    <a class="sticky-btn" href="#cta">Cek Tarif →</a>
+  </div>
+</div>
+
+<script>
+// ====== ISI 2 VARIABEL INI SEBELUM PUBLISH ======
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzWY9Ui0L0RZ_blupVtO2M-_VYtRVMTnzVpAqf5fpNKVxCiFTorNUIfmcLYX1sMPYex/exec';
+const NOMOR_CS = '62811411805'; // format internasional, tanpa + atau 0 di depan
+// =================================================
+
+const nama=document.getElementById('nama'), jenis=document.getElementById('jenis'),
+asal=document.getElementById('asal'), tujuan=document.getElementById('tujuan'),
+preview=document.getElementById('preview');
+
+function message(){
+  return `Halo, saya ${nama.value||'[Nama]'}, mau cek ongkir untuk kirim ${jenis.value||'[Jenis & Berat Paket]'} dari ${asal.value||'[Kota Asal]'} ke ${tujuan.value||'[Kota Tujuan]'} pakai Paxel Sameday. `;
+}
+[nama,jenis,asal,tujuan].forEach(el=>el.addEventListener('input',()=>preview.textContent=message()));
+
+function sendWA(e){
+  e.preventDefault();
+
+  const payload = {
+    nama: nama.value || '-',
+    jenis: jenis.value || '-',
+    asal: asal.value || '-',
+    tujuan: tujuan.value || '-',
+    pesan: message(),
+    sumber: 'LP Solution-Aware',
+    timestamp: new Date().toISOString()
+  };
+
+  fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {'Content-Type': 'text/plain;charset=utf-8'},
+    body: JSON.stringify(payload)
+  }).catch(()=>{}).finally(()=>{
+    const waLink = `https://wa.me/${NOMOR_CS}?text=${encodeURIComponent(message())}`;
+    window.location.href = waLink;
+  });
+
+  return false;
+}
+const hero=document.getElementById('hero'), cta=document.getElementById('cta'), sticky=document.getElementById('sticky');
+function updateSticky(){
+  const h=hero.getBoundingClientRect(), c=cta.getBoundingClientRect();
+  const show=h.bottom<0 && !(c.top<innerHeight && c.bottom>0);
+  sticky.classList.toggle('show',show);
+}
+addEventListener('scroll',updateSticky,{passive:true});updateSticky();
+</script>
+</body>
+</html>
