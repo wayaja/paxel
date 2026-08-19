@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Paxel Sameday — Problem Aware Mockup</title>
+<meta name="description" content="Mockup mobile-first landing page Paxel Sameday — Problem Aware">
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '27439272795695346');
+fbq('track', 'PageView');
+</script>
+<!-- End Meta Pixel Code -->
+
+<style>
+:root{
+  --paxel:#5F51A1;
+  --paxel-deep:#43377F;
+  --paxel-soft:#EEEAF8;
+  --paxel-soft-2:#F6F3FB;
+  --yellow:#FFC928;
+  --ink:#19181D;
+  --body:#47454E;
+  --muted:#716E78;
+  --paper:#FCFBFD;
+  --white:#FFFFFF;
+  --line:#E8E4EF;
+  --danger-soft:#F4F1F1;
+  --wa:#1F9D62;
+  --radius:22px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:#EDEBF1;color:var(--ink);
+  font-family:Gotham,"Avenir Next",Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.page{
+  width:min(100%,430px);margin:0 auto;background:var(--paper);
+  min-height:100vh;box-shadow:0 0 40px rgba(29,23,55,.10);overflow:hidden;
+}
+.wrap{padding-left:22px;padding-right:22px}
+section{position:relative}
+.eyebrow{
+  font-size:11px;line-height:1.2;letter-spacing:.12em;text-transform:uppercase;
+  font-weight:800;color:var(--paxel);margin:0 0 10px
+}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:38px;line-height:1.02;letter-spacing:-.045em;margin-bottom:14px}
+h2{font-size:29px;line-height:1.08;letter-spacing:-.035em;margin-bottom:14px}
+h3{font-size:18px;line-height:1.18;letter-spacing:-.015em;margin-bottom:8px}
+p{font-size:16px;line-height:1.55;color:var(--body);margin-bottom:0}
+
+
+.body-strong{font-weight:750;color:var(--ink)}
+.hl-purple{font-weight:800;color:var(--paxel-deep)}
+.marker{
+  position:relative;display:inline;z-index:0;font-weight:800;color:var(--ink);
+  padding:0 .06em;
+  background:linear-gradient(transparent 56%,rgba(255,201,40,.42) 56%,rgba(255,201,40,.42) 91%,transparent 91%);
+  -webkit-box-decoration-break:clone;box-decoration-break:clone;
+}
+.marker-soft{
+  position:relative;display:inline;font-weight:800;color:var(--ink);padding:0 .06em;
+  background:linear-gradient(transparent 57%,rgba(95,81,161,.16) 57%,rgba(95,81,161,.16) 92%,transparent 92%);
+  -webkit-box-decoration-break:clone;box-decoration-break:clone;
+}
+.small{font-size:13px;line-height:1.45;color:var(--muted)}
+.pill{
+  display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border-radius:999px;
+  background:var(--paxel-soft);color:var(--paxel-deep);font-size:12px;line-height:1.25;
+  font-weight:800;margin-bottom:16px
+}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--yellow);flex:0 0 auto}
+
+
+.hero{
+  background:linear-gradient(155deg,#fff 0%,#f9f7fc 52%,#eee9f8 100%);
+  padding:22px 0 28px;
+}
+.brandbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:25px}
+.wordmark{font-size:25px;font-weight:900;letter-spacing:-.055em;color:var(--paxel)}
+.wordmark span{color:var(--yellow)}
+.logo-box{background:var(--paxel);padding:7px 10px;border-radius:10px;display:flex;align-items:center}.logo-box img{display:block;width:auto;height:28px}
+.service{font-size:10px;font-weight:800;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.hero-stage{position:relative;min-height:195px;margin:14px -22px 18px;overflow:hidden}
+.hero-copy-card{
+  position:absolute;z-index:3;left:22px;top:22px;width:59%;padding:14px 14px 15px;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(6px);border-radius:16px;
+  box-shadow:0 12px 30px rgba(48,37,91,.10)
+}
+.hero-copy-card strong{display:block;font-size:17px;line-height:1.16;letter-spacing:-.02em}
+.hero-copy-card span{display:block;font-size:12px;line-height:1.42;color:var(--muted);margin-top:6px}
+.scene{
+  position:absolute;right:-14px;bottom:-9px;width:60%;height:190px;border-radius:38px 0 0 12px;
+  overflow:hidden;background:#ded8eb;transform:skewX(-5deg);
+}
+.scene img{
+  width:100%;height:100%;object-fit:cover;object-position:center;
+  display:block;transform:skewX(5deg) scale(1.06);
+}
+.banner{background:var(--ink);color:#fff;border-radius:18px;padding:17px;margin:0 0 12px}
+.banner h3{font-size:20px;line-height:1.15;margin:0;color:#fff}
+.dual{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.dual>div{padding:14px;border-radius:16px;min-height:144px}
+.dual .problem{background:var(--danger-soft)}
+.dual .solution{background:var(--paxel-soft)}
+.kicker{font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;color:var(--muted)}
+.dual .solution .kicker{color:var(--paxel)}
+.dual p{font-size:13px;line-height:1.42;color:var(--ink)}
+.trust-strip{
+  display:flex;gap:9px;overflow-x:auto;padding:2px 0 5px;scrollbar-width:none;
+  margin:15px -22px 0;padding-left:22px;padding-right:22px
+}
+.trust-strip::-webkit-scrollbar{display:none}
+.trust{
+  min-width:180px;background:#fff;border:1px solid var(--line);border-radius:15px;padding:12px;
+  display:grid;grid-template-columns:32px 1fr;gap:9px;align-items:start
+}
+.icon{
+  width:32px;height:32px;border-radius:10px;border:1.5px solid var(--paxel);
+  color:var(--paxel);display:grid;place-items:center;font-size:15px;font-weight:900
+}
+.trust b{display:block;font-size:12px;line-height:1.25}
+.trust span{display:block;font-size:10px;line-height:1.35;color:var(--muted);margin-top:3px}
+.barrier{margin-top:15px;padding:12px 0 0;border-top:1px solid rgba(95,81,161,.18);font-size:14px;line-height:1.5;color:#39363f}
+
+
+.agitation{padding:56px 0;background:#fff}
+.selftalk{
+  border-left:3px solid var(--yellow);padding:2px 0 2px 16px;margin:18px 0 30px;
+  font-size:17px;line-height:1.5;font-weight:650;letter-spacing:-.01em
+}
+.selftalk em{font-style:normal;color:var(--paxel)}
+.problem-list{display:grid;gap:0;border-top:1px solid var(--line)}
+.problem-row{padding:20px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:38px 1fr;gap:10px}
+.num{font-size:12px;font-weight:900;color:var(--paxel);padding-top:3px}
+.problem-row p{font-size:14px;line-height:1.48}
+.problem-row b{display:block;font-size:17px;line-height:1.25;margin-bottom:7px;color:var(--ink)}
+
+
+.reveal{
+  padding:55px 0 58px;background:var(--paxel);color:#fff;overflow:hidden
+}
+.reveal:before{
+  content:"";position:absolute;width:230px;height:230px;border-radius:50%;
+  background:rgba(255,201,40,.14);right:-115px;top:-85px
+}
+.reveal .eyebrow{color:#E9E2FF}
+.reveal .bridge{font-size:14px;line-height:1.5;color:#E9E5F7;margin-bottom:23px;max-width:310px}
+.reveal h2{font-size:37px;line-height:1.02;color:#fff;max-width:360px;margin-bottom:15px}
+.reveal h2 span{color:var(--yellow)}
+.reveal .uvp{color:#fff;font-size:17px;line-height:1.5;max-width:355px}
+.package-art{
+  height:145px;margin:30px 0 -12px;position:relative;border-radius:18px;overflow:hidden;
+  box-shadow:0 18px 34px rgba(31,20,71,.20)
+}
+.package-art img{
+  width:100%;height:100%;display:block;object-fit:cover;object-position:center;
+}
+
+
+.benefits{padding:58px 0;background:#fff}
+.benefit-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:24px}
+.benefit{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#fff}
+.benefit.wide{grid-column:1/-1;display:grid;grid-template-columns:42% 1fr}
+.thumb{height:112px;background:linear-gradient(145deg,#eae6f4,#d7d0ea);position:relative;overflow:hidden}
+.wide .thumb{height:auto;min-height:152px}
+.thumb img{
+  width:100%;height:100%;display:block;object-fit:cover;object-position:center;
+}
+.wide .thumb img{min-height:152px}
+.bcopy{padding:14px}
+.bcopy h3{font-size:16px}
+.bcopy p{font-size:13px;line-height:1.45}
+.policy{
+  grid-column:1/-1;background:var(--paxel-soft-2);border:0;padding:16px;border-radius:18px;
+  display:grid;grid-template-columns:1fr 1fr;gap:14px
+}
+.policy div+div{border-left:1px solid #dcd4ec;padding-left:14px}
+.policy strong{display:block;font-size:15px;line-height:1.25;margin-bottom:5px}
+.policy span{font-size:12px;line-height:1.4;color:var(--body)}
+
+
+.proof{padding:58px 0;background:var(--paxel-soft-2)}
+.quote{
+  background:#fff;border-radius:22px;padding:22px;margin-top:20px;border:1px solid var(--line)
+}
+.quote-mark{font-size:44px;line-height:.7;color:var(--yellow);font-weight:900}
+.quote p{font-size:19px;line-height:1.42;color:var(--ink);font-weight:700;letter-spacing:-.015em;margin:8px 0 14px}
+.person{display:flex;align-items:center;gap:10px}
+.avatar{width:38px;height:38px;border-radius:50%;overflow:hidden;background:#d7d2e3;flex:0 0 auto}
+.avatar img{width:100%;height:100%;display:block;object-fit:cover;object-position:center}
+.person b{display:block;font-size:12px}
+.person span{font-size:11px;color:var(--muted)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.stat{background:var(--paxel);color:#fff;border-radius:18px;padding:17px 14px}
+.stat strong{display:block;font-size:26px;line-height:1;color:#fff;letter-spacing:-.04em}
+.stat span{display:block;font-size:11px;color:#e9e4f6;margin-top:6px}
+.risk{margin-top:18px;font-size:14px;line-height:1.5}
+
+
+.cta{padding:58px 0 120px;background:#fff}
+.steps{display:flex;align-items:center;gap:6px;overflow:hidden;margin:18px 0 22px}
+.step{font-size:10px;font-weight:800;color:var(--paxel);white-space:nowrap}
+.arrow{font-size:10px;color:#aaa}
+.form{display:grid;gap:12px}
+label{font-size:12px;font-weight:800;color:#3e3b44}
+input{
+  width:100%;height:52px;border:1px solid #dcd8e4;border-radius:14px;padding:0 14px;
+  font:inherit;font-size:15px;outline:none;background:#fff
+}
+input:focus{border-color:var(--paxel);box-shadow:0 0 0 3px rgba(95,81,161,.10)}
+.wa-preview{background:#EAF7EF;border-radius:17px;padding:13px;margin-top:3px}
+.wa-preview .label{font-size:10px;font-weight:900;color:#47815e;margin-bottom:7px}
+.bubble{background:#fff;border-radius:5px 14px 14px 14px;padding:11px 12px;font-size:12px;line-height:1.45;color:#333;box-shadow:0 3px 8px rgba(0,0,0,.05)}
+.btn{
+  border:0;width:100%;min-height:54px;border-radius:15px;background:var(--paxel);color:#fff;
+  font:inherit;font-size:16px;font-weight:900;padding:15px 18px;cursor:pointer;text-align:center;text-decoration:none;display:block
+}
+.btn:hover{background:var(--paxel-deep)}
+
+
+.final-push{margin-top:38px;border-top:1px solid var(--line);padding-top:30px}
+.push-stage{padding:16px 0;border-bottom:1px solid var(--line)}
+.push-stage:last-child{border-bottom:0}
+.push-stage .tag{font-size:10px;letter-spacing:.11em;text-transform:uppercase;font-weight:900;color:var(--muted);margin-bottom:8px}
+.push-stage p{font-size:15px;line-height:1.52}
+.push-stage.escalate p{font-size:16px;color:var(--body);font-weight:400}
+.push-stage.solution{background:var(--paxel-soft);border:0;border-radius:18px;padding:18px;margin-top:14px}
+.push-stage.solution .tag{color:var(--paxel)}
+.push-stage.solution p{color:var(--body);font-weight:400}
+.closing{font-size:21px!important;line-height:1.3!important;font-weight:700!important;color:var(--ink)!important;letter-spacing:-.02em}
+.soft-cta-wrap{margin-top:18px}
+.soft-cta{
+  min-height:50px;width:100%;display:flex;align-items:center;justify-content:center;
+  border:1.5px solid var(--paxel);border-radius:15px;background:#fff;color:var(--paxel-deep);
+  font-size:15px;font-weight:900;text-decoration:none;padding:13px 16px;
+  transition:.18s ease;
+}
+.soft-cta:hover{background:var(--paxel-soft)}
+.soft-cta-note{font-size:11px;line-height:1.4;color:var(--muted);text-align:center;margin-top:7px}
+
+
+.sticky{
+  position:fixed;z-index:20;left:50%;bottom:0;transform:translateX(-50%);
+  width:min(100%,430px);padding:9px 12px calc(9px + env(safe-area-inset-bottom));
+  background:rgba(255,255,255,.95);backdrop-filter:blur(14px);
+  border-top:1px solid rgba(95,81,161,.14);
+  box-shadow:0 -10px 28px rgba(35,27,67,.08);
+  opacity:0;pointer-events:none;transition:.22s ease
+}
+.sticky.show{opacity:1;pointer-events:auto}
+.sticky-inner{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  max-width:100%;
+}
+.sticky-brand{min-width:0;display:flex;align-items:center;gap:9px}
+.sticky-mark{
+  width:32px;height:32px;border-radius:10px;background:var(--paxel);
+  color:#fff;display:grid;place-items:center;font-size:15px;font-weight:950;
+  letter-spacing:-.06em;flex:0 0 auto
+}
+.sticky-copy{min-width:0}
+.sticky-mark img{display:block;width:100%;height:auto;object-fit:contain}.sticky-copy strong{
+  display:block;font-size:12px;line-height:1.12;color:var(--ink);white-space:nowrap;
+}
+.sticky-copy span{
+  display:block;font-size:9.5px;line-height:1.2;color:var(--muted);margin-top:3px;white-space:nowrap;
+}
+.sticky .sticky-btn{
+  flex:0 0 auto;min-height:42px;border-radius:12px;background:var(--paxel);
+  color:#fff;text-decoration:none;font-size:12px;font-weight:900;
+  padding:12px 14px;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 5px 12px rgba(95,81,161,.16);
+}
+.footer{background:var(--paxel-deep);color:#fff;padding:24px 22px 92px}
+.footer b{font-size:18px}.footer p{font-size:11px;color:#d8d2e7;margin-top:7px}
+@media(min-width:700px){
+ body{padding:30px 0}.page{border-radius:26px}
+}
+
+.hero h1{
+  font-size:27px;
+  line-height:1.08;
+  letter-spacing:-.035em;
+  margin-bottom:14px;
+}
+.hero-hl{
+  color:var(--paxel-deep);
+  font-weight:850;
+}
+.hero-marker{
+  display:inline;
+  font-weight:850;
+  color:var(--ink);
+  padding:0 .03em;
+  background:linear-gradient(
+    transparent 59%,
+    rgba(255,201,40,.40) 59%,
+    rgba(255,201,40,.40) 91%,
+    transparent 91%
+  );
+  -webkit-box-decoration-break:clone;
+  box-decoration-break:clone;
+}
+@media(max-width:380px){
+  .hero h1{font-size:27px;letter-spacing:-.035em}
+}
+</style>
+</head>
+<body>
+<!-- Meta Pixel NoScript -->
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=27439272795695346&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel NoScript -->
+
+<main class="page">
+
+<section class="hero" id="hero">
+  <div class="wrap">
+    <div class="brandbar">
+      <div class="logo-box"><img src="https://i.ibb.co.com/nNnQpD8X/Logo-paxel-putih.webp" alt="Paxel" width="100" height="34" fetchpriority="high" decoding="async"></div>
+      <div class="service">Sameday Delivery</div>
+    </div>
+
+    <div class="pill"><span class="dot"></span>Bukan Cuma Janji — Ada Jaminan Resmi di Setiap Pengiriman</div>
+
+    <h1>Rating Tokomu Tetap Terjaga,<br>Kamu Jadi <span class="hero-hl">Lebih Yakin Kirim</span><br>ke Lebih Banyak Pelanggan.</h1>
+
+    <div class="hero-stage" aria-label="Placeholder visual hero operasional Paxel">
+      <div class="hero-copy-card">
+        <strong>Pengiriman makanan bukan cuma soal sampai.</strong>
+        <span>Kondisi barang saat diterima ikut menentukan kepercayaan pelanggan.</span>
+      </div>
+      <div class="scene"><img src="https://i.ibb.co.com/BHYBMnbm/01-Hero.png" alt="Seller makanan menyerahkan paket kepada kurir Paxel Sameday" width="1080" height="800" fetchpriority="high" decoding="async"></div>
+    </div>
+
+    <div class="banner">
+      <h3>Satu Kiriman Rusak Bisa Merusak Reputasi Toko yang Susah Payah Kamu Bangun</h3>
+    </div>
+
+    <div class="dual">
+      <div class="problem">
+        <div class="kicker">Masalahnya...</div>
+        <p>Kue hancur atau frozen food leleh saat sampai ke pembeli. <span class="marker">Satu komplain saja</span> bisa bikin rating tokomu ikut turun.</p>
+      </div>
+      <div class="solution">
+        <div class="kicker">Pakai Paxel...</div>
+        <p><span class="body-strong">Kepercayaan pelanggan tetap terjaga</span> — kirimanmu ditangani dengan lebih aman sampai ke tujuan.</p>
+      </div>
+    </div>
+
+    <div class="trust-strip">
+      <div class="trust"><div class="icon">✓</div><div><b>Jaminan Makanan Aman*</b><span>Kompensasi kalau makanan rusak/basi akibat kelalaian kurir.</span></div></div>
+      <div class="trust"><div class="icon">99</div><div><b>99,5% tepat waktu*</b><span>Performa pengiriman Paxel.</span></div></div>
+      <div class="trust"><div class="icon">H</div><div><b>Halal Logistics*</b><span>Logistik bersertifikasi Halal pertama di Indonesia.</span></div></div>
+    </div>
+
+    <p class="barrier"><span class="body-strong">Gak perlu sampai repot memperbaiki reputasi toko gara-gara kiriman rusak.</span> Kirim dengan cara yang tepat dari awal, supaya pelanggan tetap percaya sama tokomu.</p>
+  </div>
+</section>
+
+<section class="agitation">
+  <div class="wrap">
+    <div class="eyebrow">Masalah yang sering kejadian</div>
+    <h2>PERNAH NGALAMIN INI?</h2>
+    <div class="selftalk">
+      Setiap kali chat komplain <em>“kok kirimannya rusak?”</em> masuk, mungkin kamu mikir: “Namanya juga dikirim jauh, wajar kalau kadang rusak sedikit.”<br><br>
+      Padahal masalahnya bukan cuma jarak. Begitu paket keluar dari tanganmu, kamu gak lagi punya kendali penuh atas bagaimana produkmu ditangani sampai ke tujuan.
+    </div>
+
+    <div class="problem-list">
+      <div class="problem-row"><div class="num">01</div><div><b>Udah packing rapi, tapi tetap hancur pas sampai?</b><p>Masalahnya bukan packing-mu. Kurir reguler memang gak dirancang khusus untuk barang yang gampang pecah atau butuh suhu dingin.</p></div></div>
+      <div class="problem-row"><div class="num">02</div><div><b>Takut komplain publik bikin calon pembeli baru ikut ragu?</b><p>Ada <span class="hl-purple">Jaminan Makanan Aman</span> — kalau rusak akibat kelalaian kurir, kamu dapat kompensasi. Bukan cuma harus menghadapi komplain sendirian.</p></div></div>
+      <div class="problem-row"><div class="num">03</div><div><b>Ragu kirim luar kota karena belum yakin sampainya bakal gimana?</b><p><span class="hl-purple">99,5% pengiriman tepat waktu*</span>, jadi risiko keterlambatan yang bikin makanan keburu basi jauh lebih kecil.</p></div></div>
+      <div class="problem-row"><div class="num">04</div><div><b>Males cari ekspedisi baru karena kebayang ribetnya?</b><p>Cukup jadwalkan <span class="hl-purple">pick-up lewat aplikasi.</span> Kurir yang datang jemput, jadi kamu gak perlu keluar rumah atau antar paket ke counter.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="wrap">
+    <div class="eyebrow">Sekarang ada cara yang lebih tepat</div>
+    <p class="bridge">Kirim jauh seharusnya gak bikin kamu cuma bisa pasrah dan berharap paket sampai dengan utuh.</p>
+    <h2>Pakai <span>Paxel Sameday.</span></h2>
+    <p class="uvp">Supaya kirim jauh <span class="marker-soft">gak lagi jadi taruhan buat rating tokomu.</span> Dibuat buat kamu yang jualan makanan online dan gak mau reputasi yang susah payah dibangun rusak gara-gara satu pengiriman yang gagal.</p>
+    <div class="package-art"><img src="https://i.ibb.co.com/0R0vVKvq/03-THE-REVEAL.png" alt="Paket makanan siap dikirim menggunakan Paxel Sameday" width="1080" height="405" loading="lazy" decoding="async"></div>
+  </div>
+</section>
+
+<section class="benefits">
+  <div class="wrap">
+    <div class="eyebrow">Yang membantu kiriman tetap terjaga</div>
+    <h2>Bukan Cuma Cepat. Sistem Pengirimannya Juga Disiapkan untuk Makanan.</h2>
+
+    <div class="benefit-grid">
+      <article class="benefit">
+        <div class="thumb chiller"><img src="https://i.ibb.co.com/7JtsgMLg/04-A-BENEFIT-COLD-CHAIN.png" alt="Visual cold chain untuk pengiriman frozen food Paxel" width="1200" height="720" loading="lazy" decoding="async"></div>
+        <div class="bcopy"><h3>Cold Chain untuk Frozen Food</h3><p>Fasilitas pendingin khusus di titik transit membantu menjaga produk beku supaya gak mencair selama perjalanan.</p></div>
+      </article>
+      <article class="benefit">
+        <div class="thumb fragile"><img src="https://i.ibb.co.com/FkxzpyT6/04-B-BENEFIT-FRAGILE.png" alt="Paket fragile dengan penanganan khusus" width="1200" height="720" loading="lazy" decoding="async"></div>
+        <div class="bcopy"><h3>Penanganan Fragile</h3><p>Laporkan paket sebagai fragile lewat aplikasi. Kurir akan menempelkan stiker khusus supaya barang yang gampang pecah mendapat penanganan ekstra hati-hati.</p></div>
+      </article>
+      <article class="benefit wide">
+        <div class="thumb app"><img src="https://i.ibb.co.com/fGrmDmm9/04-C-BENEFIT-JADWAL-PICK-UP.png" alt="Tampilan fitur jadwal pick-up di aplikasi Paxel" width="1080" height="1080" loading="lazy" decoding="async"></div>
+        <div class="bcopy"><h3>Jadwal Pick-up Fleksibel</h3><p>Atur sendiri waktu penjemputan lewat aplikasi. Kurir datang mengambil paket, jadi kamu gak perlu antar ke counter.</p></div>
+      </article>
+      <div class="policy">
+        <div><strong class="hl-purple">Asuransi Gratis Otomatis hingga Rp1.000.000</strong><span>Setiap pengiriman otomatis terlindungi hingga Rp1.000.000 tanpa perlu daftar perlindungan tambahan.</span></div>
+        <div><strong class="hl-purple">Garansi Ongkir Kembali</strong><span>Kalau paket Sameday sampai lebih lambat dari estimasi, ongkirmu dikembalikan.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="proof">
+  <div class="wrap">
+    <div class="eyebrow">Bukti & perlindungan</div>
+    <h2>Kalau Ada Risiko di Jalan, Kamu Gak Cuma Bisa Pasrah.</h2>
+
+    <div class="quote">
+      <div class="quote-mark">“</div>
+      <p>Sejak pindah ke Paxel, udah gak pernah lagi dapat komplain kue hancur di jalan.</p>
+      <div class="person"><div class="avatar"><img src="https://i.ibb.co.com/FktS44xc/05-TESTIMONIAL-RANI.png" alt="Foto Rani, pemilik Kue Bu Rani" width="600" height="600" loading="lazy" decoding="async"></div><div><b>Rani — Kue Bu Rani</b><span>Bandung</span></div></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><strong>2,9 JT++</strong><span>pengguna</span></div>
+      <div class="stat"><strong>32 JT++</strong><span>pengiriman</span></div>
+    </div>
+
+    <p class="risk">Kalau pun ada kejadian di luar kendali, kamu tetap terlindungi lewat <span class="hl-purple">asuransi otomatis dan garansi ongkir kembali.</span> Jadi kalau terjadi masalah di perjalanan, kamu gak cuma bisa pasrah menanggung risikonya sendiri.</p>
+  </div>
+</section>
+
+<section class="cta" id="cta">
+  <div class="wrap">
+    <div class="eyebrow">Belum perlu langsung kirim</div>
+    <h2>Cari Tahu Dulu, Baru Putuskan</h2>
+    <p>Isi singkat. Pesan WhatsApp-nya langsung disiapkan supaya kamu tinggal tanya.</p>
+
+    <div class="steps">
+      <span class="step">Isi Form</span><span class="arrow">→</span>
+      <span class="step">Kirim WA</span><span class="arrow">→</span>
+      <span class="step">Tanya Dulu</span><span class="arrow">→</span>
+      <span class="step">Kirim Kalau Yakin</span>
+    </div>
+
+    <form class="form" onsubmit="return sendWA(event)">
+      <label>Nama<input id="nama" placeholder="Nama kamu" autocomplete="name"></label>
+      <label>Jenis makanan yang mau dikirim<input id="jenis" placeholder="Contoh: kue kering / frozen food"></label>
+      <label>Kota tujuan<input id="kota" placeholder="Contoh: Bandung"></label>
+
+      <div class="wa-preview">
+        <div class="label">LIVE PREVIEW WHATSAPP</div>
+        <div class="bubble" id="preview">Halo, saya [Nama], mau tanya-tanya dulu soal kirim [Jenis Makanan] ke [Kota Tujuan] pakai Paxel Sameday.</div>
+      </div>
+      <button class="btn" type="submit">Tanya Dulu Aja →</button>
+      </form>
+
+    <div class="final-push">
+      <div class="push-stage">
+        <div class="tag">Jangan Sampai Terulang</div>
+        <p>Packing sudah rapi pun belum tentu cukup kalau setelah paket diserahkan kamu gak lagi punya kendali atas cara barang ditangani.</p>
+      </div>
+      <div class="push-stage escalate">
+        <div class="tag">Kalau kejadian lagi...</div>
+        <p>Sekali kiriman rusak sampai ke pelanggan, masalahnya bukan berhenti di barang yang harus diganti. Komplain masuk, rating bisa ikut turun, dan kepercayaan yang sudah dibangun jadi ikut dipertaruhkan.</p>
+      </div>
+      <div class="push-stage solution">
+        <div class="tag">Pakai Paxel</div>
+        <p>Pakai Paxel Sameday, kirimanmu ditangani dengan sistem yang lebih sesuai untuk makanan — supaya produk sampai lebih aman dan kepercayaan pelanggan tetap terjaga.</p>
+      </div>
+      <div class="push-stage">
+        <div class="tag">Belum yakin?</div>
+        <p class="closing">Gak perlu langsung kirim. Tanya dulu aja, baru putuskan kapan mau coba.</p>
+        <div class="soft-cta-wrap">
+          <a class="soft-cta" href="#cta">Tanya Paxel Dulu →</a>
+          <div class="soft-cta-note">Cukup isi singkat. Belum perlu langsung kirim.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <img src="https://i.ibb.co.com/nNnQpD8X/Logo-paxel-putih.webp" alt="Paxel" width="100" height="34" loading="lazy" decoding="async" style="display:block;width:auto;height:30px;">
+  <p>Sameday Delivery untuk kebutuhan pengiriman makanan.</p>
+</footer>
+</main>
+
+<div class="sticky" id="sticky">
+  <div class="sticky-inner">
+    <div class="sticky-brand">
+      <div class="sticky-mark"><img src="https://i.ibb.co.com/nNnQpD8X/Logo-paxel-putih.webp" alt="" width="58" height="20"></div>
+      <div class="sticky-copy">
+        <strong>Paxel Sameday</strong>
+        <span>Kirim makanan lebih tenang</span>
+      </div>
+    </div>
+    <a class="sticky-btn" href="#cta">Tanya Dulu →</a>
+  </div>
+</div>
+
+<script>
+const nama=document.getElementById('nama'), jenis=document.getElementById('jenis'), kota=document.getElementById('kota'), preview=document.getElementById('preview');
+function message(){
+  return `Halo, saya ${nama.value||'[Nama]'}, mau tanya-tanya dulu soal kirim ${jenis.value||'[Jenis Makanan]'} ke ${kota.value||'[Kota Tujuan]'} pakai Paxel Sameday.`;
+}
+[nama,jenis,kota].forEach(el=>el.addEventListener('input',()=>preview.textContent=message()));
+function sendWA(e){
+  e.preventDefault();
+  const text = encodeURIComponent(message());
+  const waUrl = `https://wa.me/6281111121232?text=${text}`;
+  window.location.href = waUrl;
+  return false;
+}
+let heroViewContentTracked=false;
+function trackHeroViewContent(){
+  if(heroViewContentTracked) return;
+  heroViewContentTracked=true;
+  if(typeof fbq==='function'){
+    fbq('track','ViewContent');
+  }
+}
+
+const hero=document.getElementById('hero'), cta=document.getElementById('cta'), sticky=document.getElementById('sticky');
+const io=new IntersectionObserver(()=>updateSticky(),{threshold:[0,.1,.5,1]});
+io.observe(hero);io.observe(cta);
+function updateSticky(){
+  const h=hero.getBoundingClientRect(), c=cta.getBoundingClientRect();
+  if(h.bottom<0) trackHeroViewContent();
+  const show=h.bottom<0 && !(c.top<innerHeight && c.bottom>0);
+  sticky.classList.toggle('show',show);
+}
+addEventListener('scroll',updateSticky,{passive:true});updateSticky();
+</script>
+</body>
+</html>
