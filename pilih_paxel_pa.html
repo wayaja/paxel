@@ -316,6 +316,43 @@ input:focus{border-color:var(--paxel);box-shadow:0 0 0 3px rgba(95,81,161,.10)}
 @media(max-width:380px){
   .hero h1{font-size:27px;letter-spacing:-.035em}
 }
+
+.location-map{
+  padding:46px 0 50px;
+  background:#fff;
+  border-top:1px solid var(--line);
+}
+.location-map .location-head{
+  margin-bottom:14px;
+}
+.location-map .location-head .eyebrow{
+  margin-bottom:8px;
+}
+.location-map .location-head h2{
+  font-size:24px;
+  line-height:1.12;
+  margin-bottom:7px;
+}
+.location-map .location-head p{
+  font-size:14px;
+  line-height:1.48;
+  color:var(--muted);
+}
+.map-frame{
+  width:100%;
+  height:220px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  overflow:hidden;
+  background:var(--paxel-soft-2);
+}
+.map-frame iframe{
+  width:100%;
+  height:100%;
+  border:0;
+  display:block;
+}
+
 </style>
 </head>
 <body>
@@ -445,6 +482,8 @@ src="https://www.facebook.com/tr?id=27439272795695346&ev=PageView&noscript=1"
   </div>
 </section>
 
+
+
 <section class="cta" id="cta">
   <div class="wrap">
     <div class="eyebrow">Belum perlu langsung kirim</div>
@@ -491,6 +530,26 @@ src="https://www.facebook.com/tr?id=27439272795695346&ev=PageView&noscript=1"
           <div class="soft-cta-note">Cukup isi singkat. Belum perlu langsung kirim.</div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="location-map" aria-label="Lokasi Paxel Home Kuningan">
+  <div class="wrap">
+    <div class="location-head">
+      <div class="eyebrow">Lokasi operasional</div>
+      <h2>Paxel Home Kuningan</h2>
+      <p>Lokasi Paxel di Kuningan, ditampilkan langsung melalui Google Maps.</p>
+    </div>
+    <div class="map-frame">
+      <iframe
+        src="https://www.google.com/maps?q=Paxel%20Home%20Kuningan&output=embed"
+        title="Google Maps — Paxel Home Kuningan"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen>
+      </iframe>
     </div>
   </div>
 </section>
