@@ -539,6 +539,16 @@ input:focus{border-color:var(--paxel);box-shadow:0 0 0 3px rgba(95,81,161,.10)}
   box-shadow:0 3px 8px rgba(0,0,0,.05);
 }
 
+
+
+/* Customer match field */
+.phone-note{
+  margin-top:-7px;
+  font-size:10.5px;
+  line-height:1.4;
+  color:var(--muted);
+}
+
 </style>
 </head>
 <body>
@@ -693,12 +703,14 @@ src="https://www.facebook.com/tr?id=27439272795695346&ev=PageView&noscript=1"
 
     <form class="form" onsubmit="return sendWA(event)">
       <label>Nama<input id="nama" placeholder="Nama kamu" autocomplete="name"></label>
+      <label>Nomor WhatsApp<input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Contoh: 0812 3456 7890" required></label>
+      <div class="phone-note">Dipakai untuk menghubungi kamu dan membantu proses pick-up awal.</div>
       <label>Jenis makanan yang mau dikirim<input id="jenis" placeholder="Contoh: kue kering / frozen food"></label>
       <label>Kota tujuan<input id="kota" placeholder="Contoh: Bandung"></label>
 
       <div class="wa-preview">
         <div class="label">LIVE PREVIEW WHATSAPP</div>
-        <div class="bubble" id="preview">Halo, saya [Nama], mau tanya soal kirim [Jenis Makanan] ke [Kota Tujuan] pakai Paxel Sameday. Saya juga mau dibantu atur pick-up untuk pengiriman awal.</div>
+        <div class="bubble" id="preview">Halo, saya [Nama], mau tanya soal kirim [Jenis Makanan] ke [Kota Tujuan] pakai Paxel Sameday. Nomor WhatsApp saya [Nomor WhatsApp]. Saya juga mau dibantu atur pick-up untuk pengiriman awal.</div>
       </div>
       <button class="btn" type="submit">Tanya Dulu Aja →</button>
       </form>
@@ -789,24 +801,85 @@ src="https://www.facebook.com/tr?id=27439272795695346&ev=PageView&noscript=1"
 </div>
 
 <script>
-const nama=document.getElementById('nama'), jenis=document.getElementById('jenis'), kota=document.getElementById('kota'), preview=document.getElementById('preview');
-function message(){
-  return `Halo, saya ${nama.value||'[Nama]'}, mau tanya soal kirim ${jenis.value||'[Jenis Makanan]'} ke ${kota.value||'[Kota Tujuan]'} pakai Paxel Sameday. Saya juga mau dibantu atur pick-up untuk pengiriman awal.`;
+const PIXEL_ID='27439272795695346';
+const nama=document.getElementById('nama'),
+      phone=document.getElementById('phone'),
+      jenis=document.getElementById('jenis'),
+      kota=document.getElementById('kota'),
+      preview=document.getElementById('preview');
+
+function normalizeName(value){
+  return (value||'').trim().toLowerCase().replace(/\s+/g,' ');
 }
-[nama,jenis,kota].forEach(el=>el.addEventListener('input',()=>preview.textContent=message()));
+
+function normalizePhoneID(value){
+  let digits=(value||'').replace(/\D/g,'');
+  if(digits.startsWith('0')) digits='62'+digits.slice(1);
+  else if(digits.startsWith('8')) digits='62'+digits;
+  return digits;
+}
+
+function displayPhone(){
+  return phone.value.trim() || '[Nomor WhatsApp]';
+}
+
+function message(){
+  return `Halo, saya ${nama.value||'[Nama]'}, mau tanya soal kirim ${jenis.value||'[Jenis Makanan]'} ke ${kota.value||'[Kota Tujuan]'} pakai Paxel Sameday. Nomor WhatsApp saya ${displayPhone()}. Saya juga mau dibantu atur pick-up untuk pengiriman awal.`;
+}
+
+[nama,phone,jenis,kota].forEach(el=>el.addEventListener('input',()=>preview.textContent=message()));
+
+function createEventId(){
+  if(window.crypto && crypto.randomUUID) return 'wa_lead_'+crypto.randomUUID();
+  return 'wa_lead_'+Date.now()+'_'+Math.random().toString(36).slice(2,10);
+}
+
 function sendWA(e){
   e.preventDefault();
-  const text = encodeURIComponent(message());
-  const waUrl = `https://wa.me/6281111121232?text=${text}`;
-  window.location.href = waUrl;
+
+  const phoneNormalized=normalizePhoneID(phone.value);
+  if(phoneNormalized.length<10 || phoneNormalized.length>15){
+    phone.setCustomValidity('Masukkan nomor WhatsApp yang aktif.');
+    phone.reportValidity();
+    return false;
+  }
+  phone.setCustomValidity('');
+
+  const firstName=normalizeName(nama.value).split(' ')[0] || '';
+  const eventID=createEventId();
+
+  if(typeof fbq==='function'){
+    // Re-init resmi didukung Meta untuk memasukkan customer information
+    // setelah data tersedia di browser. Meta Pixel akan melakukan hashing.
+    fbq('init', PIXEL_ID, {
+      fn:firstName,
+      ph:phoneNormalized
+    });
+
+    fbq('trackSingle', PIXEL_ID, 'Lead', {
+      content_name:'Paxel WhatsApp Pickup Program',
+      content_category:'problem_aware_whatsapp_pickup'
+    }, {
+      eventID:eventID
+    });
+  }
+
+  const text=encodeURIComponent(message());
+  const waUrl=`https://wa.me/6281111121232?text=${text}`;
+
+  // Beri waktu singkat agar request Pixel dikirim sebelum pindah ke WhatsApp.
+  setTimeout(()=>{ window.location.href=waUrl; },250);
   return false;
 }
+
 let heroViewContentTracked=false;
 function trackHeroViewContent(){
   if(heroViewContentTracked) return;
   heroViewContentTracked=true;
   if(typeof fbq==='function'){
-    fbq('track','ViewContent');
+    fbq('trackSingle',PIXEL_ID,'ViewContent',{
+      content_name:'Paxel Sameday Problem Aware'
+    });
   }
 }
 
