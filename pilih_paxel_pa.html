@@ -323,7 +323,7 @@ input:focus{border-color:var(--paxel);box-shadow:0 0 0 3px rgba(95,81,161,.10)}
   border-top:1px solid var(--line);
 }
 .location-map .location-head{
-  margin-bottom:14px;
+  margin-bottom:16px;
 }
 .location-map .location-head .eyebrow{
   margin-bottom:8px;
@@ -331,18 +331,40 @@ input:focus{border-color:var(--paxel);box-shadow:0 0 0 3px rgba(95,81,161,.10)}
 .location-map .location-head h2{
   font-size:24px;
   line-height:1.12;
-  margin-bottom:7px;
+  margin:0 0 7px;
 }
 .location-map .location-head p{
+  margin:0;
   font-size:14px;
   line-height:1.48;
+  color:var(--muted);
+}
+.location-list{
+  display:grid;
+  gap:18px;
+}
+.location-card{
+  padding:16px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:#fff;
+}
+.location-card h3{
+  margin:0 0 4px;
+  font-size:18px;
+  line-height:1.22;
+}
+.location-card p{
+  margin:0 0 12px;
+  font-size:14px;
+  line-height:1.45;
   color:var(--muted);
 }
 .map-frame{
   width:100%;
   height:220px;
   border:1px solid var(--line);
-  border-radius:18px;
+  border-radius:16px;
   overflow:hidden;
   background:var(--paxel-soft-2);
 }
@@ -351,6 +373,170 @@ input:focus{border-color:var(--paxel);box-shadow:0 0 0 3px rgba(95,81,161,.10)}
   height:100%;
   border:0;
   display:block;
+}
+
+
+/* =========================================================
+   CRO HERO REVISION
+   Source tetap versi GMaps Two Locations.
+   Lokasi, form, WA, Pixel, dan section bawah tidak diubah.
+   ========================================================= */
+.hero{padding:18px 0 22px}
+.brandbar{margin-bottom:18px}
+.hero .pill{
+  margin-bottom:12px;
+  padding:7px 10px;
+  font-size:11px;
+  line-height:1.25
+}
+.hero h1{
+  font-size:27px!important;
+  line-height:1.08!important;
+  letter-spacing:-.035em!important;
+  margin-bottom:11px!important
+}
+.hero-sub{
+  font-size:14.5px;
+  line-height:1.5;
+  color:var(--body);
+  margin:0 0 15px;
+  max-width:360px
+}
+.hero-stage{
+  position:relative;
+  min-height:0;
+  height:188px;
+  margin:0 0 14px;
+  overflow:hidden;
+  border-radius:18px
+}
+.hero-stage .scene,
+.hero-stage .route-scene{
+  position:relative!important;
+  inset:auto!important;
+  right:auto!important;
+  bottom:auto!important;
+  width:100%!important;
+  height:100%!important;
+  border-radius:18px!important;
+  transform:none!important;
+  overflow:hidden
+}
+.hero-stage .scene img,
+.hero-stage .route-scene img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  transform:none!important
+}
+.hero-copy-card,.rational-card{display:none!important}
+
+.hero-proof{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  margin-top:0
+}
+.hero-proof .proof-chip{
+  min-height:58px;
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:13px;
+  padding:9px 8px
+}
+.hero-proof strong{
+  display:block;
+  font-size:13px;
+  line-height:1.05;
+  color:var(--paxel-deep);
+  letter-spacing:-.01em
+}
+.hero-proof span{
+  display:block;
+  margin-top:5px;
+  font-size:9.5px;
+  line-height:1.28;
+  color:var(--muted)
+}
+.hero-bridge{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:13px;
+  padding-top:12px;
+  border-top:1px solid rgba(95,81,161,.16);
+  color:var(--paxel-deep);
+  text-decoration:none;
+  font-size:12px;
+  line-height:1.3;
+  font-weight:800
+}
+.hero-bridge span:last-child{
+  flex:0 0 auto;
+  font-size:16px;
+  color:var(--paxel)
+}
+.hero-transition{
+  padding:20px 0 30px;
+  background:#fff
+}
+.hero-transition .banner{margin-bottom:10px}
+.hero-transition .dual{margin-bottom:10px}
+.hero-transition .barrier{margin-top:10px}
+
+@media(max-width:380px){
+  .hero h1{font-size:27px!important}
+  .hero-stage{height:178px}
+}
+
+
+
+/* Program Pick-up Awal via WhatsApp */
+.program-note{
+  margin:0 0 18px;
+  padding:13px 14px;
+  border-radius:15px;
+  background:#EAF7EF;
+  border:1px solid #D4EBDD;
+}
+.program-note strong{
+  display:block;
+  font-size:12px;
+  line-height:1.25;
+  color:#24704A;
+  margin-bottom:4px;
+}
+.program-note span{
+  display:block;
+  font-size:11px;
+  line-height:1.42;
+  color:#4C6758;
+}
+.wa-pickup-card{
+  margin-top:12px;
+  padding:13px;
+  border-radius:16px;
+  background:#EAF7EF;
+  border:1px solid #D4EBDD;
+}
+.wa-pickup-label{
+  font-size:9.5px;
+  line-height:1.2;
+  letter-spacing:.08em;
+  font-weight:900;
+  color:#47815E;
+  margin-bottom:7px;
+}
+.wa-pickup-bubble{
+  padding:11px 12px;
+  border-radius:5px 13px 13px 13px;
+  background:#fff;
+  color:#333;
+  font-size:12px;
+  line-height:1.42;
+  box-shadow:0 3px 8px rgba(0,0,0,.05);
 }
 
 </style>
@@ -364,6 +550,7 @@ src="https://www.facebook.com/tr?id=27439272795695346&ev=PageView&noscript=1"
 
 <main class="page">
 
+
 <section class="hero" id="hero">
   <div class="wrap">
     <div class="brandbar">
@@ -371,18 +558,28 @@ src="https://www.facebook.com/tr?id=27439272795695346&ev=PageView&noscript=1"
       <div class="service">Sameday Delivery</div>
     </div>
 
-    <div class="pill"><span class="dot"></span>Bukan Cuma Janji — Ada Jaminan Resmi di Setiap Pengiriman</div>
+    <div class="pill"><span class="dot"></span>Paxel Sameday untuk Pengiriman Makanan</div>
 
-    <h1>Rating Tokomu Tetap Terjaga,<br>Kamu Jadi <span class="hero-hl">Lebih Yakin Kirim</span><br>ke Lebih Banyak Pelanggan.</h1>
+    <h1>Kirim Makanan Jauh<br>Gak Harus Bikin <span class="marker">Produk Rusak</span><br>dan <span class="hero-hl">Rating Toko Ikut Turun.</span></h1>
 
-    <div class="hero-stage" aria-label="Placeholder visual hero operasional Paxel">
-      <div class="hero-copy-card">
-        <strong>Pengiriman makanan bukan cuma soal sampai.</strong>
-        <span>Kondisi barang saat diterima ikut menentukan kepercayaan pelanggan.</span>
-      </div>
+    <p class="hero-sub">Paxel Sameday membantu kiriman makanan ditangani lebih sesuai, dengan perlindungan yang jelas dari awal.</p>
+
+    <div class="hero-stage">
       <div class="scene"><img src="https://i.ibb.co.com/BHYBMnbm/01-Hero.png" alt="Seller makanan menyerahkan paket kepada kurir Paxel Sameday" width="1080" height="800" fetchpriority="high" decoding="async"></div>
     </div>
 
+    <div class="hero-proof" aria-label="Ringkasan perlindungan Paxel">
+      <div class="proof-chip"><strong>JMA*</strong><span>Jaminan Makanan Aman</span></div>
+      <div class="proof-chip"><strong>99,5%*</strong><span>tepat waktu</span></div>
+      <div class="proof-chip"><strong>Pick-up</strong><span>cukup lewat WhatsApp</span></div>
+    </div>
+
+    <a class="hero-bridge" href="#after-hero"><span>Lihat kenapa kiriman makanan butuh penanganan yang tepat</span><span>↓</span></a>
+  </div>
+</section>
+
+<section class="hero-transition" id="after-hero">
+  <div class="wrap">
     <div class="banner">
       <h3>Satu Kiriman Rusak Bisa Merusak Reputasi Toko yang Susah Payah Kamu Bangun</h3>
     </div>
@@ -398,15 +595,10 @@ src="https://www.facebook.com/tr?id=27439272795695346&ev=PageView&noscript=1"
       </div>
     </div>
 
-    <div class="trust-strip">
-      <div class="trust"><div class="icon">✓</div><div><b>Jaminan Makanan Aman*</b><span>Kompensasi kalau makanan rusak/basi akibat kelalaian kurir.</span></div></div>
-      <div class="trust"><div class="icon">99</div><div><b>99,5% tepat waktu*</b><span>Performa pengiriman Paxel.</span></div></div>
-      <div class="trust"><div class="icon">H</div><div><b>Halal Logistics*</b><span>Logistik bersertifikasi Halal pertama di Indonesia.</span></div></div>
-    </div>
-
     <p class="barrier"><span class="body-strong">Gak perlu sampai repot memperbaiki reputasi toko gara-gara kiriman rusak.</span> Kirim dengan cara yang tepat dari awal, supaya pelanggan tetap percaya sama tokomu.</p>
   </div>
 </section>
+
 
 <section class="agitation">
   <div class="wrap">
@@ -421,7 +613,7 @@ src="https://www.facebook.com/tr?id=27439272795695346&ev=PageView&noscript=1"
       <div class="problem-row"><div class="num">01</div><div><b>Udah packing rapi, tapi tetap hancur pas sampai?</b><p>Masalahnya bukan packing-mu. Kurir reguler memang gak dirancang khusus untuk barang yang gampang pecah atau butuh suhu dingin.</p></div></div>
       <div class="problem-row"><div class="num">02</div><div><b>Takut komplain publik bikin calon pembeli baru ikut ragu?</b><p>Ada <span class="hl-purple">Jaminan Makanan Aman</span> — kalau rusak akibat kelalaian kurir, kamu dapat kompensasi. Bukan cuma harus menghadapi komplain sendirian.</p></div></div>
       <div class="problem-row"><div class="num">03</div><div><b>Ragu kirim luar kota karena belum yakin sampainya bakal gimana?</b><p><span class="hl-purple">99,5% pengiriman tepat waktu*</span>, jadi risiko keterlambatan yang bikin makanan keburu basi jauh lebih kecil.</p></div></div>
-      <div class="problem-row"><div class="num">04</div><div><b>Males cari ekspedisi baru karena kebayang ribetnya?</b><p>Cukup jadwalkan <span class="hl-purple">pick-up lewat aplikasi.</span> Kurir yang datang jemput, jadi kamu gak perlu keluar rumah atau antar paket ke counter.</p></div></div>
+      <div class="problem-row"><div class="num">04</div><div><b>Males coba ekspedisi baru karena kebayang ribetnya?</b><p>Khusus program ini, <span class="hl-purple">cukup WhatsApp.</span> Tim kami bantu atur pick-up, lalu kurir datang mengambil paketmu.</p></div></div>
     </div>
   </div>
 </section>
@@ -452,7 +644,7 @@ src="https://www.facebook.com/tr?id=27439272795695346&ev=PageView&noscript=1"
       </article>
       <article class="benefit wide">
         <div class="thumb app"><img src="https://i.ibb.co.com/fGrmDmm9/04-C-BENEFIT-JADWAL-PICK-UP.png" alt="Tampilan fitur jadwal pick-up di aplikasi Paxel" width="1080" height="1080" loading="lazy" decoding="async"></div>
-        <div class="bcopy"><h3>Jadwal Pick-up Fleksibel</h3><p>Atur sendiri waktu penjemputan lewat aplikasi. Kurir datang mengambil paket, jadi kamu gak perlu antar ke counter.</p></div>
+        <div class="bcopy"><h3>Pick-up Dibantu Lewat WhatsApp</h3><p>Untuk pengiriman awal, cukup hubungi kami lewat WhatsApp. Tim kami bantu atur pick-up, lalu kurir datang mengambil paketmu.</p></div>
       </article>
       <div class="policy">
         <div><strong class="hl-purple">Asuransi Gratis Otomatis hingga Rp1.000.000</strong><span>Setiap pengiriman otomatis terlindungi hingga Rp1.000.000 tanpa perlu daftar perlindungan tambahan.</span></div>
@@ -491,11 +683,13 @@ src="https://www.facebook.com/tr?id=27439272795695346&ev=PageView&noscript=1"
     <p>Isi singkat. Pesan WhatsApp-nya langsung disiapkan supaya kamu tinggal tanya.</p>
 
     <div class="steps">
-      <span class="step">Isi Form</span><span class="arrow">→</span>
-      <span class="step">Kirim WA</span><span class="arrow">→</span>
-      <span class="step">Tanya Dulu</span><span class="arrow">→</span>
-      <span class="step">Kirim Kalau Yakin</span>
+      <span class="step">Isi Singkat</span><span class="arrow">→</span>
+      <span class="step">WhatsApp</span><span class="arrow">→</span>
+      <span class="step">Tim Bantu</span><span class="arrow">→</span>
+      <span class="step">Pick-up</span>
     </div>
+
+    <div class="program-note"><strong>Program Pick-up Awal</strong><span>Khusus program ini, proses awal dibantu lewat WhatsApp supaya kamu gak perlu mengatur pick-up sendiri.</span></div>
 
     <form class="form" onsubmit="return sendWA(event)">
       <label>Nama<input id="nama" placeholder="Nama kamu" autocomplete="name"></label>
@@ -504,7 +698,7 @@ src="https://www.facebook.com/tr?id=27439272795695346&ev=PageView&noscript=1"
 
       <div class="wa-preview">
         <div class="label">LIVE PREVIEW WHATSAPP</div>
-        <div class="bubble" id="preview">Halo, saya [Nama], mau tanya-tanya dulu soal kirim [Jenis Makanan] ke [Kota Tujuan] pakai Paxel Sameday.</div>
+        <div class="bubble" id="preview">Halo, saya [Nama], mau tanya soal kirim [Jenis Makanan] ke [Kota Tujuan] pakai Paxel Sameday. Saya juga mau dibantu atur pick-up untuk pengiriman awal.</div>
       </div>
       <button class="btn" type="submit">Tanya Dulu Aja →</button>
       </form>
@@ -535,21 +729,42 @@ src="https://www.facebook.com/tr?id=27439272795695346&ev=PageView&noscript=1"
 </section>
 
 
-<section class="location-map" aria-label="Lokasi Paxel Home Kuningan">
+<section class="location-map" aria-label="Lokasi operasional Paxel">
   <div class="wrap">
     <div class="location-head">
       <div class="eyebrow">Lokasi operasional</div>
-      <h2>Paxel Home Kuningan</h2>
-      <p>Lokasi Paxel di Kuningan, ditampilkan langsung melalui Google Maps.</p>
+      <h2>Lokasi Paxel</h2>
+      <p>Informasi lokasi operasional Paxel ditampilkan langsung melalui Google Maps.</p>
     </div>
-    <div class="map-frame">
-      <iframe
-        src="https://www.google.com/maps?q=Paxel%20Home%20Kuningan&output=embed"
-        title="Google Maps — Paxel Home Kuningan"
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        allowfullscreen>
-      </iframe>
+
+    <div class="location-list">
+      <div class="location-card">
+        <h3>Paxel Home Kuningan</h3>
+        <p>Kuningan</p>
+        <div class="map-frame">
+          <iframe
+            src="https://www.google.com/maps?q=Paxel%20Home%20Kuningan&output=embed"
+            title="Google Maps — Paxel Home Kuningan"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+
+      <div class="location-card">
+        <h3>Paxel Point Majalengka</h3>
+        <p>Majalengka</p>
+        <div class="map-frame">
+          <iframe
+            src="https://www.google.com/maps?q=Paxel%20Point%20Majalengka&output=embed"
+            title="Google Maps — Paxel Point Majalengka"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -576,7 +791,7 @@ src="https://www.facebook.com/tr?id=27439272795695346&ev=PageView&noscript=1"
 <script>
 const nama=document.getElementById('nama'), jenis=document.getElementById('jenis'), kota=document.getElementById('kota'), preview=document.getElementById('preview');
 function message(){
-  return `Halo, saya ${nama.value||'[Nama]'}, mau tanya-tanya dulu soal kirim ${jenis.value||'[Jenis Makanan]'} ke ${kota.value||'[Kota Tujuan]'} pakai Paxel Sameday.`;
+  return `Halo, saya ${nama.value||'[Nama]'}, mau tanya soal kirim ${jenis.value||'[Jenis Makanan]'} ke ${kota.value||'[Kota Tujuan]'} pakai Paxel Sameday. Saya juga mau dibantu atur pick-up untuk pengiriman awal.`;
 }
 [nama,jenis,kota].forEach(el=>el.addEventListener('input',()=>preview.textContent=message()));
 function sendWA(e){
